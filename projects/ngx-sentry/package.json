@@ -1,0 +1,13 @@
+{
+  "name": "ngx-sentry",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": ">=11.0.0",
+    "@angular/core": ">=11.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0",
+    "@sentry/angular": "^6.0.0",
+    "@sentry/tracing": "^6.0.0"
+  }
+}
