@@ -1,13 +1,26 @@
 {
   "name": "ngx-sentry",
   "version": "0.0.1",
+  "scripts": {
+    "start": "../../node_modules/.bin/watch 'yarn run build' schematics",
+    "build": "../../node_modules/.bin/tsc -p tsconfig.schematics.json",
+    "copy:schemas": "../../node_modules/.bin/cpy --parents schematics/*/schema.json ../../dist/ngx-sentry/",
+    "copy:files": "../../node_modules/.bin/cpy --parents schematics/*/files/** ../../dist/ngx-sentry/",
+    "copy:collection": "../../node_modules/.bin/cpy schematics/collection.json ../../dist/ngx-sentry/schematics",
+    "postbuild": "yarn run copy:schemas && yarn run copy:files && yarn run copy:collection"
+  },
   "peerDependencies": {
     "@angular/common": ">=11.0.0",
     "@angular/core": ">=11.0.0"
   },
   "dependencies": {
-    "tslib": "^2.0.0",
     "@sentry/angular": "^6.0.0",
-    "@sentry/tracing": "^6.0.0"
-  }
+    "@sentry/tracing": "^6.0.0",
+    "tslib": "^2.0.0"
+  },
+  "schematics": "./schematics/collection.json",
+  "ng-add": {
+    "save": "dependencies"
+  },
+  "devDependencies": {}
 }

@@ -16,23 +16,22 @@ export class NgxSentryService {
      * This function is automatically called on module initialisation.
      */
     init(): Promise<void> {
-        if(!this.config?.dsn) {
+        if (!this.config?.dsn) {
             console.warn('No Sentry DSN found. Ignore it.');
             return Promise.resolve();
         }
 
-        Sentry.init({
-            dsn: this.config.dsn,
-            environment: this.config?.environment,
-            release: this.config?.release,
+        const options = Object.assign({
             autoSessionTracking: true,
             integrations: [
                 new Integrations.BrowserTracing({
-                  tracingOrigins: this.config?.tracingOrigins ? this.config?.tracingOrigins : ['localhost'],
-                  routingInstrumentation: Sentry.routingInstrumentation,
+                    tracingOrigins: this.config?.tracingOrigins ? this.config?.tracingOrigins : ['*'],
+                    routingInstrumentation: Sentry.routingInstrumentation,
                 }),
-              ],
-        })
+            ],
+        },  this.config);
+
+        Sentry.init(options)
         return Promise.resolve();
     }
 

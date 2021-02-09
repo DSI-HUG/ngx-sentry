@@ -1,6 +1,5 @@
-export interface SentryConfig {
-    dsn: string;
-    environment?: string,
-    release?: string,
+import { BrowserOptions } from "@sentry/angular";
+
+export interface SentryConfig extends BrowserOptions {
     tracingOrigins: string[]
 }
