@@ -2,12 +2,12 @@
   "name": "ngx-sentry",
   "version": "0.0.1",
   "scripts": {
-    "start": "../../node_modules/.bin/watch 'yarn run build' schematics",
+    "start": "../../node_modules/.bin/watch 'npm run build' schematics",
     "build": "../../node_modules/.bin/tsc -p tsconfig.schematics.json",
     "copy:schemas": "../../node_modules/.bin/cpy --parents schematics/*/schema.json ../../dist/ngx-sentry/",
     "copy:files": "../../node_modules/.bin/cpy --parents schematics/*/files/** ../../dist/ngx-sentry/",
     "copy:collection": "../../node_modules/.bin/cpy schematics/collection.json ../../dist/ngx-sentry/schematics",
-    "postbuild": "yarn run copy:schemas && yarn run copy:files && yarn run copy:collection"
+    "postbuild": "npm run copy:schemas && npm run copy:files && npm run copy:collection"
   },
   "peerDependencies": {
     "@angular/common": ">=11.0.0",

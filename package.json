@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng build ngx-sentry --watch",
-    "build": "ng build --prod && cd projects/ngx-sentry && yarn run build && cd ../..",
+    "build": "ng build --prod && cd projects/ngx-sentry && npm run build && cd ../..",
     "publish:local": "cd dist/ngx-sentry && npm unpublish --force --registry http://vmlp-00221.huge.ad.hcuge.ch:4873 && npm publish --registry http://vmlp-00221.huge.ad.hcuge.ch:4873 --verbose && cd ../..",
     "test": "ng test",
     "lint": "ng lint"
