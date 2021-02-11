@@ -1,7 +1,8 @@
 import { Tree } from '@angular-devkit/schematics';
-
 import { ArrayLiteralExpression, ObjectLiteralExpression, Project, PropertyAssignment, SyntaxKind } from "ts-morph";
+
 import { Schema } from '../schema/schema';
+import { LIBRARIE_NAME } from './constant';
 
 /**
  * Update app.module.ts file
@@ -26,10 +27,10 @@ export function updateAppModule(tree: Tree, indentation: number, options: Schema
         });
     }
 
-    if (!file.getImportDeclaration('ngx-sentry')) {
+    if (!file.getImportDeclaration(LIBRARIE_NAME)) {
         file.addImportDeclaration({
             namedImports: ['NgxSentryModule'],
-            moduleSpecifier: 'ngx-sentry',
+            moduleSpecifier: LIBRARIE_NAME,
         });
     }
 
