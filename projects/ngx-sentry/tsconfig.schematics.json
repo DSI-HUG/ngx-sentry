@@ -15,7 +15,7 @@
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "rootDir": ".",
-    "outDir": "../../dist/ngx-sentry/schematics",
+    "outDir": "../../dist/ngx-sentry",
     "resolveJsonModule": true,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
@@ -29,8 +29,5 @@
   },
   "include": [
     "schematics/**/*"
-  ],
-  "exclude": [
-    "schematics/*/files/**/*"
   ]
 }
