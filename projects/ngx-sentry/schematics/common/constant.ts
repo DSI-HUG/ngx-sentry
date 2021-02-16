@@ -1,3 +1,7 @@
+import { version } from '../../package.json';
+
+export const LIBRARIE_VERSION = `${version}`;
+
 export const LIBRARIE_NAME = 'ngx-sentry';
 
 export const DEFAULT_INDENTATION = 2;
@@ -9,8 +13,8 @@ export const MODULE_IMPORT_TEXT = `NgxSentryModule.forRoot({
     tracingOrigins: ['*']
 })`;
 
-export const sentryCliRc = 
-`[defaults]
+export const sentryCliRc =
+    `[defaults]
 url={{sentryUrl}}
 org=sentry
 project={{projectName}}

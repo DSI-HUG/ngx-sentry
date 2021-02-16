@@ -4,6 +4,7 @@
   "scripts": {
     "start": "../../node_modules/.bin/watch 'npm run build' schematics",
     "build": "../../node_modules/.bin/tsc -p tsconfig.schematics.json",
+    "test": "npm run build && ../../node_modules/.bin/jasmine ../../dist/ngx-sentry/schematics/**/*.spec.js",
     "copy:schemas": "../../node_modules/.bin/cpy --parents schematics/*/schema.json ../../dist/ngx-sentry/",
     "copy:files": "../../node_modules/.bin/cpy --parents schematics/*/files/** ../../dist/ngx-sentry/",
     "copy:collection": "../../node_modules/.bin/cpy schematics/collection.json ../../dist/ngx-sentry/schematics",

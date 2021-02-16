@@ -14,7 +14,7 @@ export function ngAdd(options: Schema): Rule {
         context.addTask(new NodePackageInstallTask());
 
         const indentation = getProjectIndentationSetting(tree);
-
+        
         updatePackage(tree);
         updateTsConfig(tree);
         updateAppModule(tree, indentation, options);

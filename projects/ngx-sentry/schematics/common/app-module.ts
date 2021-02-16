@@ -1,17 +1,24 @@
-import { Tree } from '@angular-devkit/schematics';
+import { SchematicsException, Tree } from '@angular-devkit/schematics';
 import { ArrayLiteralExpression, ObjectLiteralExpression, Project, PropertyAssignment, SyntaxKind } from "ts-morph";
 
 import { Schema } from '../schema/schema';
 import { LIBRARIE_NAME } from './constant';
+import { extractProjectFromName, extractProjectName } from './utils';
 
 /**
  * Update app.module.ts file
  * @param tree 
  */
 export function updateAppModule(tree: Tree, indentation: number, options: Schema): void {
-    const modulePath = 'src/app/app.module.ts';
-    const project = new Project();
-    const file = project.addSourceFileAtPath(modulePath);
+    const projectName = extractProjectName(tree);
+    const defaultProject = extractProjectFromName(tree, projectName);
+    const modulePath = `${defaultProject.sourceRoot}/app/app.module.ts`;
+    if (!tree.exists(modulePath)) {
+        throw new SchematicsException(`Could not read file (${modulePath}).`);
+    }
+
+    const project = new Project({ useInMemoryFileSystem: true });
+    const file = project.createSourceFile(modulePath, tree.read(modulePath)?.toString());
 
     if (!file.getImportDeclaration('src/environments/environment')) {
         file.addImportDeclaration({
@@ -39,12 +46,12 @@ export function updateAppModule(tree: Tree, indentation: number, options: Schema
 
     const imports = argument?.getProperty('imports') as PropertyAssignment;
     const imps = imports?.getInitializerIfKindOrThrow(SyntaxKind.ArrayLiteralExpression) as ArrayLiteralExpression;
-    
+
     const sentryModuleIndex = imps.getElements().findIndex((el) => el.getText().includes('NgxSentryModule'));
-    if(sentryModuleIndex != -1) {
+    if (sentryModuleIndex != -1) {
         imps.removeElement(sentryModuleIndex);
     }
-    
+
     imps.addElement(`NgxSentryModule.forRoot({
         dsn: '${options.sentryUrl}',
         release: version,

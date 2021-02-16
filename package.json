@@ -6,6 +6,7 @@
     "start": "ng build ngx-sentry --watch",
     "build": "ng build --prod && cd projects/ngx-sentry && npm run build && cd ../..",
     "publish:local": "cd dist/ngx-sentry && npm unpublish --force --registry http://vmlp-00221.huge.ad.hcuge.ch:4873 && npm publish --registry http://vmlp-00221.huge.ad.hcuge.ch:4873 --verbose && cd ../..",
+    "test:schematics": "cd projects/ngx-sentry && npm run test && cd ../..",
     "test": "ng test",
     "lint": "ng lint"
   },
@@ -33,6 +34,7 @@
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
     "cpy-cli": "^3.1.1",
+    "jasmine": "^3.6.4",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.1.0",

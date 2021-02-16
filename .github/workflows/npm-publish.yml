@@ -14,6 +14,7 @@ jobs:
           node-version: 12
       - run: npm ci
       - run: npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+      - run: npm run test:schematics
 
   publish-npm:
     needs: build
@@ -29,18 +30,3 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-
-  publish-gpr:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
-          registry-url: https://npm.pkg.github.com/
-      - run: npm ci
-      - run: cd dist/ngx-sentry
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}

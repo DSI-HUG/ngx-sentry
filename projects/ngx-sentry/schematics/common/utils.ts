@@ -1,6 +1,7 @@
 import { Tree } from '@angular-devkit/schematics';
 import { SchematicsException, UpdateRecorder } from '@angular-devkit/schematics';
 import { Change, InsertChange } from '@schematics/angular/utility/change';
+import { JSONFile } from '@schematics/angular/utility/json-file';
 import { Project } from "ts-morph";
 import * as ts from 'typescript';
 
@@ -51,4 +52,20 @@ export function formatFile(tree: Tree, filePath: string, indentation: number): v
     const file = project.getSourceFileOrThrow(filePath);
     file.formatText({ indentSize: indentation });
     tree.overwrite(filePath, file.getFullText());
+}
+
+export function extractProjectName(tree: Tree): string {
+    const angularFile = new JSONFile(tree, 'angular.json');
+    return angularFile.get(['defaultProject']) as string;
+}
+
+export function extractProjectFromName(tree: Tree, name: string): any {
+    const angularFile = new JSONFile(tree, 'angular.json');
+    const projects = angularFile.get(['projects']) as any;
+    
+    if (!projects) {
+        throw new SchematicsException(`Projects not found.`);
+    }
+    
+    return projects[name];
 }

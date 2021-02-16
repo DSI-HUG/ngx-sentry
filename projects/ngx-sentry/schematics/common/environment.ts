@@ -1,5 +1,6 @@
-import { SchematicContext, Tree } from '@angular-devkit/schematics';
+import { SchematicContext, SchematicsException, Tree } from '@angular-devkit/schematics';
 import { Project, ObjectLiteralExpression, SyntaxKind, StructureKind } from "ts-morph";
+import { extractProjectFromName, extractProjectName } from '.';
 import { Schema } from '../schema/schema';
 
 /**
@@ -10,26 +11,32 @@ import { Schema } from '../schema/schema';
  * @param indentation 
  */
 export function updateEnvironmentFiles(tree: Tree, context: SchematicContext, options: Schema, indentation: number) {
-    const envsPath = 'src/environments';
+    const projectName = extractProjectName(tree);
+    const defaultProject = extractProjectFromName(tree, projectName);
+    const envDirPath = `${defaultProject.sourceRoot}/environments`;
+    const envDir = tree.getDir(envDirPath);
+    if (!envDir) {
+        throw new SchematicsException(`Could not find environments directory (${envDirPath}).`);
+    }
 
-    const project = new Project();
-    const files = project.addSourceFilesAtPaths(`${envsPath}/*.ts`);
-
-    files.forEach(envFile => {
+    envDir.subfiles.forEach(fileName => {
+        const filePath = `${envDirPath}/${fileName}`;
+        const project = new Project({ useInMemoryFileSystem: true });
+        const envFile = project.createSourceFile(filePath, tree.read(filePath)?.toString());
         const ole = envFile.getVariableDeclaration('environment')?.getInitializerIfKind(SyntaxKind.ObjectLiteralExpression) as ObjectLiteralExpression;
-    
-        if(!ole) {
+
+        if (!ole) {
             context.logger.debug('Environment declaration not found. Ignoring it.');
             return;
         }
 
-        if(ole.getProperty('sentryUrl')) {
+        if (ole.getProperty('sentryUrl')) {
             context.logger.debug('SentryUrl property already exist. Ignoring it.');
             return;
         }
 
-        ole.addProperty({name: 'sentryUrl', initializer: `'${options.sentryUrl}'`, kind: StructureKind.PropertyAssignment });
+        ole.addProperty({ name: 'sentryUrl', initializer: `'${options.sentryUrl}'`, kind: StructureKind.PropertyAssignment });
         envFile.formatText({ indentSize: indentation });
-        tree.overwrite(`src/environments/${envFile.getBaseName()}`, `${envFile.getFullText()}`);
+        tree.overwrite(filePath, `${envFile.getFullText()}`);
     });
 }
