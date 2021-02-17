@@ -16,7 +16,8 @@
   "dependencies": {
     "@sentry/angular": "^6.0.0",
     "@sentry/tracing": "^6.0.0",
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "ts-morph": "^9.1.0"
   },
   "schematics": "./schematics/collection.json",
   "ng-add": {
