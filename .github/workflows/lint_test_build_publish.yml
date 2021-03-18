@@ -5,7 +5,7 @@ on:
     types: [created]
 
 jobs:
-  lint+test+build+publish:
+  lint_test_build_publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout project

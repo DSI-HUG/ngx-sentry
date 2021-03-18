@@ -3,7 +3,7 @@ name: Run linter and tests against lib and schematics
 on: [push, pull_request]
 
 jobs:
-  lint+test:
+  lint_test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout project
