@@ -13,10 +13,10 @@ jobs:
         with:
           node-version: 15.x
       - name: Install dependencies
-        run: npm clean-install
+        run: yarn install --frozen-lockfile
       - name: Lint
-        run: npm run lint
+        run: yarn lint
       - name: Test
         run: |
-          npm run test:lib -- --no-watch --no-progress --browsers=ChromeHeadlessCI
-          npm run test:schematics
+          yarn test:lib -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+          yarn test:schematics
