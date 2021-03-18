@@ -1,14 +1,13 @@
 import { SchematicsException, Tree } from '@angular-devkit/schematics';
 import { ArrayLiteralExpression, ObjectLiteralExpression, Project, PropertyAssignment, SyntaxKind, QuoteKind } from 'ts-morph';
 
-import { Schema } from '../schema/schema.model';
 import { LIBRARY_NAME } from './constant';
 import { extractProjectFromName, extractProjectName } from './utils';
 
 /**
  * Update app.module.ts file
  */
-export function updateAppModule(tree: Tree, indentation: number, options: Schema): void {
+export function updateAppModule(tree: Tree, indentation: number): void {
     const projectName = extractProjectName(tree);
     const defaultProject = extractProjectFromName(tree, projectName);
     const modulePath = `${defaultProject.sourceRoot}/app/app.module.ts`;
@@ -57,7 +56,7 @@ export function updateAppModule(tree: Tree, indentation: number, options: Schema
     }
 
     imps.addElement(`NgxSentryModule.forRoot({
-        dsn: '${options.sentryUrl}',
+        dsn: environment.sentryUrl,
         release: version,
         environment: environment.environment,
         tracingOrigins: ['*'],
