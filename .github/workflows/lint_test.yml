@@ -1,0 +1,22 @@
+name: Run linter and tests against lib and schematics
+
+on: [push, pull_request]
+
+jobs:
+  lint_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 15.x
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Lint
+        run: yarn lint
+      - name: Test
+        run: |
+          yarn test:lib -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+          yarn test:schematics
