@@ -15,8 +15,8 @@ export function updateAppModule(tree: Tree, indentation: number): void {
         throw new SchematicsException(`Could not read file (${modulePath}).`);
     }
 
-    const project = new Project({ 
-        useInMemoryFileSystem: true, 
+    const project = new Project({
+        useInMemoryFileSystem: true,
         manipulationSettings: {
             quoteKind: QuoteKind.Single
         }
