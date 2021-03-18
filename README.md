@@ -4,7 +4,7 @@
 
 [![Build Status](https://github.com/DSI-HUG/ngx-sentry/workflows/CI%20tests/badge.svg)](https://github.com/DSI-HUG/ngx-sentry/actions?query=workflow:CI%20tests) [![Dependency Status](https://img.shields.io/david/DSI-HUG/ngx-sentry.svg)](https://david-dm.org/DSI-HUG/ngx-sentry) [![devDependency Status](https://img.shields.io/david/dev/DSI-HUG/ngx-sentry.svg)](https://david-dm.org/DSI-HUG/ngx-sentry#info=devDependencies) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
-<!-- edit: description -->
+> Angular wrapper for Sentry JavaScript SDK
 
 ## Installation
 
@@ -29,7 +29,7 @@ The ng add command will additionally perform the following configurations:
 
 ## Usage
 
-<!-- edit: usage -->
+<!-- edit: -->
 
 
 ## Development
@@ -112,9 +112,9 @@ This project comes with automatic continuous delivery (CD) using GitHub Actions.
 
 2. Push the changes
 
-3. Create a new: [GitHub release](https://github.com/@hug/ngx-sentry/releases/new)
+3. Create a new: [GitHub release](https://github.com/DSI-HUG/ngx-sentry/releases/new)
 
-4. Watch the results in: [Actions](https://github.com/@hug/ngx-sentry/actions)
+4. Watch the results in: [Actions](https://github.com/DSI-HUG/ngx-sentry/actions)
 
 
 ## Contributing
@@ -132,8 +132,17 @@ Help us keep this project open and inclusive.
 Please read and follow the [Code of Conduct][codeofconduct].
 
 
+## Credits
+
+This library was made with [@hug/ngx-lib-and-schematics-starter][starter].
+
+[![Love @hug badge](https://img.shields.io/badge/@hug-%E2%9D%A4%EF%B8%8Flove-magenta)](https://github.com/DSI-HUG)
+
+
 
 
 [schematics]: https://angular.io/guide/schematics-for-libraries
 [contributing]: CONTRIBUTING.md
 [codeofconduct]: CODE_OF_CONDUCT.md
+[starter]: https://github.com/DSI-HUG/ngx-lib-and-schematics-starter
+[dsi-hug]: https://github.com/DSI-HUG
