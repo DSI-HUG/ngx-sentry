@@ -1,0 +1,31 @@
+name: Publish library on npm repository
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  lint+test+build+publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 15.x
+          registry-url: https://registry.npmjs.org/
+      - name: Install dependencies
+        run: npm clean-install
+      - name: Lint
+        run: npm run lint
+      - name: Test
+        run: |
+        npm run test:lib -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+        npm run test:schematics
+      - name: Build
+        run: npm run build
+      - name: Publish
+        run: npm publish ./dist/library --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
