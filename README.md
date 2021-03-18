@@ -2,13 +2,13 @@
 
 [![npm version](https://img.shields.io/npm/v/@hug/ngx-sentry.svg?logo=npm&logoColor=fff&label=NPM+package&color=limegreen)](https://www.npmjs.com/package/@hug/ngx-sentry) [![npm downloads](https://img.shields.io/npm/dm/@hug/ngx-sentry.svg?style=flat-square)](https://npmcharts.com/compare/@hug/ngx-sentry?minimal=true) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-[![PRs Welcome](https://img.shields.io/badge/prs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![Build Status](https://github.com/GITHUG_REPO_NAME/workflows/CI/badge.svg)](https://github.com/GITHUG_REPO_NAME/actions?query=workflow:CI) [![Dependency Status](https://img.shields.io/david/GITHUG_REPO_NAME.svg?style=flat-square)](https://david-dm.org/GITHUG_REPO_NAME) [![devDependency Status](https://img.shields.io/david/dev/GITHUG_REPO_NAME.svg?style=flat-square)](https://david-dm.org/GITHUG_REPO_NAME#info=devDependencies)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![Build Status](https://github.com/GITHUG_REPO_NAME/workflows/CI/badge.svg)](https://github.com/GITHUG_REPO_NAME/actions?query=workflow:CI) [![Dependency Status](https://img.shields.io/david/GITHUG_REPO_NAME.svg?style=flat-square)](https://david-dm.org/GITHUG_REPO_NAME) [![devDependency Status](https://img.shields.io/david/dev/GITHUG_REPO_NAME.svg?style=flat-square)](https://david-dm.org/GITHUG_REPO_NAME#info=devDependencies)
 
 <!-- edit: description -->
 
 ## Installation
 
-To set up an Angular project with this library, use the Angular CLI's installation [schematic][schematics] by running the following command:
+To set up an Angular project with this library, use the Angular CLI's installation [schematic][schematics]:
 
 ```sh
 ng add @hug/ngx-sentry
@@ -65,7 +65,7 @@ The library and schematics can be tested on an Angular project while being devel
    ng add @hug/ngx-sentry
    ```
 
-**Tips:** you can use git to watch the effective changes made by the schematics
+**Tips:** ***you can use git to watch the effective changes made by the schematics***
 
 1. Make a clean state after creating the dummy Angular project
 
