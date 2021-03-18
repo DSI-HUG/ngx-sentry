@@ -27,7 +27,7 @@ export function ngAdd(options: Schema): Rule {
             updateTsConfig(tree);
 
             const indentation = getProjectIndentationSetting(tree);
-            updateAppModule(tree, indentation, options);
+            updateAppModule(tree, indentation);
             updateEnvironmentFiles(tree, context, options, indentation);
 
             updateSentryCliRc(tree, options);

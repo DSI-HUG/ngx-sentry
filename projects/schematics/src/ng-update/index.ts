@@ -16,7 +16,7 @@ export function ngUpdate(options: Schema): Rule {
 
         updatePackage(tree);
         updateTsConfig(tree);
-        updateAppModule(tree, indentation, options);
+        updateAppModule(tree, indentation);
         updateEnvironmentFiles(tree, context, options, indentation);
         updateSentryCliRc(tree, options);
 
