@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/@hug/ngx-sentry.svg?logo=npm&logoColor=fff&label=NPM+package&color=limegreen)](https://www.npmjs.com/package/@hug/ngx-sentry) [![npm downloads](https://img.shields.io/npm/dm/@hug/ngx-sentry.svg)](https://npmcharts.com/compare/@hug/ngx-sentry?minimal=true) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com) [![Build Status](https://github.com/DSI-HUG/ngx-sentry/workflows/CI%20tests/badge.svg)](https://github.com/DSI-HUG/ngx-sentry/actions?query=workflow:CI%20tests) [![Dependency Status](https://img.shields.io/david/DSI-HUG/ngx-sentry.svg)](https://david-dm.org/DSI-HUG/ngx-sentry) [![devDependency Status](https://img.shields.io/david/dev/DSI-HUG/ngx-sentry.svg)](https://david-dm.org/DSI-HUG/ngx-sentry#info=devDependencies)
+[![Build Status](https://github.com/DSI-HUG/ngx-sentry/workflows/CI%20tests/badge.svg)](https://github.com/DSI-HUG/ngx-sentry/actions?query=workflow:CI%20tests) [![Dependency Status](https://img.shields.io/david/DSI-HUG/ngx-sentry.svg)](https://david-dm.org/DSI-HUG/ngx-sentry) [![devDependency Status](https://img.shields.io/david/dev/DSI-HUG/ngx-sentry.svg)](https://david-dm.org/DSI-HUG/ngx-sentry#info=devDependencies) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
 <!-- edit: description -->
 
