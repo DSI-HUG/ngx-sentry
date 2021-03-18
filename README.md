@@ -6,6 +6,8 @@
 
 > Angular wrapper for Sentry JavaScript SDK
 
+<hr>
+
 ## Installation
 
 To set up an Angular project with this library use the Angular CLI's installation [schematic][schematics]:
@@ -34,7 +36,7 @@ The ng add command will additionally perform the following configurations:
 
 ## Development
 
-### Testing
+#### Testing
 
 The library and schematics can be tested on an Angular project while being developed:
 
@@ -85,7 +87,7 @@ The library and schematics can be tested on an Angular project while being devel
    git reset --hard && git clean -fd
    ```
 
-### Unit testing
+#### Unit testing
 
 Unit tests can be executed on the library itself or on the schematics.
 
@@ -94,7 +96,7 @@ npm run test:lib
 npm run test:schematics
 ```
 
-### Building the library
+#### Building the library
 
 The library will be built in the `./dist/library` directory.
 
@@ -104,7 +106,7 @@ Schematics will be embedded within the library under `./dist/library/schematics`
 npm run build
 ```
 
-### Publishing the library
+#### Publishing the library
 
 This project comes with automatic continuous delivery (CD) using GitHub Actions.
 
@@ -119,13 +121,13 @@ This project comes with automatic continuous delivery (CD) using GitHub Actions.
 
 ## Contributing
 
-### Want to Help?
+#### Want to Help?
 
 Want to file a bug, contribute some code or improve documentation? Excellent!
 
 But please read up first on the guidelines for [contributing][contributing], and learn about submission process, coding rules and more.
 
-### Code of Conduct
+#### Code of Conduct
 
 Help us keep this project open and inclusive.
 
