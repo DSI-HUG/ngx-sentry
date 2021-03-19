@@ -5,7 +5,7 @@
 <p align="center">
     <br>
     <a href="https://www.hug.ch/">
-        <img src="https://www.hug.ch/sites/all/themes/interhug/img/logos/logo-hug.svg" alt="hug-logo" height="60px" />
+        <img src="https://www.hug.ch/sites/all/themes/interhug/img/logos/logo-hug.svg" alt="hug-logo" height="54px" />
     </a>
     <br><br>
     <i>Angular wrapper for Sentry JavaScript SDK</i>
@@ -65,7 +65,7 @@ The ng add command will additionally perform the following configurations:
 <!-- edit: -->
 
 
-## Development
+## Development
 
 See the [developer docs][developer].
 
