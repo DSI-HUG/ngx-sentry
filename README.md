@@ -5,6 +5,7 @@
 <p align="center">
     <i>Angular wrapper for Sentry JavaScript SDK</i>
     <br>
+    <br>
 </p>
 
 <p align="center">
