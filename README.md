@@ -29,7 +29,7 @@
     <a href="https://david-dm.org/DSI-HUG/ngx-sentry">
         <img src="https://img.shields.io/david/DSI-HUG/ngx-sentry.svg" alt="Dependency Status" />
     </a>
-    <a href="https://david-dm.org/DSI-HUG/ngx-sentry#info=devDependencies">
+    <a href="https://david-dm.org/DSI-HUG/ngx-sentry?type=dev">
         <img src="https://img.shields.io/david/dev/DSI-HUG/ngx-sentry.svg" alt="devDependency Status" />
     </a>
     <a href="http://makeapullrequest.com">
