@@ -58,7 +58,7 @@ export function updateAppModule(tree: Tree, indentation: number): void {
     imps.addElement(`NgxSentryModule.forRoot({
         dsn: environment.sentryUrl,
         release: version,
-        environment: environment.environment,
+        environment: environment.name, // Or replace it by your own value
         tracingOrigins: ['*'],
     })`);
 
