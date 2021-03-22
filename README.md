@@ -14,7 +14,7 @@
 
 <p align="center">
     <a href="https://www.npmjs.com/package/@hug/ngx-sentry">
-        <img src="https://img.shields.io/npm/v/@hug/ngx-sentry.svg?logo=npm&logoColor=fff&label=NPM+package&color=limegreen" alt="npm version" />
+        <img src="https://img.shields.io/npm/v/@hug/ngx-sentry.svg?logo=npm" alt="npm version" />
     </a>
     <img src="https://img.shields.io/npm/dm/@hug/ngx-sentry.svg)](https://npmcharts.com/compare/@hug/ngx-sentry?minimal=true" alt="npm donwloads" />
     <a href="https://www.gnu.org/licenses/gpl-3.0">
