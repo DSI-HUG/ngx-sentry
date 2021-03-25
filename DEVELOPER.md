@@ -2,7 +2,7 @@
 
 This document describes how you can test, build and publish the library and schematics.
 
-## Prerequisite
+## Prerequisite
 
 Before you can build and test this library you must install and configure the following products on your development machine: [Git][git], [Node.js][nodejs], [Yarn][yarn].
 
@@ -74,7 +74,7 @@ yarn test:lib
 yarn test:schematics
 ```
 
-## Linting/verifying source code
+## Linting/verifying source code
 
 Check that the code is properly formatted and adheres to coding style.
 
