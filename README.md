@@ -14,26 +14,28 @@
 
 <p align="center">
     <a href="https://www.npmjs.com/package/@hug/ngx-sentry">
-        <img src="https://img.shields.io/npm/v/@hug/ngx-sentry.svg?logo=npm" alt="npm version" />
+        <img src="https://img.shields.io/npm/v/@hug/ngx-sentry.svg?color=blue&logo=npm" alt="npm version" />
     </a>
-    <img src="https://img.shields.io/npm/dm/@hug/ngx-sentry.svg)](https://npmcharts.com/compare/@hug/ngx-sentry?minimal=true" alt="npm donwloads" />
+    <a href="https://npmcharts.com/compare/@hug/ngx-sentry?minimal=true">
+        <img src="https://img.shields.io/npm/dt/@hug/ngx-sentry.svg?color=blue)" alt="npm donwloads" />
+    </a>
     <a href="https://www.gnu.org/licenses/gpl-3.0">
-        <img src="https://img.shields.io/badge/license-GPLv3-blue.svg" alt="License: GPL v3" />
+        <img src="https://img.shields.io/badge/license-GPLv3-blue.svg" alt="license GPLv3" />
     </a>
 </p>
 
 <p align="center">
     <a href="https://github.com/DSI-HUG/ngx-sentry/actions?query=workflow:CI%20tests">
-        <img src="https://github.com/DSI-HUG/ngx-sentry/workflows/CI%20tests/badge.svg" alt="Build Status" />
+        <img src="https://github.com/DSI-HUG/ngx-sentry/workflows/CI%20tests/badge.svg" alt="build status" />
     </a>
     <a href="https://david-dm.org/DSI-HUG/ngx-sentry">
-        <img src="https://img.shields.io/david/DSI-HUG/ngx-sentry.svg" alt="Dependency Status" />
+        <img src="https://img.shields.io/david/DSI-HUG/ngx-sentry.svg" alt="dependency status" />
     </a>
     <a href="https://david-dm.org/DSI-HUG/ngx-sentry?type=dev">
-        <img src="https://img.shields.io/david/dev/DSI-HUG/ngx-sentry.svg" alt="devDependency Status" />
+        <img src="https://img.shields.io/david/dev/DSI-HUG/ngx-sentry.svg" alt="devDependency status" />
     </a>
     <a href="http://makeapullrequest.com">
-        <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" />
+        <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome" />
     </a>
 </p>
 

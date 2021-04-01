@@ -1,4 +1,4 @@
-name: Publish library on npm repository
+name: Publish library to NPM
 
 on:
   release:
