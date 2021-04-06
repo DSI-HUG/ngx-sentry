@@ -3,34 +3,36 @@
 We would love for you to contribute to this project and help make it even better than it is today!
 As a contributor, here are the guidelines we would like you to follow:
 
- - [Code of Conduct](#coc)
- - [Question or Problem?](#question)
- - [Issues and Bugs](#issue)
- - [Feature Requests](#feature)
- - [Submission Guidelines](#submit)
- - [Coding Rules](#rules)
- - [Commit Message Guidelines](#commit)
+ * [Code of Conduct](#coc)
+ * [Question or Problem?](#question)
+ * [Issues and Bugs](#issue)
+ * [Feature Requests](#feature)
+ * [Submission Guidelines](#submit)
+ * [Coding Rules](#rules)
+ * [Commit Message Guidelines](#commit)
 
 
 ## <a name="coc"></a> Code of Conduct
 
-Help us keep this project open and inclusive.
-Please read and follow our [Code of Conduct][coc].
+Please read and follow our [Code of Conduct][coc], and help us keep this project open and inclusive.
 
 
-## <a name="question"></a> Got a Question or Problem?
+## <a name="question"></a> Got a Question or Problem ?
 
 Please open an issue and add the `question` label to it.
 
 
-## <a name="issue"></a> Found a Bug?
+## <a name="issue"></a> Found a Bug ?
 
 If you find a bug in the source code, you can help us by [submitting an issue](#submit-issue) to our [GitHub Repository][github].
+
 Even better, you can [submit a Pull Request](#submit-pr) with a fix.
 
 
-## <a name="feature"></a> Missing a Feature?
+## <a name="feature"></a> Missing a Feature ?
+
 You can *request* a new feature by [submitting an issue](#submit-issue) to our GitHub Repository.
+
 If you would like to *implement* a new feature, please consider the size of the change in order to determine the right steps to proceed:
 
 * For a **Major Feature**, first open an issue and outline your proposal so that it can be discussed.
@@ -42,7 +44,6 @@ If you would like to *implement* a new feature, please consider the size of the 
 
 
 ## <a name="submit"></a> Submission Guidelines
-
 
 ### <a name="submit-issue"></a> Submitting an Issue
 
@@ -60,14 +61,14 @@ We understand that sometimes it might be hard to extract essential bits of code 
 
 Unfortunately, we are not able to investigate / fix bugs without a minimal reproduction, so if we don't hear back from you, we are going to close an issue that doesn't have enough info to be reproduced.
 
-You can file new issues by selecting from our [new issue templates][issueTemplates] and filling out the issue template.
+You can file new issues by selecting and filling out the issue template from our [new issue templates][issue-templates].
 
 
 ### <a name="submit-pr"></a> Submitting a Pull Request (PR)
 
 Before you submit your Pull Request (PR) consider the following guidelines:
 
-1. Search [GitHub][githubPR] for an open or closed PR that relates to your submission.
+1. Search [GitHub][github-pr] for an open or closed PR that relates to your submission.
    You don't want to duplicate existing efforts.
 
 2. Be sure that an issue describes the problem you're fixing, or documents the design for the feature you'd like to add.
@@ -77,8 +78,8 @@ Before you submit your Pull Request (PR) consider the following guidelines:
 
 4. Make your changes in a new git branch:
 
-     ```shell
-     git checkout -b my-fix-branch master
+     ```sh
+     $ git checkout -b my-fix-branch master
      ```
 
 5. Create your patch, **including appropriate test cases**.
@@ -90,22 +91,24 @@ Before you submit your Pull Request (PR) consider the following guidelines:
 8. Commit your changes using a descriptive commit message that follows our [commit message conventions](#commit).
    Adherence to these conventions is necessary because release notes are automatically generated from these messages.
 
-     ```shell
-     git commit --all
+     ```sh
+     $ git commit --all
      ```
     Note: the optional commit `-a` command line option will automatically "add" and "rm" edited files.
 
 9. Push your branch to GitHub:
 
-    ```shell
-    git push origin my-fix-branch
+    ```sh
+    $ git push origin my-fix-branch
     ```
 
 10. In GitHub, send a pull request to `develop` branch.
 
 ### Reviewing a Pull Request
 
-Pull requests may not be accepted from community members who haven't been good citizens of the community. Such behavior includes not following the [code of conduct](#coc) and applies within or outside of this repository.
+Pull requests may not be accepted from community members who haven't been good citizens of the community.
+
+Such behavior includes not following the [code of conduct](#coc) and applies within or outside of this repository.
 
 #### Addressing review feedback
 
@@ -117,15 +120,14 @@ If we ask for changes via code reviews then:
 
 3. Create a fixup commit and push to your GitHub repository (this will update your Pull Request):
 
-    ```shell
-    git commit --all --fixup HEAD
-    git push
+    ```sh
+    $ git commit --all --fixup HEAD
+    $ git push
     ```
 
 That's it! Thank you for your contribution!
 
-
-##### Updating the commit message
+#### Updating the commit message
 
 A reviewer might often suggest changes to a commit message (for example, to add more context for a change or adhere to our [commit message guidelines](#commit)).
 
@@ -133,26 +135,25 @@ In order to update the commit message of the last commit on your branch:
 
 1. Check out your branch:
 
-    ```shell
-    git checkout my-fix-branch
+    ```sh
+    $ git checkout my-fix-branch
     ```
 
 2. Amend the last commit and modify the commit message:
 
-    ```shell
-    git commit --amend
+    ```sh
+    $ git commit --amend
     ```
 
 3. Push to your GitHub repository:
 
-    ```shell
-    git push --force-with-lease
+    ```sh
+    $ git push --force-with-lease
     ```
 
 > NOTE:<br />
 > If you need to update the commit message of an earlier commit, you can use `git rebase` in interactive mode.
 > See the [git docs](https://git-scm.com/docs/git-rebase#_interactive_mode) for more details.
-
 
 #### After your pull request is merged
 
@@ -160,26 +161,26 @@ After your pull request is merged, you can safely delete your branch and pull th
 
 * Delete the remote branch on GitHub either through the GitHub web UI or your local shell as follows:
 
-    ```shell
-    git push origin --delete my-fix-branch
+    ```sh
+    $ git push origin --delete my-fix-branch
     ```
 
 * Check out the master branch:
 
-    ```shell
-    git checkout master -f
+    ```sh
+    $ git checkout master -f
     ```
 
 * Delete the local branch:
 
-    ```shell
-    git branch -D my-fix-branch
+    ```sh
+    $ git branch -D my-fix-branch
     ```
 
 * Update your master with the latest upstream version:
 
-    ```shell
-    git pull --ff upstream master
+    ```sh
+    $ git pull --ff upstream master
     ```
 
 
@@ -187,9 +188,9 @@ After your pull request is merged, you can safely delete your branch and pull th
 
 To ensure consistency throughout the source code, keep these rules in mind as you are working:
 
-* All features or bug fixes **must be tested** by one or more specs (unit-tests).
-* All public API methods **must be documented**.
-* We follow [Google's JavaScript Style Guide][js-style-guide], but wrap all code at **100 characters**.
+* All features or bug fixes **must be tested** by one or more specs (unit-tests)
+* All public API methods **must be documented**
+* We follow [Google's JavaScript Style Guide][js-style-guide], but wrap all code at **100 characters**
 
 
 ## <a name="commit"></a> Commit Message Format
@@ -197,6 +198,7 @@ To ensure consistency throughout the source code, keep these rules in mind as yo
 *This specification is inspired by and supersedes the [Conventional Commits message format][commit-message-format].*
 
 We have very precise rules over how our Git commit messages must be formatted.
+
 This format leads to **easier to read commit history**.
 
 Each commit message consists of a **header**, a **body**, and a **footer**.
@@ -212,15 +214,14 @@ Each commit message consists of a **header**, a **body**, and a **footer**.
 
 The `header` is mandatory and must conform to the [Commit Message Header](#commit-header) format.
 
-The `body` is mandatory for all commits except for those of type "docs".
-When the body is present it must be at least 20 characters long and must conform to the [Commit Message Body](#commit-body) format.
+The `body` is mandatory for all commits except for those of type "docs". When the body is present it must be at least 20 characters long and must conform to the [Commit Message Body](#commit-body) format.
 
 The `footer` is optional. The [Commit Message Footer](#commit-footer) format describes what the footer is used for and the structure it must have.
 
 Any line of the commit message cannot be longer than 100 characters.
 
 
-#### <a name="commit-header"></a>Commit Message Header
+#### <a name="commit-header"></a> Commit Message Header
 
 ```
 <type>(<scope>): <short summary>
@@ -261,15 +262,16 @@ Use the summary field to provide a succinct description of the change:
 * no dot (.) at the end
 
 
-#### <a name="commit-body"></a>Commit Message Body
+#### <a name="commit-body"></a> Commit Message Body
 
 Just as in the summary, use the imperative, present tense: "fix" not "fixed" nor "fixes".
 
 Explain the motivation for the change in the commit message body. This commit message should explain _why_ you are making the change.
+
 You can include a comparison of the previous behavior with the new behavior in order to illustrate the impact of the change.
 
 
-#### <a name="commit-footer"></a>Commit Message Footer
+#### <a name="commit-footer"></a> Commit Message Footer
 
 The footer can contain information about breaking changes and is also the place to reference GitHub issues, Jira tickets, and other PRs that this commit closes or is related to.
 
@@ -282,7 +284,7 @@ BREAKING CHANGE: <breaking change summary>
 Fixes #<issue number>
 ```
 
-Breaking Change section should start with the phrase "BREAKING CHANGE: " followed by a summary of the breaking change, a blank line, and a detailed description of the breaking change that also includes migration instructions.
+Breaking Change section should start with the phrase `BREAKING CHANGE: ` followed by a summary of the breaking change, a blank line, and a detailed description of the breaking change that also includes migration instructions.
 
 
 ### Revert commits
@@ -291,15 +293,15 @@ If the commit reverts a previous commit, it should begin with `revert: `, follow
 
 The content of the commit message body should contain:
 
-- information about the SHA of the commit being reverted in the following format: `This reverts commit <SHA>`,
-- a clear description of the reason for reverting the commit message.
+* information about the SHA of the commit being reverted in the following format: `This reverts commit <SHA>`
+* a clear description of the reason for reverting the commit message
 
 
 
 
-[coc]: https://github.com/DSI-HUG/ngx-sentry/blob/master/CONTRIBUTING.md
+[coc]: https://github.com/DSI-HUG/ngx-sentry/blob/master/CODE_OF_CONDUCT.md
 [github]: https://github.com/DSI-HUG/ngx-sentry
-[issueTemplates]: https://github.com/DSI-HUG/ngx-sentry/issues/new/choose
-[githubPR]: https://github.com/angular/angular/pulls
+[issue-templates]: https://github.com/DSI-HUG/ngx-sentry/issues/new/choose
+[github-pr]: https://github.com/angular/angular/pulls
 [js-style-guide]: https://google.github.io/styleguide/jsguide.html
 [commit-message-format]: https://www.conventionalcommits.org/en/v1.0.0
