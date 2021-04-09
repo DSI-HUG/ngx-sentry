@@ -59,9 +59,7 @@ describe('Test - ngAdd schematic', () => {
         expect(packagePath).toBeDefined();
         if (packagePath) {
             expect(tree.exists(packagePath)).toBeTruthy();
-            expect(tree.readContent(packagePath)).toContain('sentry:finish');
-            expect(tree.readContent(packagePath)).toContain('sentry:upload');
-            expect(tree.readContent(packagePath)).toContain('sentry:version');
+            expect(tree.readContent(packagePath)).toContain('sentry');
         }
 
         const tsConfigPath = tree.files.find((path) => path.indexOf('tsconfig.json') != -1);
