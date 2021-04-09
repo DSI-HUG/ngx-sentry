@@ -16,12 +16,21 @@ export function updateSentryCliRc(tree: Tree, option: Schema): void {
     }
 
     const projectName = Object.keys(projects)[0];
+    const url = extractSentryRootUrl(option.sentryUrl);
 
-    let contentFile = SENTRY_CLI_RC.replace('{{sentryUrl}}', option.sentryUrl);
+    let contentFile = SENTRY_CLI_RC.replace('{{sentryUrl}}', url);
     contentFile = contentFile.replace('{{projectName}}', projectName);
     if (tree.exists('.sentryclirc')) {
         tree.overwrite('.sentryclirc', contentFile);
     } else {
         tree.create('.sentryclirc', contentFile);
     }
+}
+
+/**
+ * Export origin url from sentry url with authentication token
+ */
+export function extractSentryRootUrl(completeUrl: string): string {
+    const url = new URL(completeUrl);
+    return url.origin;
 }
