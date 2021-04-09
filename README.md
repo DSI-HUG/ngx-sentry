@@ -69,7 +69,7 @@ You're done! Sentry is now configured to be used in your application.
 
 ## Usage
 
-You can set the current user by using the NgySentryService provided by the library.
+You can set the current user by using the NgxSentryService provided by the library.
 
 ```javascript
 constructor(
