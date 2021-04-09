@@ -9,6 +9,9 @@
         "rtrompier (https://github.com/rtrompier)",
         "badisi (https://github.com/badisi)"
     ],
+    "bin": {
+        "ngx-sentry": "./bin/ngx-sentry"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/DSI-HUG/ngx-sentry.git"
