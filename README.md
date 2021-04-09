@@ -49,23 +49,49 @@ To set up an Angular project with this library use the Angular CLI's installatio
 $ ng add @hug/ngx-sentry
 ```
 
-<!-- edit:
-The ng add command will install the library and ask the following questions to determine which features to include:
+The  `ng add`  command will install Sentry dependencies, the HUG Wrapper configuration and ask you the following questions:
 
-1. lorem ipsum
-2. lorem ipsum
+1.  Sentry's dsn url:
+    
+    You can pass your project sentry url (providing during the project creation process) to configure automatically all the Sentry configurations.
+    
+The  `ng add`  command will additionally perform the following configurations:
 
-The ng add command will additionally perform the following configurations:
+-   Add project dependencies to  `package.json`
+-   Create the `.sentryclirc` file containing the project configuration
+-   Add Sentry versioning and sourcemap configurations to `package.json`
+-   Allow json module resolving to `tsconfig.json`
+-   Add `sentryUrl` property to your `environments.*.ts` files
+-   Import NgxSentryModule to your application module
 
-* lorem ipsum
-* lorem ipsum
--->
+You're done! Sentry is now configured to be used in your application.
 
 
 ## Usage
 
-<!-- edit: -->
+You can set the current user by using the NgySentryService provided by the library.
 
+```javascript
+constructor(
+    private sentryService: NgxSentryService,
+) {
+    this.sentryService.setUser({
+        email: 'rtrm@hcuge.ch',
+        username: 'rtrm',
+        attr1: 'attr1'
+    });
+}
+```
+
+To remove the current user, you can pass null
+
+```javascript
+constructor(
+    private sentryService: NgxSentryService,
+) {
+    this.sentryService.setUser(null);
+}
+```
 
 ## Development
 
