@@ -1,6 +1,6 @@
 {
     "name": "@hug/ngx-sentry",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Angular wrapper for Sentry JavaScript SDK",
     "homepage": "https://github.com/DSI-HUG/ngx-sentry",
     "license": "GPL-3.0-only",
@@ -10,7 +10,7 @@
         "badisi (https://github.com/badisi)"
     ],
     "bin": {
-        "ngx-sentry": "./bin/ngx-sentry"
+        "ngx-sentry": "./schematics/bin/index.js"
     },
     "repository": {
         "type": "git",
@@ -39,6 +39,7 @@
     "dependencies": {
         "@sentry/angular": "^6.0.0",
         "@sentry/tracing": "^6.0.0",
+        "@sentry/cli": "^1.0.0",
         "tslib": "^2.0.0",
         "ts-morph": "^10.0.0"
     },

@@ -14,6 +14,7 @@
     "allowedNonPeerDependencies": [
         "@sentry/angular",
         "@sentry/tracing",
+        "@sentry/cli",
         "ts-morph"
     ]
 }
