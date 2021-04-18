@@ -31,7 +31,7 @@ Even better, you can [submit a Pull Request](#submit-pr) with a fix.
 
 ## <a name="feature"></a> Missing a Feature ?
 
-You can *request* a new feature by [submitting an issue](#submit-issue) to our GitHub Repository.
+You can *request* a new feature by [submitting an issue](#submit-issue) to our [GitHub Repository][github].
 
 If you would like to *implement* a new feature, please consider the size of the change in order to determine the right steps to proceed:
 
