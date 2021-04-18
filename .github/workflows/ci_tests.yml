@@ -17,6 +17,6 @@ jobs:
       - name: Lint
         run: npm run lint
       - name: Test library
-        run: npm run test:lib --no-watch --no-progress --browsers=ChromeHeadlessCI
+        run: npm run test:lib -- --no-watch --no-progress --browsers=ChromeHeadlessCI
       - name: Test schematics
         run: npm run test:schematics
