@@ -5,7 +5,7 @@
         "ng": "ng",
         "start:schematics": "cd projects/schematics && npm start",
         "start:lib": "ng build --watch",
-        "build:copy:res": "cpy LICENSE CHANGELOG.md dist/library",
+        "build:copy:res": "cpy LICENSE CHANGELOG.md README.md dist/library",
         "build:schematics": "cd projects/schematics && npm run build && cd ../..",
         "build:lib": "ng build library --prod",
         "build": "npm run build:lib && npm run build:schematics && npm run build:copy:res",
