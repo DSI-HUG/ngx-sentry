@@ -9,9 +9,6 @@
         "rtrompier (https://github.com/rtrompier)",
         "badisi (https://github.com/badisi)"
     ],
-    "bin": {
-        "ngx-sentry": "./schematics/bin/index.js"
-    },
     "repository": {
         "type": "git",
         "url": "https://github.com/DSI-HUG/ngx-sentry.git"
@@ -42,6 +39,9 @@
         "@sentry/cli": "^1.0.0",
         "tslib": "^2.0.0",
         "ts-morph": "^10.0.0"
+    },
+    "bin": {
+        "ngx-sentry": "./schematics/bin/index.js"
     },
     "schematics": "./schematics/collection.json",
     "ng-add": {
