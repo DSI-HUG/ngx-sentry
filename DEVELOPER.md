@@ -8,14 +8,13 @@ Before you can build and test this library you must install and configure the fo
 
 * [Git][git]
 * [Node.js][nodejs]
-* [Yarn][yarn]
 
 You will then need to install the required dependencies:
 
 ```sh
 $ cd <library-path>
-$ yarn global add @angular-devkit/schematics-cli
-$ yarn install
+$ npm install -g @angular-devkit/schematics-cli
+$ npm install
 ```
 
 ## Testing locally
@@ -25,22 +24,22 @@ The library and schematics can be tested on an Angular project while being devel
 1. Ouput the library and schematics to dist and watch for changes
 
    ```sh
-   $ yarn start:lib
-   $ yarn start:schematics
+   $ npm run start:lib
+   $ npm run start:schematics
    ```
 
 2. Symlink the library to the global node_modules
 
    ```sh
    $ cd ./dist/library
-   $ yarn link
+   $ npm link
    ```
 
 3. Create a dummy Angular project and link the library to it
 
    ```sh
    $ ng new test-lib ./test-lib
-   $ yarn link @hug/ngx-sentry
+   $ npm link @hug/ngx-sentry
    ```
 
 4. Run and test the library and schematics against the Angular project
@@ -74,8 +73,8 @@ The library and schematics can be tested on an Angular project while being devel
 Unit tests can be executed on the library itself or on the schematics.
 
 ```sh
-$ yarn test:lib
-$ yarn test:schematics
+$ npm run test:lib
+$ npm run test:schematics
 ```
 
 ## Linting/verifying source code
@@ -83,7 +82,7 @@ $ yarn test:schematics
 Check that the code is properly formatted and adheres to coding style.
 
 ```sh
-$ yarn lint
+$ npm run lint
 ```
 
 ## Building the library
@@ -93,7 +92,7 @@ The library will be built in the `./dist/library` directory.
 Schematics will be embedded within the library under `./dist/library/schematics`.
 
 ```sh
-$ yarn build
+$ npm run build
 ```
 
 ## Publishing to NPM repository
@@ -109,4 +108,3 @@ This project comes with automatic continuous delivery (CD) using *GitHub Actions
 
 [git]: https://git-scm.com/
 [nodejs]: https://nodejs.org/
-[yarn]: https://yarnpkg.com/
