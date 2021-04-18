@@ -1,0 +1,12 @@
+{
+    "root": true,
+    "parserOptions": {
+        "project": [
+            "projects/library/tsconfig.lib.json",
+            "projects/library/tsconfig.spec.json"
+        ]
+    },
+    "extends": [
+        "@hug/eslint-config/recommended"
+    ]
+}
