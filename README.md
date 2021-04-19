@@ -31,8 +31,8 @@
     <a href="https://david-dm.org/DSI-HUG/ngx-sentry">
         <img src="https://img.shields.io/david/DSI-HUG/ngx-sentry.svg" alt="dependency status" />
     </a>
-    <a href="https://david-dm.org/DSI-HUG/ngx-sentry?type=dev">
-        <img src="https://img.shields.io/david/dev/DSI-HUG/ngx-sentry.svg" alt="devDependency status" />
+    <a href="https://david-dm.org/DSI-HUG/ngx-sentry?type=peer">
+        <img src="https://img.shields.io/david/dev/DSI-HUG/ngx-sentry.svg" alt="peerDependency status" />
     </a>
     <a href="https://github.com/DSI-HUG/ngx-sentry/blob/master/CONTRIBUTING.md#-submitting-a-pull-request-pr">
         <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome" />
@@ -52,9 +52,9 @@ $ ng add @hug/ngx-sentry
 The  `ng add`  command will install Sentry dependencies, the HUG Wrapper configuration and ask you the following questions:
 
 1.  Sentry's dsn url:
-    
+
     You can pass your project sentry url (providing during the project creation process) to configure automatically all the Sentry configurations.
-    
+
 The  `ng add`  command will additionally perform the following configurations:
 
 -   Add project dependencies to  `package.json`

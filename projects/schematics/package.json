@@ -3,11 +3,11 @@
     "scripts": {
         "start": "watch 'npm run build' src",
         "copy:res": "cd src && cpy --parents '*/schema.json' '*/files/**' 'collection.json'",
-        "test": "jasmine ../../dist/spec/**/*.spec.js",
         "build:test": "tsc -p tsconfig.spec.json",
+        "postbuild:test": "npm run copy:res -- ../../../dist/spec/schematics/ && cpy ../../package.json ../../dist/spec/",
         "clean:test": "del ../../dist/spec/ --force",
+        "test": "jasmine ../../dist/spec/**/*.spec.js",
         "pretest": "npm run clean:test && npm run build:test",
-        "postbuild:test": "npm run copy:res -- ../../../dist/spec/schematics/ && cpy ../library/package.json ../../dist/spec/",
         "build": "tsc -p tsconfig.json",
         "postbuild": "npm run copy:res -- ../../../dist/library/schematics/"
     }
