@@ -1,15 +1,17 @@
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 
-import { getProjectIndentationSetting, updateAppModule, updateEnvironmentFiles, updateTsConfig, updatePackage, updateSentryCliRc } from '../common';
+import { getProjectIndentationSetting, isAngularProject, updateAppModule, updateEnvironmentFiles, updatePackage, updateSentryCliRc, updateTsConfig } from '../common';
 import { Schema } from '../schema/schema.model';
 
 /**
  * Execute ng update process
  */
-export function ngUpdate(options: Schema): Rule {
-    return (tree: Tree, context: SchematicContext) => {
-        context.logger.debug('ngUpdate', options as any);
+export const ngUpdate = (options: Schema): Rule => (tree: Tree, context: SchematicContext): Tree => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    context.logger.debug('ngUpdate', options as any);
+
+    if (isAngularProject(tree)) {
         context.addTask(new NodePackageInstallTask());
 
         const indentation = getProjectIndentationSetting(tree);
@@ -19,7 +21,7 @@ export function ngUpdate(options: Schema): Rule {
         updateAppModule(tree, indentation);
         updateEnvironmentFiles(tree, context, options, indentation);
         updateSentryCliRc(tree, options);
+    }
 
-        return tree;
-    };
-}
+    return tree;
+};

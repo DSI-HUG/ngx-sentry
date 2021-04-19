@@ -5,19 +5,15 @@ import * as Sentry from '@sentry/angular';
 import { SentryConfig } from './models/sentry-config.model';
 import { NgxSentryService } from './ngx-sentry.service';
 
-export function initializeSentry(sentryService: NgxSentryService): () => Promise<void> {
-    const res = (): Promise<any> => {
-        return sentryService.init();
-    };
+export const initializeSentry = (sentryService: NgxSentryService): () => Promise<void> => {
+    const res = (): Promise<void> => sentryService.init();
     return res;
-}
+};
 
-export function initializeTracing(): () => Promise<void> {
-    const res = (): Promise<void> => {
-        return Promise.resolve();
-    };
+export const initializeTracing = (): () => Promise<void> => {
+    const res = (): Promise<void> => Promise.resolve();
     return res;
-}
+};
 
 @NgModule()
 export class NgxSentryModule {
@@ -28,18 +24,18 @@ export class NgxSentryModule {
                 {
                     provide: ErrorHandler,
                     useValue: Sentry.createErrorHandler({
-                        showDialog: true,
-                    }),
+                        showDialog: true
+                    })
                 },
                 {
                     provide: Sentry.TraceService,
-                    deps: [Router],
+                    deps: [Router]
                 },
                 {
                     provide: APP_INITIALIZER,
                     useFactory: initializeTracing,
                     deps: [Sentry.TraceService],
-                    multi: true,
+                    multi: true
                 },
                 {
                     provide: 'sentryConfig',
@@ -49,7 +45,7 @@ export class NgxSentryModule {
                     provide: APP_INITIALIZER,
                     useFactory: initializeSentry,
                     deps: [NgxSentryService],
-                    multi: true,
+                    multi: true
                 },
                 NgxSentryService
             ]

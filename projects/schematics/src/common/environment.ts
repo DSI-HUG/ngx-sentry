@@ -1,15 +1,16 @@
 import { SchematicContext, SchematicsException, Tree } from '@angular-devkit/schematics';
-import { Project, ObjectLiteralExpression, SyntaxKind, StructureKind } from 'ts-morph';
-import { extractProjectFromName, extractProjectName } from '.';
+import { ObjectLiteralExpression, Project, StructureKind, SyntaxKind } from 'ts-morph';
+
 import { Schema } from '../schema/schema.model';
+import { extractProjectFromName, extractProjectName } from '.';
 
 /**
  * Insert SentryUrl in environment file
  */
-export function updateEnvironmentFiles(tree: Tree, context: SchematicContext, options: Schema, indentation: number): void {
+export const updateEnvironmentFiles = (tree: Tree, context: SchematicContext, options: Schema, indentation: number): void => {
     const projectName = extractProjectName(tree);
     const defaultProject = extractProjectFromName(tree, projectName);
-    const envDirPath = `${defaultProject.sourceRoot}/environments`;
+    const envDirPath = `${defaultProject.sourceRoot as string}/environments`;
     const envDir = tree.getDir(envDirPath);
     if (!envDir) {
         throw new SchematicsException(`Could not find environments directory (${envDirPath}).`);
@@ -36,4 +37,4 @@ export function updateEnvironmentFiles(tree: Tree, context: SchematicContext, op
         envFile.formatText({ indentSize: indentation });
         tree.overwrite(filePath, `${envFile.getFullText()}`);
     });
-}
+};

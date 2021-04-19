@@ -1,13 +1,13 @@
 import { SchematicsException, Tree } from '@angular-devkit/schematics';
-import { ArrayLiteralExpression, ObjectLiteralExpression, Project, PropertyAssignment, SyntaxKind, QuoteKind } from 'ts-morph';
+import { ObjectLiteralExpression, Project, PropertyAssignment, QuoteKind, SyntaxKind } from 'ts-morph';
 
-import { LIBRARY_NAME } from './constant';
+import { libraryName } from './constant';
 import { extractProjectFromName, extractProjectName } from './utils';
 
 /**
  * Update app.module.ts file
  */
-export function updateAppModule(tree: Tree, indentation: number): void {
+export const updateAppModule = (tree: Tree, indentation: number): void => {
     const projectName = extractProjectName(tree);
     const defaultProject = extractProjectFromName(tree, projectName);
     const modulePath = `${defaultProject.sourceRoot}/app/app.module.ts`;
@@ -26,21 +26,21 @@ export function updateAppModule(tree: Tree, indentation: number): void {
     if (!file.getImportDeclaration('src/environments/environment')) {
         file.addImportDeclaration({
             namedImports: ['environment'],
-            moduleSpecifier: 'src/environments/environment',
+            moduleSpecifier: 'src/environments/environment'
         });
     }
 
     if (!file.getImportDeclaration('package.json')) {
         file.addImportDeclaration({
             namedImports: ['version'],
-            moduleSpecifier: 'package.json',
+            moduleSpecifier: 'package.json'
         });
     }
 
-    if (!file.getImportDeclaration(LIBRARY_NAME)) {
+    if (!file.getImportDeclaration(libraryName)) {
         file.addImportDeclaration({
             namedImports: ['NgxSentryModule'],
-            moduleSpecifier: LIBRARY_NAME,
+            moduleSpecifier: libraryName
         });
     }
 
@@ -48,9 +48,9 @@ export function updateAppModule(tree: Tree, indentation: number): void {
     const argument = decorator.getArguments()[0] as ObjectLiteralExpression;
 
     const imports = argument?.getProperty('imports') as PropertyAssignment;
-    const imps = imports?.getInitializerIfKindOrThrow(SyntaxKind.ArrayLiteralExpression) as ArrayLiteralExpression;
+    const imps = imports?.getInitializerIfKindOrThrow(SyntaxKind.ArrayLiteralExpression);
 
-    const sentryModuleIndex = imps.getElements().findIndex((el) => el.getText().includes('NgxSentryModule'));
+    const sentryModuleIndex = imps.getElements().findIndex(el => el.getText().includes('NgxSentryModule'));
     if (sentryModuleIndex !== -1) {
         imps.removeElement(sentryModuleIndex);
     }
@@ -64,4 +64,4 @@ export function updateAppModule(tree: Tree, indentation: number): void {
 
     file.formatText({ indentSize: indentation });
     tree.overwrite(modulePath, file.getFullText());
-}
+};

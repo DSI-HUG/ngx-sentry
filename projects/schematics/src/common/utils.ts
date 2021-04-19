@@ -5,9 +5,10 @@ import { JSONFile } from '@schematics/angular/utility/json-file';
 import { Project } from 'ts-morph';
 import * as ts from 'typescript';
 
-import { DEFAULT_INDENTATION } from '.';
+import { defaultIndentation } from '.';
+import { AngularJsonProject } from './constant';
 
-export function getTsSourceFile(host: Tree, path: string): ts.SourceFile {
+export const getTsSourceFile = (host: Tree, path: string): ts.SourceFile => {
     const buffer = host.read(path);
     if (!buffer) {
         throw new SchematicsException(`Could not read file (${path}).`);
@@ -15,18 +16,18 @@ export function getTsSourceFile(host: Tree, path: string): ts.SourceFile {
     const content = buffer.toString();
     const source = ts.createSourceFile(path, content, ts.ScriptTarget.Latest, true);
     return source;
-}
+};
 
-export function persistInsertChanges(changes: Change[], recorder: UpdateRecorder): void {
-    for (const change of changes) {
+export const persistInsertChanges = (changes: Change[], recorder: UpdateRecorder): void => {
+    changes.forEach((change: Change) => {
         if (change instanceof InsertChange) {
             recorder.insertLeft(change.pos, change.toAdd);
         }
-    }
-}
+    });
+};
 
-export function getProjectIndentationSetting(tree: Tree): number {
-    const defaultIdentation = DEFAULT_INDENTATION;
+export const getProjectIndentationSetting = (tree: Tree): number => {
+    const defaultIdentation = defaultIndentation;
     const buffer = tree.read('.editorconfig');
     if (!buffer) {
         return defaultIdentation;
@@ -44,28 +45,36 @@ export function getProjectIndentationSetting(tree: Tree): number {
     }
 
     return 0;
-}
+};
 
-export function formatFile(tree: Tree, filePath: string, indentation: number): void {
+export const formatFile = (tree: Tree, filePath: string, indentation: number): void => {
     const project = new Project();
     project.addSourceFilesAtPaths(filePath);
     const file = project.getSourceFileOrThrow(filePath);
     file.formatText({ indentSize: indentation });
     tree.overwrite(filePath, file.getFullText());
-}
+};
 
-export function extractProjectName(tree: Tree): string {
+export const extractProjectName = (tree: Tree): string => {
     const angularFile = new JSONFile(tree, 'angular.json');
     return angularFile.get(['defaultProject']) as string;
-}
+};
 
-export function extractProjectFromName(tree: Tree, name: string): any {
+export const extractProjectFromName = (tree: Tree, name: string): AngularJsonProject => {
     const angularFile = new JSONFile(tree, 'angular.json');
-    const projects = angularFile.get(['projects']) as any;
+    const projects = angularFile.get(['projects']) as Record<string, AngularJsonProject>;
 
     if (!projects) {
-        throw new SchematicsException(`Projects not found.`);
+        throw new SchematicsException('Projects not found.');
     }
 
     return projects[name];
-}
+};
+
+export const isAngularProject = (tree: Tree): boolean => {
+    const angularJson = new JSONFile(tree, 'angular.json');
+    if (!angularJson) {
+        throw new SchematicsException('Project is not an angular project.');
+    }
+    return true;
+};
