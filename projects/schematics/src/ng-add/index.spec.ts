@@ -1,8 +1,8 @@
 import { Tree } from '@angular-devkit/schematics';
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import { Schema as ApplicationOptions, Style } from '@schematics/angular/application/schema';
-import { Schema as WorkspaceOptions } from '@schematics/angular/workspace/schema';
 import { JSONFile } from '@schematics/angular/utility/json-file';
+import { Schema as WorkspaceOptions } from '@schematics/angular/workspace/schema';
 import { join } from 'path';
 
 import { Schema as SchematicOptions } from '../schema/schema.model';

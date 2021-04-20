@@ -10,7 +10,7 @@ import { extractProjectFromName, extractProjectName } from '.';
 export const updateEnvironmentFiles = (tree: Tree, context: SchematicContext, options: Schema, indentation: number): void => {
     const projectName = extractProjectName(tree);
     const defaultProject = extractProjectFromName(tree, projectName);
-    const envDirPath = `${defaultProject.sourceRoot as string}/environments`;
+    const envDirPath = `${defaultProject.sourceRoot}/environments`;
     const envDir = tree.getDir(envDirPath);
     if (!envDir) {
         throw new SchematicsException(`Could not find environments directory (${envDirPath}).`);
