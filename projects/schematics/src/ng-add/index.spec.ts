@@ -2,43 +2,45 @@ import { Tree } from '@angular-devkit/schematics';
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import { Schema as ApplicationOptions, Style } from '@schematics/angular/application/schema';
 import { Schema as WorkspaceOptions } from '@schematics/angular/workspace/schema';
+import { JSONFile } from '@schematics/angular/utility/json-file';
 import { join } from 'path';
 
 import { Schema as SchematicOptions } from '../schema/schema.model';
 
+const workspaceOptions: WorkspaceOptions = {
+    name: 'workspace',
+    newProjectRoot: 'projects',
+    version: '0.0.0'
+};
+
+const appOptions: ApplicationOptions = {
+    name: 'app-test',
+    inlineStyle: false,
+    inlineTemplate: false,
+    routing: false,
+    style: Style.Scss,
+    skipTests: false,
+    skipPackageJson: false
+};
+
+const schematicOptions: SchematicOptions = {
+    sentryUrl: 'http://sentry.ch'
+};
+
+const collectionPath = join(__dirname, '../collection.json');
+
+const runner = new SchematicTestRunner('ngAdd schematic', collectionPath);
+
+const getCleanAppTree = async (): Promise<UnitTestTree> => {
+    const workspaceTree = await runner
+        .runExternalSchematicAsync('@schematics/angular', 'workspace', workspaceOptions)
+        .toPromise();
+    return await runner
+        .runExternalSchematicAsync('@schematics/angular', 'application', appOptions, workspaceTree)
+        .toPromise();
+};
+
 describe('Test - ngAdd schematic', () => {
-    const collectionPath = join(__dirname, '../collection.json');
-    const runner = new SchematicTestRunner('ngAdd schematic', collectionPath);
-    let appTree: UnitTestTree;
-
-    const workspaceOptions: WorkspaceOptions = {
-        name: 'workspace',
-        newProjectRoot: 'projects',
-        version: '0.0.0'
-    };
-
-    const appOptions: ApplicationOptions = {
-        name: 'app-test',
-        inlineStyle: false,
-        inlineTemplate: false,
-        routing: false,
-        style: Style.Scss,
-        skipTests: false,
-        skipPackageJson: false
-    };
-
-    const schematicOptions: SchematicOptions = {
-        sentryUrl: 'http://sentry.ch'
-    };
-
-    /**
-     * Create angular application before each test
-     */
-    beforeEach(async () => {
-        appTree = await runner.runExternalSchematicAsync('@schematics/angular', 'workspace', workspaceOptions).toPromise();
-        appTree = await runner.runExternalSchematicAsync('@schematics/angular', 'application', appOptions, appTree).toPromise();
-    });
-
     /**
      * Angular project should be required
      */
@@ -50,54 +52,60 @@ describe('Test - ngAdd schematic', () => {
     /**
      * Schematics should work
      */
-    it('should update & create files', async () => {
-        const nbFiles = appTree.files.length;
-        const tree = await runner.runSchematicAsync('ng-add', schematicOptions, appTree).toPromise();
+    describe('should update & create files', () => {
+        let tree: UnitTestTree;
+        let nbFiles: number;
 
-        expect(tree.files.length).toEqual(nbFiles + 1); // Should create only one new file
+        beforeAll(async () => {
+            tree = await getCleanAppTree();
+            nbFiles = tree.files.length;
+            tree = await runner.runSchematicAsync('ng-add', schematicOptions, tree).toPromise();
+        });
 
-        const packagePath = tree.files.find(path => path.includes('package.js'));
-        expect(packagePath).toBeDefined();
-        if (packagePath) {
-            expect(tree.exists(packagePath)).toBeTruthy();
-            expect(tree.readContent(packagePath)).toContain('sentry');
-        }
+        it('should create only one new file', () => {
+            expect(tree.files.length).toEqual(nbFiles + 1);
+        });
 
-        const tsConfigPath = tree.files.find(path => path.includes('tsconfig.json'));
-        expect(tsConfigPath).toBeDefined();
-        if (tsConfigPath) {
-            expect(tree.exists(tsConfigPath)).toBeTruthy();
-            expect(tree.readContent(tsConfigPath)).toContain('resolveJsonModule');
-        }
+        it('should update package.json', () => {
+            const packageJsonPath = tree.files.find(path => path.includes('package.json')) || '';
+            expect(tree.exists(packageJsonPath)).toBeTruthy('package.json does not exists');
+            const packageJson = new JSONFile(tree, packageJsonPath);
+            const packageJsonScripts = packageJson.get(['scripts']) as Record<string, string>;
+            expect(packageJsonScripts?.sentry).toBeDefined('{package.json}.scripts.sentry does not exists');
+        });
 
-        const appModulePath = tree.files.find(path => path.includes('app.module.ts'));
-        expect(appModulePath).toBeDefined();
-        if (appModulePath) {
-            expect(tree.exists(appModulePath)).toBeTruthy();
+        it('should update tsconfig.json', () => {
+            const tsConfigPath = tree.files.find(path => path.includes('tsconfig.json')) || '';
+            expect(tree.exists(tsConfigPath)).toBeTruthy('tsconfig.json does not exists');
+            const tsConfig = new JSONFile(tree, tsConfigPath);
+            const tsConfigCompilerOptions = tsConfig.get(['compilerOptions']) as Record<string, string>;
+            expect(tsConfigCompilerOptions?.resolveJsonModule).toBeDefined('{tsconfig.json}.compilerOptions.resolveJsonModule does not exists');
+        });
+
+        it('should update app.module.ts', () => {
+            const appModulePath = tree.files.find(path => path.includes('app.module.ts')) || '';
+            expect(tree.exists(appModulePath)).toBeTruthy('app.module.ts does not exists');
             expect(tree.readContent(appModulePath)).toContain('NgxSentryModule.forRoot');
-        }
+        });
 
-        const envTsPath = tree.files.find(path => path.includes('environment.ts'));
-        expect(envTsPath).toBeDefined();
-        if (envTsPath) {
-            expect(tree.exists(envTsPath)).toBeTruthy();
+        it('should update environment.ts', () => {
+            const envTsPath = tree.files.find(path => path.includes('environment.ts')) || '';
+            expect(tree.exists(envTsPath)).toBeTruthy('environment.ts does not exists');
             expect(tree.readContent(envTsPath)).toContain('sentryUrl');
-        }
+        });
 
-        const envprodTsPath = tree.files.find(path => path.includes('environment.prod.ts'));
-        expect(envprodTsPath).toBeDefined();
-        if (envprodTsPath) {
-            expect(tree.exists(envprodTsPath)).toBeTruthy();
+        it('should update environment.prod.ts', () => {
+            const envprodTsPath = tree.files.find(path => path.includes('environment.prod.ts')) || '';
+            expect(tree.exists(envprodTsPath)).toBeTruthy('environment.prod.ts does not exists');
             expect(tree.readContent(envprodTsPath)).toContain('sentryUrl');
-        }
+        });
 
-        const sentryclircPath = tree.files.find(path => path.includes('.sentryclirc'));
-        expect(sentryclircPath).toBeDefined();
-        if (sentryclircPath) {
-            expect(tree.exists(sentryclircPath)).toBeTruthy();
+        it('should create .sentryclirc', () => {
+            const sentryclircPath = tree.files.find(path => path.includes('.sentryclirc')) || '';
+            expect(tree.exists(sentryclircPath)).toBeTruthy('.sentryclirc does not exists');
             expect(tree.readContent(sentryclircPath)).toContain('[defaults]');
             expect(tree.readContent(sentryclircPath)).toContain(`url=${schematicOptions.sentryUrl}`);
             expect(tree.readContent(sentryclircPath)).toContain(`project=${appOptions.name}`);
-        }
+        });
     });
 });

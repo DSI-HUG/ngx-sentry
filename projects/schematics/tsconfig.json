@@ -15,7 +15,7 @@
         "noUnusedParameters": true,
         "noUnusedLocals": true,
         "rootDir": "src",
-        "outDir": "../../dist/library/schematics",
+        "outDir": "../../dist/schematics",
         "skipDefaultLibCheck": true,
         "skipLibCheck": true,
         "sourceMap": false,
