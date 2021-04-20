@@ -32,7 +32,7 @@
         <img src="https://img.shields.io/david/DSI-HUG/ngx-sentry.svg" alt="dependency status" />
     </a>
     <a href="https://david-dm.org/DSI-HUG/ngx-sentry?type=peer">
-        <img src="https://img.shields.io/david/dev/DSI-HUG/ngx-sentry.svg" alt="peerDependency status" />
+        <img src="https://img.shields.io/david/peer/DSI-HUG/ngx-sentry.svg" alt="peerDependency status" />
     </a>
     <a href="https://github.com/DSI-HUG/ngx-sentry/blob/master/CONTRIBUTING.md#-submitting-a-pull-request-pr">
         <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome" />
