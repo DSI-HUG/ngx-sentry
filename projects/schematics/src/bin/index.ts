@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { exec, ExecException } from 'node:child_process';
+import { exec, ExecException } from 'child_process';
 
 const directory = process?.argv[2] || '';
 const version = process?.env?.npm_package_version || '';
