@@ -28,4 +28,4 @@ jobs:
       - name: Publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish ./dist/library --access public
+        run: npm publish ./dist --access public
