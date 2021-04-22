@@ -5,15 +5,20 @@ import * as Sentry from '@sentry/angular';
 import { SentryConfig } from './models/sentry-config.model';
 import { NgxSentryService } from './ngx-sentry.service';
 
-export const initializeSentry = (sentryService: NgxSentryService): () => Promise<void> => {
-    const res = (): Promise<void> => sentryService.init();
+/* eslint-disable */
+export function initializeSentry(sentryService: NgxSentryService): () => Promise<void> {
+    const res = (): Promise<any> => {
+        return sentryService.init();
+    };
     return res;
-};
-
-export const initializeTracing = (): () => Promise<void> => {
-    const res = (): Promise<void> => Promise.resolve();
+}
+export function initializeTracing(): () => Promise<void> {
+    const res = (): Promise<void> => {
+        return Promise.resolve();
+    };
     return res;
-};
+}
+/* eslint-enable */
 
 @NgModule()
 export class NgxSentryModule {
