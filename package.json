@@ -57,7 +57,7 @@
         "@angular/cli": "~11.2.9",
         "@angular/compiler-cli": "~11.2.10",
         "@angular/platform-browser-dynamic": "^11.2.10",
-        "@hug/eslint-config": "^1.2.0",
+        "@hug/eslint-config": "^2.0.0",
         "@types/jasmine": "~3.6.9",
         "@types/node": "^14.14.41",
         "cpy-cli": "^3.1.1",
