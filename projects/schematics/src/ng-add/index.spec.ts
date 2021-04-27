@@ -24,7 +24,8 @@ const appOptions: ApplicationOptions = {
 };
 
 const schematicOptions: SchematicOptions = {
-    sentryUrl: 'http://sentry.ch'
+    sentryUrl: 'http://sentry.ch',
+    projectName: 'sentryProjectName'
 };
 
 const collectionPath = join(__dirname, '../collection.json');
@@ -105,7 +106,7 @@ describe('Test - ngAdd schematic', () => {
             expect(tree.exists(sentryclircPath)).toBeTruthy('.sentryclirc does not exists');
             expect(tree.readContent(sentryclircPath)).toContain('[defaults]');
             expect(tree.readContent(sentryclircPath)).toContain(`url=${schematicOptions.sentryUrl}`);
-            expect(tree.readContent(sentryclircPath)).toContain(`project=${appOptions.name}`);
+            expect(tree.readContent(sentryclircPath)).toContain(`project=${schematicOptions.projectName}`);
         });
     });
 });

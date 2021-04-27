@@ -1,22 +1,13 @@
-import { SchematicsException, Tree } from '@angular-devkit/schematics';
-import { JSONFile } from '@schematics/angular/utility/json-file';
-
+import { Tree } from '@angular-devkit/schematics';
 import { Schema } from '../schema/schema.model';
-import { AngularJsonProject, sentryCliRc } from './constant';
+import { sentryCliRc } from './constant';
 
 /**
  * Update sentryclirc file
  */
 export const updateSentryCliRc = (tree: Tree, option: Schema): void => {
-    const angularFile = new JSONFile(tree, 'angular.json');
-    const projects = angularFile.get(['projects']) as Record<string, AngularJsonProject>;
-
-    if (!projects) {
-        throw new SchematicsException('Projects not found.');
-    }
-
-    const projectName = Object.keys(projects)[0];
     const url = extractSentryRootUrl(option.sentryUrl);
+    const projectName = option?.projectName || 'default';
 
     let contentFile = sentryCliRc.replace('{{sentryUrl}}', url);
     contentFile = contentFile.replace('{{projectName}}', projectName);
