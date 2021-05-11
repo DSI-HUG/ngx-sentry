@@ -19,33 +19,41 @@ $ npm install
 
 ## Testing locally
 
-The library and schematics can be tested on an Angular project while being developed:
+The library and schematics can be tested on an Angular project while being developed.
 
-1. Ouput the library and schematics to dist and watch for changes
+The whole process is already automated for you so you can focus only on the development.
 
-   ```sh
-   $ npm run start:lib
-   $ npm run start:schematics
-   ```
+This includes:
 
-2. Symlink the library to the global node_modules
+* Ouputting the library and schematics to the `./dist` folder
+* Creating a dummy Angular project in `./tmp/test-lib`
+* Symlinking the library with the dummy project
+* Watching for library and schematics changes
 
-   ```sh
-   $ cd ./dist/library
-   $ npm link
-   ```
+**Testing**
 
-3. Create a dummy Angular project and link the library to it
+1. Start testing
 
    ```sh
-   $ ng new test-lib ./test-lib
-   $ npm link @hug/ngx-sentry
-   ```
+   $ cd <library-path>
+   $ npm start
 
-4. Run and test the library and schematics against the Angular project
+2. Run and test the library and schematics against the Angular project
 
    ```sh
+   $ cd ./tmp/test-lib
    $ ng add @hug/ngx-sentry
+   ```
+
+**Known issues**
+
+When using `npm`, any package installation made by your schematics will remove the symlink to the library ([#3](https://github.com/npm/rfcs/pull/3), [#2372](https://github.com/npm/cli/issues/2372)).
+
+To fix this issue, run the following command after each package installation:
+
+   ```sh
+   $ cd ./tmp/test-lib
+   $ npm link @hug/ngx-sentry
    ```
 
 **Tips** - ***you can use git to watch the effective changes made by the schematics:***
@@ -53,12 +61,14 @@ The library and schematics can be tested on an Angular project while being devel
 1. Make a clean state after creating the dummy Angular project
 
    ```sh
+   $ cd ./tmp/test-lib
    $ git commit -am 'clean state'
    ```
 
 2. Run the schematics and check the changes
 
    ```sh
+   $ ng add @hug/ngx-sentry
    $ git status
    ```
 
@@ -87,9 +97,9 @@ $ npm run lint
 
 ## Building the library
 
-The library will be built in the `./dist/library` directory.
+> The library will be built in the `./dist` directory.
 
-Schematics will be embedded within the library under `./dist/library/schematics`.
+> Schematics will be embedded within the library under `./dist/schematics`.
 
 ```sh
 $ npm run build
@@ -99,7 +109,7 @@ $ npm run build
 
 This project comes with automatic continuous delivery (CD) using *GitHub Actions*.
 
-1. Bump the library version in `./projects/library/package.json`
+1. Bump the library version in `./package.json`
 2. Push the changes
 3. Create a new: [GitHub release](https://github.com/DSI-HUG/ngx-sentry/releases/new)
 4. Watch the results in: [Actions](https://github.com/DSI-HUG/ngx-sentry/actions)

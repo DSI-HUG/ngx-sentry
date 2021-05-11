@@ -1,12 +1,21 @@
-import { Tree } from '@angular-devkit/schematics';
-import { SchematicsException, UpdateRecorder } from '@angular-devkit/schematics';
+import { SchematicsException, Tree, UpdateRecorder } from '@angular-devkit/schematics';
 import { Change, InsertChange } from '@schematics/angular/utility/change';
 import { JSONFile } from '@schematics/angular/utility/json-file';
 import { Project } from 'ts-morph';
-import * as ts from 'typescript';
+import ts from 'typescript';
 
-import { defaultIndentation } from '.';
-import { AngularJsonProject } from './constant';
+const defaultIndentation = 2;
+
+interface AngularJsonProject {
+    sourceRoot: string;
+    architect: {
+        build: {
+            options: {
+                outputPath: string;
+            };
+        };
+    };
+}
 
 export const getTsSourceFile = (host: Tree, path: string): ts.SourceFile => {
     const buffer = host.read(path);
@@ -55,11 +64,6 @@ export const formatFile = (tree: Tree, filePath: string, indentation: number): v
     tree.overwrite(filePath, file.getFullText());
 };
 
-export const extractProjectName = (tree: Tree): string => {
-    const angularFile = new JSONFile(tree, 'angular.json');
-    return angularFile.get(['defaultProject']) as string;
-};
-
 export const extractProjectFromName = (tree: Tree, name: string): AngularJsonProject => {
     const angularFile = new JSONFile(tree, 'angular.json');
     const projects = angularFile.get(['projects']) as Record<string, AngularJsonProject>;
@@ -69,12 +73,4 @@ export const extractProjectFromName = (tree: Tree, name: string): AngularJsonPro
     }
 
     return projects[name];
-};
-
-export const isAngularProject = (tree: Tree): boolean => {
-    const angularJson = new JSONFile(tree, 'angular.json');
-    if (!angularJson) {
-        throw new SchematicsException('Project is not an angular project.');
-    }
-    return true;
 };

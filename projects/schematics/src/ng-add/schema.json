@@ -3,20 +3,5 @@
     "id": "ng-add",
     "title": "ng-add schematic",
     "type": "object",
-    "properties": {
-        "projectName": {
-            "type": "string",
-            "default": "",
-            "description": "Sentry project name",
-            "x-prompt": "What is your sentry's project name ?"
-        },
-        "sentryUrl": {
-            "type": "string",
-            "default": "",
-            "description": "Sentry project dsn",
-            "x-prompt": "What is your sentry's dsn url ?"
-        }
-    },
-    "required": [],
     "additionalProperties": false
 }

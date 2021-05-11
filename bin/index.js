@@ -1,23 +1,25 @@
 #!/usr/bin/env node
-import { exec, ExecException } from 'child_process';
 
-const directory = process?.argv[2] || '';
-const version = process?.env?.npm_package_version || '';
+'use strict';
 
-const execCmd = (cmd: string, sucessMessage: string): Promise<void> => new Promise<void>((resolve, reject) => {
-    exec(cmd, (err: ExecException, stdout: string, stderr: string) => {
+const { exec } = require('child_process');
+
+const execCmd = (cmd, successMessage) => new Promise((resolve, reject) => {
+    exec(cmd, (err, stdout, stderr) => {
         if (err) {
             console.error(stdout, stderr);
             reject(err);
         }
-        console.log(sucessMessage);
+        console.log(successMessage);
         resolve();
     });
 });
 
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
-(async (): Promise<void> => {
+(async () => {
     try {
+        const directory = process.argv[2] || '';
+        const version = process.env.npm_package_version || '';
+
         // Create release
         let command = `sentry-cli releases new ${version}`;
         await execCmd(command, 'Release created');

@@ -2,10 +2,11 @@
     "compilerOptions": {
         "baseUrl": ".",
         "lib": [
-            "es2018",
+            "es2020",
             "dom"
         ],
         "declaration": true,
+        "esModuleInterop": true,
         "module": "commonjs",
         "moduleResolution": "node",
         "noEmitOnError": true,
@@ -20,7 +21,7 @@
         "skipLibCheck": true,
         "sourceMap": false,
         "strictNullChecks": true,
-        "target": "es6",
+        "target": "es2019",
         "types": [
             "jasmine",
             "node"
@@ -31,6 +32,6 @@
     ],
     "exclude": [
         "src/**/*.spec.ts",
-        "src/*/files/**/*"
+        "src/**/*/files/**/*"
     ]
 }

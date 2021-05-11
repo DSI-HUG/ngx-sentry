@@ -1,6 +1,9 @@
 {
     "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
     "dest": "./dist/",
+    "assets": [
+        "bin"
+    ],
     "lib": {
         "entryFile": "./projects/library/src/public-api.ts",
         "umdModuleIds": {
@@ -9,6 +12,7 @@
         }
     },
     "allowedNonPeerDependencies": [
+        "@badisi/latest-version",
         "@sentry/angular",
         "@sentry/tracing",
         "@sentry/cli",

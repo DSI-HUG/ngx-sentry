@@ -2,14 +2,14 @@
     "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
     "schematics": {
         "ng-add": {
-            "description": "Add library to the application",
-            "factory": "./ng-add/index#ngAdd",
+            "description": "Run ng-add schematic",
+            "factory": "./ng-add/index",
             "schema": "./ng-add/schema.json"
         },
-        "ng-update": {
-            "description": "Update library",
-            "factory": "./ng-update/index#ngUpdate",
-            "schema": "./ng-update/schema.json"
+        "sentry": {
+            "description": "Run sentry schematic",
+            "factory": "./sentry/index",
+            "schema": "./sentry/schema.json"
         }
     }
 }

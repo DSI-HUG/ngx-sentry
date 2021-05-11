@@ -29,19 +29,18 @@
         "http-interceptor",
         "http-errors"
     ],
+    "bin": {
+        "ngx-sentry": "./bin/index.js"
+    },
     "scripts": {
-        "ng": "ng",
-        "start:schematics": "cd projects/schematics && npm start",
-        "start:lib": "ng build --watch",
-        "build:copy:res": "cpy LICENSE CHANGELOG.md README.md dist/",
-        "build:schematics": "cd projects/schematics && npm run build && cd ../..",
-        "build:lib": "ng build library --prod",
-        "build": "npm run build:lib && npm run build:schematics && npm run build:copy:res",
-        "test:schematics": "cd projects/schematics && npm run test && cd ../..",
+        "start": "node ./build --watch",
+        "build": "node ./build --build",
+        "test:schematics": "cd projects/schematics; ts-node ../../node_modules/.bin/jasmine --config=jasmine.json; cd ../..;",
         "test:lib": "ng test library",
         "lint": "ng lint"
     },
     "dependencies": {
+        "@badisi/latest-version": "^2.0.1",
         "@sentry/angular": "^6.0.0",
         "@sentry/cli": "^1.0.0",
         "@sentry/tracing": "^6.0.0",
@@ -53,16 +52,17 @@
         "@angular/core": "^11.0.0"
     },
     "devDependencies": {
-        "@angular-devkit/build-angular": "~0.1102.9",
-        "@angular/cli": "~11.2.9",
-        "@angular/compiler-cli": "~11.2.10",
-        "@angular/platform-browser-dynamic": "^11.2.10",
-        "@hug/eslint-config": "^2.0.0",
-        "@types/jasmine": "~3.6.9",
-        "@types/node": "^14.14.41",
-        "cpy-cli": "^3.1.1",
-        "del-cli": "^3.0.1",
-        "eslint": "^7.24.0",
+        "@angular-devkit/build-angular": "^0.1102.12",
+        "@angular/cli": "^11.2.12",
+        "@angular/compiler-cli": "^11.2.13",
+        "@angular/platform-browser-dynamic": "^11.2.13",
+        "@hug/eslint-config": "^2.2.0",
+        "@types/jasmine": "^3.7.1",
+        "@types/node": "^15.0.2",
+        "chokidar": "^3.5.1",
+        "colors": "^1.4.0",
+        "cpy": "^8.1.2",
+        "eslint": "^7.26.0",
         "jasmine": "^3.7.0",
         "jasmine-core": "~3.7.1",
         "jasmine-spec-reporter": "~7.0.0",
@@ -70,16 +70,11 @@
         "karma-chrome-launcher": "~3.1.0",
         "karma-coverage": "~2.0.3",
         "karma-jasmine": "~4.0.0",
-        "karma-jasmine-html-reporter": "^1.5.0",
+        "karma-jasmine-html-reporter": "^1.6.0",
         "ng-packagr": "^11.0.0",
         "protractor": "~7.0.0",
-        "ts-morph": "^10.0.2",
         "ts-node": "~9.1.1",
-        "typescript": "~4.1.5",
-        "watch": "^1.0.2"
-    },
-    "bin": {
-        "ngx-sentry": "./schematics/bin/index.js"
+        "typescript": "~4.1.5"
     },
     "schematics": "./schematics/collection.json",
     "ng-add": {

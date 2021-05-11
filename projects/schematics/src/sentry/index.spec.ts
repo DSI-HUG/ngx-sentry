@@ -5,7 +5,7 @@ import { JSONFile } from '@schematics/angular/utility/json-file';
 import { Schema as WorkspaceOptions } from '@schematics/angular/workspace/schema';
 import { join } from 'path';
 
-import { Schema as SchematicOptions } from '../schema/schema.model';
+import { SentryOptions } from './sentry-options';
 
 const workspaceOptions: WorkspaceOptions = {
     name: 'workspace',
@@ -23,14 +23,14 @@ const appOptions: ApplicationOptions = {
     skipPackageJson: false
 };
 
-const schematicOptions: SchematicOptions = {
+const schematicOptions: SentryOptions = {
     sentryUrl: 'http://sentry.ch',
     projectName: 'sentryProjectName'
 };
 
 const collectionPath = join(__dirname, '../collection.json');
 
-const runner = new SchematicTestRunner('ngAdd schematic', collectionPath);
+const runner = new SchematicTestRunner('sentry schematic', collectionPath);
 
 const getCleanAppTree = async (): Promise<UnitTestTree> => {
     const workspaceTree = await runner
@@ -46,7 +46,7 @@ describe('Test - ngAdd schematic', () => {
      * Angular project should be required
      */
     it('should failed without an angular app', async () => {
-        const tree$ = runner.runSchematicAsync('ng-add', schematicOptions, Tree.empty()).toPromise();
+        const tree$ = runner.runSchematicAsync('sentry', schematicOptions, Tree.empty()).toPromise();
         await expectAsync(tree$).toBeRejected();
     });
 
@@ -60,7 +60,7 @@ describe('Test - ngAdd schematic', () => {
         beforeAll(async () => {
             tree = await getCleanAppTree();
             nbFiles = tree.files.length;
-            tree = await runner.runSchematicAsync('ng-add', schematicOptions, tree).toPromise();
+            tree = await runner.runSchematicAsync('sentry', schematicOptions, tree).toPromise();
         });
 
         it('should create only one new file', () => {

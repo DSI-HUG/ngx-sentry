@@ -3,5 +3,7 @@
     "compilerOptions": {
         "outDir": "../../dist/spec/schematics"
     },
-    "exclude": []
+    "exclude": [
+        "src/**/*/files/**/*"
+    ]
 }
