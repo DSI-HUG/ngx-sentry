@@ -1,3 +1,4 @@
+/* eslint-disable array-element-newline */
 const { existsSync, renameSync, mkdirSync, rmSync } = require('fs-extra');
 const { exec, spawn, spawnSync } = require('child_process');
 const { watch: chokidarWatch } = require('chokidar');
@@ -142,16 +143,11 @@ const watch = async () => {
     console.log('\n> Creating dummy Angular project..');
     patchNgNew(true);
     spawnSync('ng', [
-        'new',
-        'test-lib',
-        '--package-manager',
-        'npm',
-        '--directory',
-        `${basename(__dirname)}/tmp/test-lib`,
-        '--style',
-        'scss',
-        '--strict',
-        'true',
+        'new', 'test-lib',
+        '--package-manager', 'npm',
+        '--directory', `${basename(__dirname)}/tmp/test-lib`,
+        '--style', 'scss',
+        '--strict', 'true',
         '--routing',
         '--skip-install'
     ], { stdio: 'inherit', stderr: 'inherit', cwd: '..' });
