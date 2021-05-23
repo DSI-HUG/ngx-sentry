@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "id": "sentry",
+    "$id": "sentry",
     "title": "sentry schematic",
     "type": "object",
     "properties": {

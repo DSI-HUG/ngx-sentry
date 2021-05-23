@@ -22,4 +22,17 @@ export default (options: SentryOptions): Rule =>
             modifyJson('package.json', ['scripts', 'sentry'], `ngx-sentry ${getDefaultProjectOutputPath(tree)}`),
             modifyJson('tsconfig.json', ['compilerOptions', 'resolveJsonModule'], true),
             packageInstallTask()
+
+            /* addImportToNgModule(
+                'src/app/app.module.ts',
+                tags.stripIndent`
+                    NgxSentryModule.forRoot({
+                        dsn: environment.sentryUrl,
+                        release: version,
+                        environment: environment.name, // Or replace it by your own value
+                        tracingOrigins: ['*'],
+                    })
+                `,
+                '@hug/ngx-sentry'
+            )*/
         ]);

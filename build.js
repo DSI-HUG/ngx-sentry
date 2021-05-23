@@ -54,7 +54,7 @@ const build = async () => {
     cleanDir(DIST_PATH);
 
     console.log('> Building library..');
-    await execCmd('ng build library --prod');
+    await execCmd('ng build library --configuration=production');
 
     console.log('> Building schematics..');
     await execCmd('tsc -p ./projects/schematics/tsconfig.json');
@@ -148,8 +148,7 @@ const watch = async () => {
         '--directory', `${basename(__dirname)}/tmp/test-lib`,
         '--style', 'scss',
         '--strict', 'true',
-        '--routing',
-        '--skip-install'
+        '--routing'
     ], { stdio: 'inherit', stderr: 'inherit', cwd: '..' });
     patchNgNew(false);
 
@@ -158,17 +157,17 @@ const watch = async () => {
 
     // Wait for ng to rebuild dist folder
     const watcher = chokidarWatch('./dist/package.json');
-    watcher.on('add', async () => {
-        console.log('\n> Linking library.. (may take some time)');
-        await linkLibrary();
+    watcher.on('add', () => {
+        setTimeout(async () => {
+            console.log('\n> Linking library..');
+            await linkLibrary();
 
-        console.log('\n> Watching schematics..');
-        watchSchematics();
+            console.log('\n> Watching schematics..');
+            watchSchematics();
 
-        watcher.close();
+            watcher.close();
+        });
     });
-
-    console.log('\n');
 };
 
 const cleanUp = async () => {

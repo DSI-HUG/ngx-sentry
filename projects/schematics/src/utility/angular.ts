@@ -1,4 +1,4 @@
-import { Rule, SchematicsException, Tree } from '@angular-devkit/schematics';
+import { noop, Rule, SchematicsException, Tree } from '@angular-devkit/schematics';
 import {
     addDeclarationToModule, addExportToModule, addImportToModule, addProviderToModule,
     addRouteDeclarationToModule, addSymbolToNgModuleMetadata, getDecoratorMetadata,
@@ -6,6 +6,8 @@ import {
 } from '@schematics/angular/utility/ast-utils';
 import { Change, NoopChange, RemoveChange } from '@schematics/angular/utility/change';
 import { JSONFile } from '@schematics/angular/utility/json-file';
+import { join } from 'path';
+import { satisfies } from 'semver';
 import { ArrayLiteralExpression, ObjectLiteralExpression, PropertyAssignment, SourceFile } from 'typescript';
 
 import { commitChanges, getTsSourceFile } from './file';
@@ -16,6 +18,17 @@ export const ensureIsAngularProject = (): Rule =>
             throw new SchematicsException('Project is not an Angular project.');
         }
     };
+
+export const isAngularVersion = (range: string, rule: Rule): Rule => {
+    try {
+        const angularPkgJsonPath = require.resolve(join('@angular/core', 'package.json'), { paths: ['.'] });
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const ngVersion = (require(angularPkgJsonPath) as { version: string }).version;
+        return (satisfies(ngVersion, range)) ? rule : noop();
+    } catch {
+        return noop();
+    }
+};
 
 export const getDefaultProjectName = (tree: Tree): string => {
     const angularJson = new JSONFile(tree, 'angular.json');
