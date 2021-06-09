@@ -28,7 +28,7 @@ export class NgxSentryModule {
             providers: [
                 {
                     provide: ErrorHandler,
-                    useValue: Sentry.createErrorHandler({
+                    useValue: Sentry.createErrorHandler(config?.errorHandlerOptions ? config?.errorHandlerOptions : {
                         showDialog: true
                     })
                 },
