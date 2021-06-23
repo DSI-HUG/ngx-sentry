@@ -1,4 +1,4 @@
-import { Rule, SchematicContext, SchematicsException, Tree } from '@angular-devkit/schematics';
+import { Rule, SchematicContext, SchematicsException, TaskId, Tree } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import latestVersion from '@badisi/latest-version';
 import { JSONFile } from '@schematics/angular/utility/json-file';
@@ -68,10 +68,14 @@ export const addPackageJsonPeerDependencies = (deps: string[] | KeyValueItem[]):
 
 // --- INSTALL DEPS ---
 
-export const packageInstallTask = (): Rule =>
+export const packageInstallTask = (callback?: (taskId: TaskId | undefined) => void): Rule =>
     (_tree: Tree, context: SchematicContext): void => {
+        let taskId;
         if (packageJsonDepsModified) {
             packageJsonDepsModified = false;
-            context.addTask(new NodePackageInstallTask());
+            taskId = context.addTask(new NodePackageInstallTask());
+        }
+        if (callback) {
+            callback(taskId);
         }
     };

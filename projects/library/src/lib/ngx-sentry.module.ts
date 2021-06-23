@@ -1,6 +1,6 @@
 import { APP_INITIALIZER, ErrorHandler, ModuleWithProviders, NgModule } from '@angular/core';
 import { Router } from '@angular/router';
-import * as Sentry from '@sentry/angular';
+import { createErrorHandler, TraceService } from '@sentry/angular';
 
 import { SentryConfig } from './models/sentry-config.model';
 import { NgxSentryService } from './ngx-sentry.service';
@@ -28,18 +28,18 @@ export class NgxSentryModule {
             providers: [
                 {
                     provide: ErrorHandler,
-                    useValue: Sentry.createErrorHandler({
+                    useValue: createErrorHandler({
                         showDialog: true
                     })
                 },
                 {
-                    provide: Sentry.TraceService,
+                    provide: TraceService,
                     deps: [Router]
                 },
                 {
                     provide: APP_INITIALIZER,
                     useFactory: initializeTracing,
-                    deps: [Sentry.TraceService],
+                    deps: [TraceService],
                     multi: true
                 },
                 {

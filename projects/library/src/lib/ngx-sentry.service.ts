@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import * as Sentry from '@sentry/angular';
+import { configureScope, init as initSentry, routingInstrumentation, User } from '@sentry/angular';
 import { Integrations } from '@sentry/tracing';
 
 import { SentryConfig } from './models/sentry-config.model';
@@ -25,21 +25,21 @@ export class NgxSentryService {
             autoSessionTracking: true,
             integrations: [
                 new Integrations.BrowserTracing({
-                    tracingOrigins: this.config?.tracingOrigins ? this.config?.tracingOrigins : ['*'],
-                    routingInstrumentation: Sentry.routingInstrumentation
+                    tracingOrigins: (this.config?.tracingOrigins) ? this.config?.tracingOrigins : ['*'],
+                    routingInstrumentation
                 })
             ],
             ...this.config
         };
 
-        Sentry.init(options);
+        initSentry(options);
         return Promise.resolve();
     }
 
     /**
      * Set user for sentry trace
      */
-    public setUser(user?: Sentry.User): void {
-        Sentry.configureScope(scope => scope.setUser(user ? user : null));
+    public setUser(user?: User): void {
+        configureScope(scope => scope.setUser(user ? user : null));
     }
 }

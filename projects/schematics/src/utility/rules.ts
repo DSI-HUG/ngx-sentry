@@ -1,6 +1,6 @@
 import { chain, Rule, SchematicContext, Tree, UnsuccessfulWorkflowExecution } from '@angular-devkit/schematics';
 import { spawn as childProcessSpawn } from 'child_process';
-import { blue, cyan, magenta, red, white, yellow } from 'colors/safe';
+import { blue, cyan, gray, magenta, red, white, yellow } from 'colors/safe';
 import ora from 'ora';
 
 interface BufferOutput {
@@ -21,9 +21,9 @@ export const info = (message: string): Rule =>
 export const warn = (message: string): Rule =>
     log(`${yellow('WARNING')} ${white(message)}`);
 
-export const schematic = (name: string, rules: Rule[]): Rule =>
+export const schematic = (name: string, rules: Rule[], options?: unknown): Rule =>
     chain([
-        log(magenta(`🚀 SCHEMATIC ${white('[')} ${magenta(name)} ${white(']')}`)),
+        log(magenta(`🚀 SCHEMATIC ${white('[')} ${magenta(name)}${(options) ? gray(`, ${JSON.stringify(options)}`) : ''} ${white(']')}`)),
         ...rules
     ]);
 
@@ -43,6 +43,8 @@ export const spawn = (command: string, args: string[], showOutput = false): Rule
                 stdio: (verbose) ? 'inherit' : 'pipe',
                 shell: true
             });
+            childProcess.once('disconnect', resolve);
+            childProcess.once('error', error => reject(error));
             childProcess.on('close', (code: number) => {
                 if (code === 0) {
                     if (!verbose) {

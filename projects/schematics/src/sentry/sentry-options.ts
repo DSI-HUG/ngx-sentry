@@ -1,7 +1,4 @@
-export interface SentryOptions {
-    /** Sentry project name. */
-    projectName: string;
-
-    /** Sentry DSN url. */
-    sentryUrl: string;
+export class SentryOptions {
+    public projectName: string;
+    public sentryUrl: string;
 }

@@ -38,6 +38,15 @@ const cleanDir = path => {
     mkdirSync(path, { recursive: true });
 };
 
+const copyAssets = () => cpy(
+    LIB_ASSETS,
+    DIST_PATH,
+    {
+        expandDirectories: true,
+        parents: true
+    }
+);
+
 const copySchematicsAssets = () => cpy(
     SCHEMATICS_ASSETS,
     `${process.cwd()}/${DIST_PATH}/schematics`,
@@ -60,7 +69,7 @@ const build = async () => {
     await execCmd('tsc -p ./projects/schematics/tsconfig.json');
 
     console.log('> Copying assets..');
-    await cpy(LIB_ASSETS, DIST_PATH);
+    await copyAssets();
     await copySchematicsAssets();
 
     console.log(`> ${green('Done!')}\n`);
@@ -148,7 +157,7 @@ const watch = async () => {
         '--directory', `${basename(__dirname)}/tmp/test-lib`,
         '--style', 'scss',
         '--strict', 'true',
-        '--routing'
+        '--routing', 'true'
     ], { stdio: 'inherit', stderr: 'inherit', cwd: '..' });
     patchNgNew(false);
 

@@ -35,4 +35,4 @@ export default (options: SentryOptions): Rule =>
                 `,
                 '@hug/ngx-sentry'
             )*/
-        ]);
+        ], options);

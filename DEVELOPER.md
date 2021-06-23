@@ -37,6 +37,7 @@ This includes:
    ```sh
    $ cd <library-path>
    $ npm start
+   ```
 
 2. Run and test the library and schematics against the Angular project
 
