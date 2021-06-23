@@ -7,16 +7,10 @@ import { NgxSentryService } from './ngx-sentry.service';
 
 /* eslint-disable */
 export function initializeSentry(sentryService: NgxSentryService): () => Promise<void> {
-    const res = (): Promise<any> => {
-        return sentryService.init();
-    };
-    return res;
+    return (): Promise<any> => sentryService.init();
 }
 export function initializeTracing(): () => Promise<void> {
-    const res = (): Promise<void> => {
-        return Promise.resolve();
-    };
-    return res;
+    return (): Promise<void> => Promise.resolve();
 }
 /* eslint-enable */
 
@@ -29,7 +23,10 @@ export class NgxSentryModule {
                 {
                     provide: ErrorHandler,
                     useValue: createErrorHandler({
-                        showDialog: true
+                        // Defaults options
+                        showDialog: true,
+                        // User options
+                        ...config?.errorHandlerOptions
                     })
                 },
                 {
