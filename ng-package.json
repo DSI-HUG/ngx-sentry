@@ -16,7 +16,6 @@
         "@sentry/angular",
         "@sentry/tracing",
         "@sentry/cli",
-        "ts-morph",
-        "semver"
+        "ts-morph"
     ]
 }
