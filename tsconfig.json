@@ -1,5 +1,6 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
+    "extends": "./tsconfig.hug.json",
     "compileOnSave": false,
     "compilerOptions": {
         "baseUrl": "./",
@@ -9,8 +10,8 @@
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
         "sourceMap": true,
-    	"declaration": false,
-    	"downlevelIteration": true,
+        "declaration": false,
+        "downlevelIteration": true,
         "paths": {
             "library": [
                 "dist/library"
