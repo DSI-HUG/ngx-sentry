@@ -1,5 +1,8 @@
 import { noop, Rule, SchematicsException, Tree } from '@angular-devkit/schematics';
 import {
+    ArrayLiteralExpression, ObjectLiteralExpression, PropertyAssignment, SourceFile
+} from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
+import {
     addDeclarationToModule, addExportToModule, addImportToModule, addProviderToModule,
     addRouteDeclarationToModule, addSymbolToNgModuleMetadata, getDecoratorMetadata,
     getMetadataField, insertImport
@@ -8,7 +11,6 @@ import { Change, NoopChange, RemoveChange } from '@schematics/angular/utility/ch
 import { JSONFile } from '@schematics/angular/utility/json-file';
 import { join } from 'path';
 import { satisfies } from 'semver';
-import { ArrayLiteralExpression, ObjectLiteralExpression, PropertyAssignment, SourceFile } from 'typescript';
 
 import { commitChanges, getTsSourceFile } from './file';
 

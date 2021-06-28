@@ -1,9 +1,11 @@
 import { JsonValue, normalize, strings } from '@angular-devkit/core';
 import { apply, applyTemplates, MergeStrategy, mergeWith, move, Rule, SchematicsException, Tree, url } from '@angular-devkit/schematics';
+import {
+    createSourceFile, ScriptTarget, SourceFile
+} from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
 import { insertImport } from '@schematics/angular/utility/ast-utils';
 import { applyToUpdateRecorder, Change } from '@schematics/angular/utility/change';
 import { InsertionIndex, JSONFile, JSONPath } from '@schematics/angular/utility/json-file';
-import { createSourceFile, ScriptTarget, SourceFile } from 'typescript';
 
 export const serializeToJson = (obj: unknown): string => `${JSON.stringify(obj, null, 2)}\n`;
 
