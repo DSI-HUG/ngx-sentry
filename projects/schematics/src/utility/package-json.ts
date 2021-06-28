@@ -68,10 +68,10 @@ export const addPackageJsonPeerDependencies = (deps: string[] | KeyValueItem[]):
 
 // --- INSTALL DEPS ---
 
-export const packageInstallTask = (callback?: (taskId: TaskId | undefined) => void): Rule =>
+export const packageInstallTask = (callback?: (taskId: TaskId | undefined) => void, force = false): Rule =>
     (_tree: Tree, context: SchematicContext): void => {
         let taskId;
-        if (packageJsonDepsModified) {
+        if (packageJsonDepsModified || force) {
             packageJsonDepsModified = false;
             taskId = context.addTask(new NodePackageInstallTask());
         }
