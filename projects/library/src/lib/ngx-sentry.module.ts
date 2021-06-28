@@ -7,7 +7,7 @@ import { NgxSentryService } from './ngx-sentry.service';
 
 /* eslint-disable */
 export function initializeSentry(sentryService: NgxSentryService): () => Promise<void> {
-    return (): Promise<any> => sentryService.init();
+    return (): Promise<void> => sentryService.init();
 }
 export function initializeTracing(): () => Promise<void> {
     return (): Promise<void> => Promise.resolve();

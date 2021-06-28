@@ -6,7 +6,6 @@ import { SentryConfig } from './models/sentry-config.model';
 
 @Injectable()
 export class NgxSentryService {
-
     constructor(
         @Inject('sentryConfig') private config: SentryConfig
     ) { }
@@ -18,21 +17,18 @@ export class NgxSentryService {
     public init(): Promise<void> {
         if (!this.config?.dsn) {
             console.warn('No Sentry DSN found. Ignore it.');
-            return Promise.resolve();
+        } else {
+            initSentry({
+                autoSessionTracking: true,
+                integrations: [
+                    new Integrations.BrowserTracing({
+                        tracingOrigins: (this.config?.tracingOrigins) ? this.config?.tracingOrigins : ['*'],
+                        routingInstrumentation
+                    })
+                ],
+                ...this.config
+            });
         }
-
-        const options = {
-            autoSessionTracking: true,
-            integrations: [
-                new Integrations.BrowserTracing({
-                    tracingOrigins: (this.config?.tracingOrigins) ? this.config?.tracingOrigins : ['*'],
-                    routingInstrumentation
-                })
-            ],
-            ...this.config
-        };
-
-        initSentry(options);
         return Promise.resolve();
     }
 
