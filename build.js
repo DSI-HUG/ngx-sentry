@@ -10,8 +10,7 @@ const TMP_PATH = './tmp';
 const DIST_PATH = './dist';
 const LIB_ASSETS = [
     'README.md',
-    'LICENSE',
-    'package.json'
+    'LICENSE'
 ];
 const SCHEMATICS_ASSETS = [
     '*/schema.json',
