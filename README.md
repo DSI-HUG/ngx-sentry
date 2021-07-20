@@ -49,13 +49,13 @@ To set up an Angular project with this library use the Angular CLI's installatio
 $ ng add @hug/ngx-sentry
 ```
 
-The  `ng add`  command will install Sentry dependencies, the HUG Wrapper configuration and ask you the following questions:
+The `ng add` command will install Sentry dependencies, the HUG Wrapper configuration and ask you the following questions:
 
 1.  Sentry's dsn url:
 
     You can pass your project sentry url (providing during the project creation process) to configure automatically all the Sentry configurations.
 
-The  `ng add`  command will additionally perform the following configurations:
+The `ng add` command will additionally perform the following configurations:
 
 -   Add project dependencies to  `package.json`
 -   Create the `.sentryclirc` file containing the project configuration
@@ -100,13 +100,13 @@ See the [developer docs][developer].
 
 ## Contributing
 
-### Want to Help?
+#### Want to Help?
 
 Want to file a bug, contribute some code or improve documentation? Excellent!
 
 But please read up first on the guidelines for [contributing][contributing], and learn about submission process, coding rules and more.
 
-### Code of Conduct
+#### Code of Conduct
 
 Please read and follow the [Code of Conduct][codeofconduct], and help us keep this project open and inclusive.
 
