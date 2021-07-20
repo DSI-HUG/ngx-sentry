@@ -32,6 +32,23 @@ export const isAngularVersion = (range: string, rule: Rule): Rule => {
     }
 };
 
+export const addAngularJsonAssets = (value: string): Rule =>
+    (tree: Tree): void => {
+        const angularJson = new JSONFile(tree, 'angular.json');
+        const architectPath = ['projects', getDefaultProjectName(tree), 'architect'];
+
+        ['build', 'test'].forEach(configName => {
+            const assetsPath = [...architectPath, configName, 'options', 'assets'];
+            const assets = angularJson.get(assetsPath) as string[];
+            if (!assets.includes(value)) {
+                assets.push(value);
+                if (JSON.stringify(angularJson.get(assetsPath)) !== JSON.stringify(assets)) {
+                    angularJson.modify(assetsPath, assets);
+                }
+            }
+        });
+    };
+
 export const getDefaultProjectName = (tree: Tree): string => {
     const angularJson = new JSONFile(tree, 'angular.json');
     return angularJson.get(['defaultProject']) as string;
