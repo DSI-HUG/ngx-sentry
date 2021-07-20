@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
 
-import { NgxSentryModule } from './ngx-sentry.module';
+import { NgxSentryModule } from '../ngx-sentry.module';
 import { NgxSentryService } from './ngx-sentry.service';
 
 describe('NgxSentryService', () => {

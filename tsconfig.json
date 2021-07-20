@@ -13,8 +13,11 @@
         "declaration": false,
         "downlevelIteration": true,
         "paths": {
-            "library": [
-                "dist/library"
+            "@hug/ngx-sentry": [
+                "projects/library/src"
+            ],
+            "@hug/ngx-sentry/*": [
+                "projects/library/src/*"
             ]
         },
         "experimentalDecorators": true,

@@ -61,6 +61,9 @@ const build = async () => {
     console.log('> Cleaning..');
     cleanDir(DIST_PATH);
 
+    console.log('> Deploying package.json..');
+    await cpy('./package.json', './projects/library/src');
+
     console.log('> Building library..');
     await execCmd('ng build library --configuration=production');
 

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { createErrorHandler, TraceService } from '@sentry/angular';
 
 import { SentryConfig } from './models/sentry-config.model';
-import { NgxSentryService } from './ngx-sentry.service';
+import { NgxSentryService } from './services/ngx-sentry.service';
 
 /* eslint-disable */
 export function initializeSentry(sentryService: NgxSentryService): () => Promise<void> {

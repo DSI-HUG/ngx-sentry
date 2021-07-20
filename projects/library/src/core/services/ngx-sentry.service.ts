@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { configureScope, init as initSentry, routingInstrumentation, User } from '@sentry/angular';
 import { Integrations } from '@sentry/tracing';
 
-import { SentryConfig } from './models/sentry-config.model';
+import { SentryConfig } from '../models/sentry-config.model';
 
 @Injectable()
 export class NgxSentryService {
