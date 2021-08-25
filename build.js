@@ -1,13 +1,18 @@
 /* eslint-disable array-element-newline */
-const { existsSync, renameSync, mkdirSync, rmSync } = require('fs-extra');
+const { existsSync, renameSync, mkdirSync, rmSync, readFileSync, writeFileSync } = require('fs-extra');
 const { exec, spawn, spawnSync } = require('child_process');
 const { watch: chokidarWatch } = require('chokidar');
-const { green } = require('colors/safe');
+const { green, magenta } = require('colors/safe');
 const { basename } = require('path');
 const cpy = require('cpy');
 
+// --- OPTIONS
+const USE_SCHEMATICS = true;
+// ---
+
 const TMP_PATH = './tmp';
 const DIST_PATH = './dist';
+const DEMO_PROJECT_NAME = 'demo-app';
 const LIB_ASSETS = [
     'README.md',
     'LICENSE'
@@ -30,12 +35,17 @@ const execCmd = (cmd, opts) => new Promise((resolve, reject) => {
     });
 });
 
-const cleanDir = path => {
-    if (existsSync(path)) {
+const cleanDir = path => new Promise(resolve => {
+    const exists = existsSync(path);
+    if (exists) {
         rmSync(path, { recursive: true });
     }
-    mkdirSync(path, { recursive: true });
-};
+    // Gives time to rmSync to unlock the file on Windows
+    setTimeout(() => {
+        mkdirSync(path, { recursive: true });
+        resolve();
+    }, exists ? 1000 : 0);
+});
 
 const copyAssets = () => cpy(
     LIB_ASSETS,
@@ -57,57 +67,54 @@ const copySchematicsAssets = () => cpy(
     }
 );
 
-const build = async () => {
-    console.log('> Cleaning..');
-    cleanDir(DIST_PATH);
+const log = str => console.log(magenta(str));
+const logHeader = str => {
+    console.log(green(`\n${'-'.repeat(78)}`));
+    console.log(green(str));
+    console.log(green(`${'-'.repeat(78)}`));
+};
 
-    console.log('> Deploying package.json..');
+const build = async () => {
+    log('> Cleaning..');
+    await cleanDir(DIST_PATH);
+
+    log('> Deploying package.json..');
     await cpy('./package.json', './projects/library/src');
 
-    console.log('> Building library..');
+    log('> Building library..');
     await execCmd('ng build library --configuration=production');
 
-    console.log('> Building schematics..');
-    await execCmd('tsc -p ./projects/schematics/tsconfig.json');
+    if (USE_SCHEMATICS) {
+        log('> Building schematics..');
+        await execCmd('tsc -p ./projects/schematics/tsconfig.json');
+    }
 
-    console.log('> Copying assets..');
+    log('> Copying assets..');
     await copyAssets();
-    await copySchematicsAssets();
+    if (USE_SCHEMATICS) {
+        await copySchematicsAssets();
+    }
 
-    console.log(`> ${green('Done!')}\n`);
+    log(`> ${green('Done!')}\n`);
 };
 
 /**
- * - Allow the creation of a new Angular project under /tmp/test-lib by avoiding the following error during `ng new test-lib`:
- *      "And invalid configuration file was found ['/angular.json']. Please delete the file before running the command."
- * - Allow the creation of a .git folder under /tmp/test-lib to track changes.
+ *  Allow the creation of a new Angular project under /tmp/${DEMO_PROJECT_NAME} by avoiding the following error during `ng new`:
+ *  "And invalid configuration file was found ['/angular.json']. Please delete the file before running the command."
  */
 const patchNgNew = patch => {
-    if (patch) {
-        if (existsSync('angular.json')) {
-            renameSync('angular.json', 'angular-old.json');
-        }
-        if (existsSync('.git')) {
-            renameSync('.git', '.git-old');
-        }
-    } else {
-        if (existsSync('angular-old.json')) {
-            renameSync('angular-old.json', 'angular.json');
-        }
-        if (existsSync('.git-old')) {
-            renameSync('.git-old', '.git');
-        }
+    if (patch && (existsSync('angular.json'))) {
+        renameSync('angular.json', 'angular-old.json');
+    } else if (!patch && existsSync('angular-old.json')) {
+        renameSync('angular-old.json', 'angular.json');
     }
 };
 
 const linkLibrary = async () => {
     try {
         await execCmd('npm link', { cwd: './dist' });
-        await execCmd('npm link @hug/ngx-sentry', { cwd: './tmp/test-lib' });
-
-        console.log(green(`\n${'-'.repeat(78)}`));
-        console.log(green('Linked library'));
-        console.log(green(`${'-'.repeat(78)}`));
+        await execCmd('npm link @hug/ngx-sentry --save', { cwd: `./tmp/${DEMO_PROJECT_NAME}` });
+        logHeader('Linked library');
     } catch (err) {
         console.error(err);
     }
@@ -123,23 +130,15 @@ const unwatchSchematics = async () => {
 const watchSchematics = () => {
     const rebuild = async () => {
         // Clean
-        cleanDir(`${process.cwd()}/${DIST_PATH}/schematics`);
+        await cleanDir(`${process.cwd()}/${DIST_PATH}/schematics`);
         // Build
-        spawn('tsc', ['-p', './projects/schematics/tsconfig.json'], { stdio: 'inherit', stderr: 'inherit' })
-            .on('exit', () => {
-                console.log(green(`\n${'-'.repeat(78)}`));
-                console.log(green('Built Schematics'));
-                console.log(green(`${'-'.repeat(78)}`));
-            });
+        spawn('tsc', ['-p', './projects/schematics/tsconfig.json'], { stdio: 'inherit', stderr: 'inherit', shell: true })
+            .on('exit', () => logHeader('Built Schematics'));
         // Copy assets
-        copySchematicsAssets().then(() => {
-            console.log(green(`\n${'-'.repeat(78)}`));
-            console.log(green('Copied Schematics assets'));
-            console.log(green(`${'-'.repeat(78)}`));
-        });
+        copySchematicsAssets().then(() => logHeader('Copied Schematics assets'));
     };
 
-    schematicsWatcher = chokidarWatch('./projects/schematics', { ignoreInitial: true });
+    schematicsWatcher = chokidarWatch('./projects/schematics', { ignoreInitial: true, usePolling: true });
     schematicsWatcher.on('ready', rebuild);
     schematicsWatcher.on('add', rebuild);
     schematicsWatcher.on('change', rebuild);
@@ -147,42 +146,68 @@ const watchSchematics = () => {
 };
 
 const watch = async () => {
-    console.log('> Cleaning..');
-    cleanDir(DIST_PATH);
-    cleanDir(TMP_PATH);
+    log('> Cleaning..');
+    await cleanDir(DIST_PATH);
+    await cleanDir(TMP_PATH);
 
-    console.log('\n> Creating dummy Angular project..');
+    log('\n> Deploying package.json..');
+    await cpy('./package.json', './projects/library/src');
+
+    log('\n> Creating dummy Angular project..');
     patchNgNew(true);
-    spawnSync('ng', [
-        'new', 'test-lib',
-        '--package-manager', 'npm',
-        '--directory', `${basename(__dirname)}/tmp/test-lib`,
-        '--style', 'scss',
-        '--strict', 'true',
-        '--routing', 'true'
-    ], { stdio: 'inherit', stderr: 'inherit', cwd: '..' });
+    try {
+        spawnSync('ng', [
+            'new', DEMO_PROJECT_NAME,
+            '--package-manager', 'npm',
+            '--directory', `${basename(__dirname)}/tmp/${DEMO_PROJECT_NAME}`,
+            '--style', 'scss',
+            '--strict', 'true',
+            '--routing', 'true'
+        ], { stdio: 'inherit', stderr: 'inherit', cwd: '..', shell: true });
+    } catch (err) {
+        console.error(err);
+    }
     patchNgNew(false);
 
-    console.log('\n> Watching library..');
-    spawn('ng', ['build', 'library', '--watch'], { stdio: 'inherit', stderr: 'inherit' });
+    log('\n> Modifying dummy Angular project..');
+    const demoPkgJsonPath = `./tmp/${DEMO_PROJECT_NAME}/angular.json`;
+    const pkgJson = JSON.parse(readFileSync(demoPkgJsonPath, { encoding: 'utf8' }));
+    pkgJson.projects[DEMO_PROJECT_NAME].architect.build.options.preserveSymlinks = true;
+    writeFileSync(demoPkgJsonPath, JSON.stringify(pkgJson, null, 4), { encoding: 'utf8' });
+
+    log('\n> Initializing git in dummy Angular project..');
+    await execCmd('git init', { cwd: `./tmp/${DEMO_PROJECT_NAME}` });
+    await execCmd('git add --all', { cwd: `./tmp/${DEMO_PROJECT_NAME}` });
+    await execCmd('git commit -am "First commit"', { cwd: `./tmp/${DEMO_PROJECT_NAME}` });
+
+    log('\n> Watching library..');
+    try {
+        spawn('ng', ['build', 'library', '--configuration', 'development', '--watch'], { stdio: 'inherit', stderr: 'inherit', shell: true });
+    } catch (err) {
+        console.error(err);
+    }
 
     // Wait for ng to rebuild dist folder
-    const watcher = chokidarWatch('./dist/package.json');
+    const watcher = chokidarWatch('./dist/package.json', { usePolling: true });
     watcher.on('add', () => {
         setTimeout(async () => {
-            console.log('\n> Linking library..');
+            log('\n> Linking library..');
             await linkLibrary();
 
-            console.log('\n> Watching schematics..');
-            watchSchematics();
+            if (USE_SCHEMATICS) {
+                log('\n> Watching schematics..');
+                watchSchematics();
+            }
 
             watcher.close();
-        });
+        }, 1000);
     });
 };
 
 const cleanUp = async () => {
-    await unwatchSchematics();
+    if (USE_SCHEMATICS) {
+        await unwatchSchematics();
+    }
 };
 
 const registerExitEvents = () => {

@@ -26,58 +26,54 @@ The whole process is already automated for you so you can focus only on the deve
 This includes:
 
 * Ouputting the library and schematics to the `./dist` folder
-* Creating a dummy Angular project in `./tmp/test-lib`
+* Creating a dummy Angular project in `./tmp`
 * Symlinking the library with the dummy project
-* Watching for library and schematics changes
+* Watching for library and/or schematics changes
 
 **Testing**
 
-1. Start testing
+1. Choose whether or not you want to use schematics in your library
+
+   * Open `./build.js`
+   * Enable/disable the option `USE_SCHEMATICS`
+
+2. Start testing
 
    ```sh
    $ cd <library-path>
    $ npm start
    ```
 
-2. Run and test the library and schematics against the Angular project
+3. Run and test the schematics against the demo Angular project
 
    ```sh
-   $ cd ./tmp/test-lib
+   $ cd ./tmp/demo-app
    $ ng add @hug/ngx-sentry
    ```
 
-**Known issues**
-
-When using `npm`, any package installation made by your schematics will remove the symlink to the library ([#3](https://github.com/npm/rfcs/pull/3), [#2372](https://github.com/npm/cli/issues/2372)).
-
-To fix this issue, run the following command after each package installation:
+4. Run and test the library against the demo Angular project
 
    ```sh
-   $ cd ./tmp/test-lib
-   $ npm link @hug/ngx-sentry
+   $ cd ./tmp/demo-app
+   $ ng serve
    ```
 
 **Tips** - ***you can use git to watch the effective changes made by the schematics:***
 
-1. Make a clean state after creating the dummy Angular project
-
-   ```sh
-   $ cd ./tmp/test-lib
-   $ git commit -am 'clean state'
-   ```
-
-2. Run the schematics and check the changes
+1. Run the schematics and check the changes
 
    ```sh
    $ ng add @hug/ngx-sentry
    $ git status
    ```
 
-3. Reset changes, modify the library or schematics and test them again
+2. Reset changes
 
    ```sh
    $ git reset --hard && git clean -fd
    ```
+
+3. Modify the library and/or the schematics and test them again
 
 ## Unit testing
 
