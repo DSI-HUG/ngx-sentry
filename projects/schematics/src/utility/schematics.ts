@@ -2,59 +2,27 @@ import { Option } from '@angular/cli/models/interface';
 import { parseJsonSchemaToOptions } from '@angular/cli/utilities/json-schema';
 import { JsonObject, schema } from '@angular-devkit/core';
 import { SchematicContext } from '@angular-devkit/schematics';
-import { IncomingMessage } from 'http';
-import { get } from 'https';
 import { dirname as pathDirname, resolve as pathResolve } from 'path';
+
+import { getJsonFromUrl } from './request';
 
 export interface NgCliOption extends Option {
     hint: string;
 }
 
-const getJsonObjectFromUrl = async (hostname: string, path: string): Promise<JsonObject> =>
-    new Promise((resolve, reject) => {
-        // eslint-disable-next-line consistent-return
-        const req = get({ hostname, path }, (res: IncomingMessage) => {
-            if (res.statusCode === 200) {
-                let rawData = '';
-                res.setEncoding('utf8');
-                res.on('data', chunk => rawData += chunk);
-                res.once('end', () => {
-                    res.setTimeout(0);
-                    res.removeAllListeners();
-                    try {
-                        return resolve(JSON.parse(rawData));
-                    } catch (err) {
-                        return reject(err);
-                    }
-                });
-            } else {
-                res.removeAllListeners();
-                res.resume(); // consume response data to free up memory
-                return reject(`Request error (${String(res.statusCode)}): https://${hostname}/${path}`);
-            }
-        });
-        const abort = (error: Error | string): void => {
-            req.removeAllListeners();
-            req.destroy();
-            return reject(error);
-        };
-        req.once('timeout', () => abort(`Request timed out: https://${hostname}/${path}`));
-        req.once('error', err => abort(err));
-    });
-
 const getExternalSchemaJson = async (packageName: string): Promise<JsonObject> => {
     const hostname = 'cdn.jsdelivr.net';
     const path = `/npm/${packageName}@latest`;
-    const pkgJson = await getJsonObjectFromUrl(hostname, `${path}/package.json`);
+    const pkgJson = await getJsonFromUrl(pathResolve(hostname, path, 'package.json'));
     if (pkgJson?.schematics) {
-        const collectionJson = await getJsonObjectFromUrl(hostname, pathResolve(path, pkgJson.schematics as string));
+        const collectionJson = await getJsonFromUrl(pathResolve(hostname, path, pkgJson.schematics as string));
         if (collectionJson?.schematics) {
-            const schemaPath = pathResolve(
+            return await getJsonFromUrl(pathResolve(
+                hostname,
                 path,
                 pathDirname(pkgJson.schematics as string),
                 ((collectionJson.schematics as JsonObject)['ng-add'] as JsonObject).schema as string
-            );
-            return await getJsonObjectFromUrl(hostname, schemaPath);
+            ));
         }
     }
     return {};

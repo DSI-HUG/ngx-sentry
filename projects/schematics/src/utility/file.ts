@@ -7,7 +7,21 @@ import { insertImport } from '@schematics/angular/utility/ast-utils';
 import { applyToUpdateRecorder, Change } from '@schematics/angular/utility/change';
 import { InsertionIndex, JSONFile, JSONPath } from '@schematics/angular/utility/json-file';
 
+import { getDataFromUrl } from './request';
+
 export const serializeToJson = (obj: unknown): string => `${JSON.stringify(obj, null, 2)}\n`;
+
+export const downloadFile = (source: string, destination: string, replace = false): Rule =>
+    async (tree: Tree): Promise<void> => {
+        if (!tree.exists(destination) || replace) {
+            const data = await getDataFromUrl(source);
+            if (!tree.exists(destination)) {
+                tree.create(destination, data);
+            } else {
+                tree.overwrite(destination, data);
+            }
+        }
+    };
 
 export const deployFiles = (templateOptions = {}, source = './files', destination = '', strategy = MergeStrategy.Overwrite): Rule =>
     mergeWith(
