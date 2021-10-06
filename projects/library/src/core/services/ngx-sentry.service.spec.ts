@@ -11,12 +11,7 @@ describe('NgxSentryService', () => {
         TestBed.configureTestingModule({
             imports: [
                 RouterModule.forRoot([]),
-                NgxSentryModule.forRoot({
-                    dsn: '',
-                    release: '1.0.0',
-                    environment: 'UNITS-TESTS',
-                    tracingOrigins: ['*']
-                })
+                NgxSentryModule.forRoot()
             ]
         });
         service = TestBed.inject(NgxSentryService);
