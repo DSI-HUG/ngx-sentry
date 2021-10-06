@@ -1,5 +1,5 @@
 /* eslint-disable array-element-newline */
-const { existsSync, renameSync, mkdirSync, rmSync, readFileSync, writeFileSync } = require('fs-extra');
+const { existsSync, renameSync, mkdirSync, rmSync, readFileSync, writeFileSync } = require('fs');
 const { exec, spawn, spawnSync } = require('child_process');
 const { watch: chokidarWatch } = require('chokidar');
 const { green, magenta } = require('colors/safe');
@@ -74,12 +74,21 @@ const logHeader = str => {
     console.log(green(`${'-'.repeat(78)}`));
 };
 
+const deployPackageJson = async () => {
+    await cpy('./package.json', './projects/library/src');
+
+    const pkgJsonPath = './projects/library/src/package.json';
+    const pkgJson = JSON.parse(readFileSync(pkgJsonPath, { encoding: 'utf8' }));
+    delete pkgJson.engines;
+    writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 4), { encoding: 'utf8' });
+};
+
 const build = async () => {
     log('> Cleaning..');
     await cleanDir(DIST_PATH);
 
     log('> Deploying package.json..');
-    await cpy('./package.json', './projects/library/src');
+    await deployPackageJson();
 
     log('> Building library..');
     await execCmd('ng build library --configuration=production');
@@ -151,7 +160,7 @@ const watch = async () => {
     await cleanDir(TMP_PATH);
 
     log('\n> Deploying package.json..');
-    await cpy('./package.json', './projects/library/src');
+    await deployPackageJson();
 
     log('\n> Creating dummy Angular project..');
     patchNgNew(true);
