@@ -15,6 +15,7 @@ const workspaceOptions: WorkspaceOptions = {
 
 const appOptions: ApplicationOptions = {
     name: 'app-test',
+    projectRoot: '',
     inlineStyle: false,
     inlineTemplate: false,
     routing: false,
@@ -24,8 +25,8 @@ const appOptions: ApplicationOptions = {
 };
 
 const schematicOptions: SentryOptions = {
-    sentryUrl: 'http://sentry.ch',
-    projectName: 'sentryProjectName'
+    projectName: 'SentryProjectName',
+    sentryDsnUrl: 'https://a1b2c3d4e5f6g7h8@sentry.domain.ch/4'
 };
 
 const collectionPath = join(__dirname, '../collection.json');
@@ -63,50 +64,51 @@ describe('Test - ngAdd schematic', () => {
             tree = await runner.runSchematicAsync('sentry', schematicOptions, tree).toPromise();
         });
 
-        it('should create only one new file', () => {
+        it('should create only one new file (ie. .sentryclirc', () => {
             expect(tree.files.length).toEqual(nbFiles + 1);
-        });
-
-        it('should update package.json', () => {
-            const packageJsonPath = tree.files.find(path => path.includes('package.json')) || '';
-            expect(tree.exists(packageJsonPath)).toBeTruthy('package.json does not exists');
-            const packageJson = new JSONFile(tree, packageJsonPath);
-            const packageJsonScripts = packageJson.get(['scripts']) as Record<string, string>;
-            expect(packageJsonScripts?.sentry).toBeDefined('{package.json}.scripts.sentry does not exists');
-        });
-
-        it('should update tsconfig.json', () => {
-            const tsConfigPath = tree.files.find(path => path.includes('tsconfig.json')) || '';
-            expect(tree.exists(tsConfigPath)).toBeTruthy('tsconfig.json does not exists');
-            const tsConfig = new JSONFile(tree, tsConfigPath);
-            const tsConfigCompilerOptions = tsConfig.get(['compilerOptions']) as Record<string, string>;
-            expect(tsConfigCompilerOptions?.resolveJsonModule).toBeDefined('{tsconfig.json}.compilerOptions.resolveJsonModule does not exists');
-        });
-
-        it('should update app.module.ts', () => {
-            const appModulePath = tree.files.find(path => path.includes('app.module.ts')) || '';
-            expect(tree.exists(appModulePath)).toBeTruthy('app.module.ts does not exists');
-            expect(tree.readContent(appModulePath)).toContain('NgxSentryModule.forRoot');
-        });
-
-        it('should update environment.ts', () => {
-            const envTsPath = tree.files.find(path => path.includes('environment.ts')) || '';
-            expect(tree.exists(envTsPath)).toBeTruthy('environment.ts does not exists');
-            expect(tree.readContent(envTsPath)).toContain('sentryUrl');
-        });
-
-        it('should update environment.prod.ts', () => {
-            const envprodTsPath = tree.files.find(path => path.includes('environment.prod.ts')) || '';
-            expect(tree.exists(envprodTsPath)).toBeTruthy('environment.prod.ts does not exists');
-            expect(tree.readContent(envprodTsPath)).toContain('sentryUrl');
         });
 
         it('should create .sentryclirc', () => {
             const sentryclircPath = tree.files.find(path => path.includes('.sentryclirc')) || '';
-            expect(tree.exists(sentryclircPath)).toBeTruthy('.sentryclirc does not exists');
+            expect(tree.exists(sentryclircPath)).withContext('.sentryclirc does not exists').toBeTruthy();
             expect(tree.readContent(sentryclircPath)).toContain('[defaults]');
-            expect(tree.readContent(sentryclircPath)).toContain(`url=${schematicOptions.sentryUrl}`);
+            expect(tree.readContent(sentryclircPath)).toContain(`url=${new URL(schematicOptions.sentryDsnUrl).origin}`);
             expect(tree.readContent(sentryclircPath)).toContain(`project=${schematicOptions.projectName}`);
+        });
+
+        it('should update package.json', () => {
+            const packageJsonPath = tree.files.find(path => path.includes('package.json')) || '';
+            expect(tree.exists(packageJsonPath)).withContext('package.json does not exists').toBeTruthy();
+            const packageJson = new JSONFile(tree, packageJsonPath);
+            const packageJsonScripts = packageJson.get(['scripts']) as Record<string, string>;
+            expect(packageJsonScripts?.sentry).withContext('{package.json}.scripts.sentry does not exists').toBeDefined();
+        });
+
+        it('should update tsconfig.json', () => {
+            const tsConfigPath = tree.files.find(path => path.includes('tsconfig.json')) || '';
+            expect(tree.exists(tsConfigPath)).withContext('tsconfig.json does not exists').toBeTruthy();
+            const tsConfig = new JSONFile(tree, tsConfigPath);
+            const tsConfigCompilerOptions = tsConfig.get(['compilerOptions']) as Record<string, string>;
+            expect(tsConfigCompilerOptions?.resolveJsonModule).withContext('{tsconfig.json}.compilerOptions.resolveJsonModule does not exists').toBeDefined();
+            expect(tsConfigCompilerOptions?.resolveJsonModule).withContext('{tsconfig.json}.compilerOptions.resolveJsonModule should be enabled').toBeTrue();
+            expect(tsConfigCompilerOptions?.allowSyntheticDefaultImports).withContext('{tsconfig.json}.compilerOptions.allowSyntheticDefaultImports does not exists').toBeDefined();
+            expect(tsConfigCompilerOptions?.allowSyntheticDefaultImports).withContext('{tsconfig.json}.compilerOptions.allowSyntheticDefaultImports should be enabled').toBeTrue();
+        });
+
+        it('should update main.ts', () => {
+            const mainTsPath = tree.files.find(path => path.includes('main.ts')) || '';
+            expect(tree.exists(mainTsPath)).withContext('main.ts does not exists').toBeTruthy();
+            expect(tree.readContent(mainTsPath)).withContext('app.module.ts does not import @hug/ngx-sentry').toContain('from \'@hug/ngx-sentry\'');
+            expect(tree.readContent(mainTsPath)).withContext('app.module.ts does not import package.json').toContain('package.json');
+            expect(tree.readContent(mainTsPath)).withContext('app.module.ts does not initialize Sentry').toContain('initSentry');
+        });
+
+        it('should update app.module.ts', () => {
+            const appModulePath = tree.files.find(path => path.includes('app.module.ts')) || '';
+            expect(tree.exists(appModulePath)).withContext('app.module.ts does not exists').toBeTruthy();
+            expect(tree.readContent(appModulePath)).withContext('app.module.ts does not import @hug/ngx-sentry').toContain('from \'@hug/ngx-sentry\'');
+            expect(tree.readContent(appModulePath)).withContext('app.module.ts does not import NgxSentryModule').toContain('NgxSentryModule');
+            expect(tree.readContent(appModulePath)).withContext('app.module.ts does not provide NgxSentryModule.forRoot()').toContain('NgxSentryModule.forRoot()');
         });
     });
 });

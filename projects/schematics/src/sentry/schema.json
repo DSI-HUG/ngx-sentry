@@ -9,7 +9,7 @@
             "description": "Sentry project name",
             "type": "string"
         },
-        "sentryUrl": {
+        "sentryDsnUrl": {
             "x-prompt": "What is your Sentry's dsn url ?",
             "description": "Sentry project dsn",
             "type": "string"
@@ -17,7 +17,7 @@
     },
     "required": [
         "projectName",
-        "sentryUrl"
+        "sentryDsnUrl"
     ],
     "additionalProperties": false
 }

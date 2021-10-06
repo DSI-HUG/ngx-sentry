@@ -4,14 +4,13 @@
 
 const { exec } = require('child_process');
 
-const execCmd = (cmd, successMessage) => new Promise((resolve, reject) => {
-    exec(cmd, (err, stdout, stderr) => {
+const execCmd = (cmd, opts) => new Promise((resolve, reject) => {
+    exec(cmd, opts, (err, stdout, stderr) => {
         if (err) {
             console.error(stdout, stderr);
-            reject(err);
+            return reject(err);
         }
-        console.log(successMessage);
-        resolve();
+        return resolve(stdout);
     });
 });
 
@@ -20,21 +19,23 @@ const execCmd = (cmd, successMessage) => new Promise((resolve, reject) => {
         const directory = process.argv[2] || '';
         const version = process.env.npm_package_version || '';
 
+        console.log('[ngx-sentry]');
+
         // Create release
-        let command = `sentry-cli releases new ${version}`;
-        await execCmd(command, 'Release created');
+        console.log('> 1/4 Creating release..');
+        await execCmd(`sentry-cli releases new ${version}`);
 
         // Delete existing files
-        command = `sentry-cli releases files ${version} delete --all`;
-        await execCmd(command, 'Existing files deleted');
+        console.log('> 2/4 Deleting existing files..');
+        await execCmd(`sentry-cli releases files ${version} delete --all`);
 
         // Upload files
-        command = `sentry-cli releases files ${version} upload-sourcemaps ${directory} -x .js -x .map --validate --verbose --rewrite --strip-common-prefix`;
-        await execCmd(command, 'Files uploaded');
+        console.log('> 3/4 Uploading new files..');
+        await execCmd(`sentry-cli releases files ${version} upload-sourcemaps ${directory} -x .js -x .map --validate --verbose --rewrite --strip-common-prefix`);
 
         // Finish release
-        command = `sentry-cli releases finalize ${version}`;
-        await execCmd(command, 'Release finished');
+        console.log('> 4/4 Finalizing release..');
+        await execCmd(`sentry-cli releases finalize ${version}`);
     } catch (err) {
         console.error(err);
         process.exit(1);
