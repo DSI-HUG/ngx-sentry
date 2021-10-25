@@ -77,12 +77,12 @@ The `ng add` command will additionally perform the following actions:
 
 Follow these steps to integrate your project's source maps with Sentry:
 
-1. **Generate Source Maps**
+1. Generate Source Maps
 ```sh
 $ ng build --source-map
 ```
 
-2. **Provide Source Maps to Sentry**
+2. Provide Source Maps to Sentry
 ```sh
 $ npx ngx-sentry ./dist/your-project-name
 ```
