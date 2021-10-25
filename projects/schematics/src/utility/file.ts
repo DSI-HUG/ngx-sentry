@@ -1,10 +1,12 @@
 import { JsonValue, normalize, strings } from '@angular-devkit/core';
-import { apply, applyTemplates, MergeStrategy, mergeWith, move, Rule, SchematicsException, Tree, url } from '@angular-devkit/schematics';
 import {
-    createSourceFile, ScriptTarget, SourceFile
+    apply, applyTemplates, MergeStrategy, mergeWith, move, Rule, SchematicsException, Tree, url
+} from '@angular-devkit/schematics';
+import {
+    createSourceFile, isStringLiteral, ScriptTarget, SourceFile, SyntaxKind
 } from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
-import { insertImport } from '@schematics/angular/utility/ast-utils';
-import { applyToUpdateRecorder, Change } from '@schematics/angular/utility/change';
+import { findNodes, insertImport } from '@schematics/angular/utility/ast-utils';
+import { applyToUpdateRecorder, Change, RemoveChange, ReplaceChange } from '@schematics/angular/utility/change';
 import { InsertionIndex, JSONFile, JSONPath } from '@schematics/angular/utility/json-file';
 
 import { getDataFromUrl } from './request';
@@ -111,4 +113,41 @@ export const addImportToFile = (filePath: string, symbolName: string, fileName: 
         const sourceFile = getTsSourceFile(tree, filePath);
         const changes = insertImport(sourceFile, '', symbolName, fileName, isDefault);
         commitChanges(tree, filePath, [changes]);
+    };
+
+export const updateImportInFile = (filePath: string, symbolName: string, newSymbolName: string | undefined, fileName: string): Rule =>
+    (tree: Tree): void => {
+        const changes: Change[] = [];
+        const sourceFile = getTsSourceFile(tree, filePath);
+
+        const allImports = findNodes(sourceFile, SyntaxKind.ImportDeclaration);
+        const relevantImports = allImports.filter(node => {
+            const importFiles = node
+                .getChildren()
+                .filter(isStringLiteral)
+                .map(n => n.text);
+            return importFiles.filter(file => file === fileName).length === 1;
+        });
+
+        relevantImports.forEach(relevantImport => {
+            const names = findNodes(relevantImport, SyntaxKind.Identifier);
+            const symbolNameNodeIndex = names.findIndex(name => name.getText() === symbolName);
+            if (symbolNameNodeIndex !== -1) {
+                const symbolNameNode = names[symbolNameNodeIndex];
+                if (newSymbolName) {
+                    // Rename the name in the import statement
+                    changes.push(new ReplaceChange(filePath, symbolNameNode.getStart(), symbolName, newSymbolName));
+                } else if (names.length === 1) {
+                    // Remove the whole import statement
+                    changes.push(new RemoveChange(filePath, relevantImport.getFullStart(), relevantImport.getFullText()));
+                } else {
+                    // Remove only the name from the import statement
+                    const newNames = names.filter(name => name.getText() !== symbolName).map(name => name.getText());
+                    const newRelevantImport = `import { ${newNames.join(', ')} } from '${fileName}';`;
+                    changes.push(new ReplaceChange(filePath, relevantImport.getStart(), relevantImport.getText(), newRelevantImport));
+                }
+            }
+        });
+
+        commitChanges(tree, filePath, changes);
     };
