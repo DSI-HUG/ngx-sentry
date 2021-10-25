@@ -51,7 +51,11 @@ export const addAngularJsonAssets = (value: string): Rule =>
 
 export const getDefaultProjectName = (tree: Tree): string => {
     const angularJson = new JSONFile(tree, 'angular.json');
-    return angularJson.get(['defaultProject']) as string;
+    const defaultProjectName = angularJson.get(['defaultProject']) as string;
+    if (!defaultProjectName) {
+        throw new SchematicsException('Cannot find "defaultProject" property in angular.json file.');
+    }
+    return defaultProjectName;
 };
 
 export const getDefaultProjectOutputPath = (tree: Tree): string => {
@@ -91,7 +95,7 @@ export const addImportToNgModule = (filePath: string, classifiedName: string, im
         let sourceFile = getTsSourceFile(tree, filePath);
 
         // Fix: manage module import with `forRoot`
-        const matches = new RegExp(/(.*).forRoot\({/gm).exec(classifiedName);
+        const matches = new RegExp(/(.*).forRoot\(/gm).exec(classifiedName);
         if (matches?.length) {
             const realClassifiedName = matches[1];
 
