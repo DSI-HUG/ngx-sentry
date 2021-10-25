@@ -20,6 +20,7 @@ const LIB_ASSETS = [
 const SCHEMATICS_ASSETS = [
     '*/schema.json',
     '*/files/**/*',
+    'migration.json',
     'collection.json'
 ];
 

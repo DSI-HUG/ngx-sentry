@@ -79,10 +79,13 @@
         "typescript": "^4.3.5"
     },
     "engines": {
-        "yarn": "Please use Npm instead of Yarn to install dependencies.",
-        "node": ">=14.14.0"
+        "yarn": "Please use Npm instead of Yarn.",
+        "node": ">= 14.14.0"
     },
     "schematics": "./schematics/collection.json",
+    "ng-update": {
+        "migrations": "./schematics/migration.json"
+    },
     "ng-add": {
         "save": "dependencies"
     }

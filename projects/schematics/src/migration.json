@@ -1,0 +1,10 @@
+{
+    "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
+    "schematics": {
+        "ng-update-2-0-0": {
+            "description": "Updates to v2.0.0",
+            "factory": "./ng-update/2-0-0/index",
+            "version": "2.0.0"
+        }
+    }
+}
