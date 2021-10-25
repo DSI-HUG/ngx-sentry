@@ -9,7 +9,7 @@ export class NgxSentryModule {
         public traceService: TraceService
     ) { }
 
-    public static forRoot(options?: ErrorHandlerOptions): ModuleWithProviders<NgxSentryModule> {
+    public static forRoot(errorHandlerOptions?: ErrorHandlerOptions): ModuleWithProviders<NgxSentryModule> {
         return {
             ngModule: NgxSentryModule,
             providers: [
@@ -20,7 +20,7 @@ export class NgxSentryModule {
                         // --- default options ---
                         showDialog: false,
                         // --- custom options ---
-                        ...options
+                        ...errorHandlerOptions
                     })
                 },
                 {

@@ -1,23 +1,30 @@
 import { BrowserOptions, init, instrumentAngularRouting } from '@sentry/angular';
 import { Integrations } from '@sentry/tracing';
 
-export const initSentry = (options: { dsn: string; environment: string; release: string } & BrowserOptions): void => {
+export interface NgxBrowserOptions extends BrowserOptions {
+    dsn: string;
+    environment: string;
+    release: string;
+    tracingOrigins?: Array<string | RegExp>;
+}
+
+export const initSentry = (browserOptions: NgxBrowserOptions): void => {
     init({
         // --- default options ---
         autoSessionTracking: true,
         integrations: [
-            // Registers and configures the Tracing integration, which automatically instruments the application to
-            // monitor its performance, including custom Angular routing instrumentation.
+            // Registers and configures the Tracing integration, which automatically instruments the application
+            // to monitor its performance, including custom Angular routing instrumentation.
             new Integrations.BrowserTracing({
-                tracingOrigins: ['*'],
+                tracingOrigins: browserOptions.tracingOrigins || ['localhost', /^\//],
                 routingInstrumentation: instrumentAngularRouting
             })
         ],
         // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
         // We recommend adjusting this value in production.
-        tracesSampleRate: 1.0,
+        tracesSampleRate: 0.2,
 
         // --- custom options ---
-        ...options
+        ...browserOptions
     });
 };

@@ -8,7 +8,7 @@
         <img src="https://www.hug.ch/sites/all/themes/interhug/img/logos/logo-hug.svg" alt="hug-logo" height="54px" />
     </a>
     <br><br>
-    <i>Angular wrapper for Sentry JavaScript SDK</i>
+    <i>Angular wrapper for the official Sentry JavaScript SDK</i>
     <br><br>
 </p>
 
@@ -41,54 +41,108 @@
 
 <hr>
 
-## Installation
+## Getting started
 
-To set up an Angular project with this library use the Angular CLI's installation [schematic][schematics]:
+To set up or update an Angular project with this library use the Angular CLI's [schematic][schematics] commands:
+
+#### Installation
 
 ```sh
 $ ng add @hug/ngx-sentry
 ```
 
+#### Update
+
+```sh
+$ ng update @hug/ngx-sentry
+```
+
+----
+
 The `ng add` command will install Sentry dependencies, the HUG Wrapper configuration and ask you the following questions:
 
-1.  Sentry's dsn url:
+1.  **Sentry's project name**: *the name used when creating the Sentry project*
+2.  **Sentry's dsn url**: *Data Source Name url provided during the Sentry project creation process*
 
-    You can pass your project sentry url (providing during the project creation process) to configure automatically all the Sentry configurations.
+The `ng add` command will additionally perform the following actions:
 
-The `ng add` command will additionally perform the following configurations:
-
--   Add project dependencies to  `package.json`
--   Create the `.sentryclirc` file containing the project configuration
--   Add Sentry versioning and sourcemap configurations to `package.json`
--   Allow json module resolving to `tsconfig.json`
--   Add `sentryUrl` property to your `environments.*.ts` files
--   Import NgxSentryModule to your application module
-
-You're done! Sentry is now configured to be used in your application.
+-   Add dependencies to `package.json`
+-   Add `resolveJsonModule` and `allowSyntheticDefaultImports` to `tsconfig.json`
+-   Create a `.sentryclirc` file containing all the Sentry configurations
+-   Initialize and configure Sentry in `main.ts`
+-   Import the `NgxSentryModule` in your Angular application module
 
 
 ## Usage
 
-You can set the current user by using the NgxSentryService provided by the library.
+Follow these steps to integrate your project's source maps with Sentry:
 
-```javascript
+1. **Generate Source Maps**
+```sh
+$ ng build --source-map
+```
+
+2. **Provide Source Maps to Sentry**
+```sh
+$ npx ngx-sentry ./dist/your-project-name
+```
+
+
+## Options
+
+This library is a wrapper around the official Sentry JavaScript SDK, with added functionalities and configurations.
+
+You shouldn't have to configure anything else but in case you wanted to, you can still do it.
+
+All options available in `@sentry/browser` can be configured from `@hug/ngx-sentry`.
+
+#### Sentry Browser's SDK
+
+The Sentry Browser's SDK can be configured in `main.ts`:
+
+```ts
+/**
+ * @param {BrowserOptions} browserOptions
+ * @link https://github.com/getsentry/sentry-javascript/blob/143ee3991e99a07bf60ee21a53723253a7f1c2fb/packages/browser/src/backend.ts#L12
+ */
+initSentry(browserOptions: BrowserOptions);
+```
+
+#### ErrorHandler
+
+The behavior of the ErrorHandler can be configured in `app.module.ts`:
+
+```ts
+@NgModule({
+    imports: [
+        /**
+         * @param {errorHandlerOptions} ErrorHandlerOptions
+         * @link https://github.com/getsentry/sentry-javascript/blob/master/packages/angular/src/errorhandler.ts#L10
+         */
+        NgxSentryModule.forRoot(errorHandlerOptions?: ErrorHandlerOptions)
+    ]
+})
+export class AppModule { }
+```
+
+#### Current user
+
+You can define the current user via the `NgxSentryService`:
+
+```ts
 constructor(
-    private sentryService: NgxSentryService,
-) {
+    private sentryService: NgxSentryService
+) {}
+
+public ngOnInit(): void {
+    // Set the current user
     this.sentryService.setUser({
         email: 'rtrm@hcuge.ch',
         username: 'rtrm',
         attr1: 'attr1'
     });
-}
-```
 
-To remove the current user, you can pass null
-
-```javascript
-constructor(
-    private sentryService: NgxSentryService,
-) {
+    // Remove the current user
     this.sentryService.setUser(null);
 }
 ```

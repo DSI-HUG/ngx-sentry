@@ -76,14 +76,6 @@ describe('Test - ngAdd schematic', () => {
             expect(tree.readContent(sentryclircPath)).toContain(`project=${schematicOptions.projectName}`);
         });
 
-        it('should update package.json', () => {
-            const packageJsonPath = tree.files.find(path => path.includes('package.json')) || '';
-            expect(tree.exists(packageJsonPath)).withContext('package.json does not exists').toBeTruthy();
-            const packageJson = new JSONFile(tree, packageJsonPath);
-            const packageJsonScripts = packageJson.get(['scripts']) as Record<string, string>;
-            expect(packageJsonScripts?.sentry).withContext('{package.json}.scripts.sentry does not exists').toBeDefined();
-        });
-
         it('should update tsconfig.json', () => {
             const tsConfigPath = tree.files.find(path => path.includes('tsconfig.json')) || '';
             expect(tree.exists(tsConfigPath)).withContext('tsconfig.json does not exists').toBeTruthy();
@@ -98,6 +90,7 @@ describe('Test - ngAdd schematic', () => {
         it('should update main.ts', () => {
             const mainTsPath = tree.files.find(path => path.includes('main.ts')) || '';
             expect(tree.exists(mainTsPath)).withContext('main.ts does not exists').toBeTruthy();
+            expect(tree.readContent(mainTsPath)).withContext('app.module.ts does not import environment').toContain('environment');
             expect(tree.readContent(mainTsPath)).withContext('app.module.ts does not import @hug/ngx-sentry').toContain('from \'@hug/ngx-sentry\'');
             expect(tree.readContent(mainTsPath)).withContext('app.module.ts does not import package.json').toContain('package.json');
             expect(tree.readContent(mainTsPath)).withContext('app.module.ts does not initialize Sentry').toContain('initSentry');
