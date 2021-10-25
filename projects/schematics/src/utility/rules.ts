@@ -21,6 +21,9 @@ export const info = (message: string): Rule =>
 export const warn = (message: string): Rule =>
     log(`${yellow('WARNING')} ${white(message)}`);
 
+export const action = (message: string): Rule =>
+    log(`${yellow('ACTION')} ${yellow(message)}`);
+
 export const schematic = (name: string, rules: Rule[], options?: unknown): Rule =>
     chain([
         log(magenta(`🚀 SCHEMATIC ${white('[')} ${magenta(name)}${(options) ? gray(`, ${JSON.stringify(options)}`) : ''} ${white(']')}`)),
