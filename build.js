@@ -26,6 +26,13 @@ const SCHEMATICS_ASSETS = [
 
 let schematicsWatcher;
 
+const log = str => console.log(magenta(str));
+const logHeader = str => {
+    console.log(green(`\n${'-'.repeat(78)}`));
+    console.log(green(str));
+    console.log(green(`${'-'.repeat(78)}`));
+};
+
 const execCmd = (cmd, opts) => new Promise((resolve, reject) => {
     exec(cmd, opts, (err, stdout, stderr) => {
         if (err) {
@@ -67,13 +74,6 @@ const copySchematicsAssets = () => cpy(
         dot: true
     }
 );
-
-const log = str => console.log(magenta(str));
-const logHeader = str => {
-    console.log(green(`\n${'-'.repeat(78)}`));
-    console.log(green(str));
-    console.log(green(`${'-'.repeat(78)}`));
-};
 
 const deployPackageJson = async () => {
     await cpy('./package.json', './projects/library/src');
