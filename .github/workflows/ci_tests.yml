@@ -1,4 +1,4 @@
-name: CI tests
+name: Run tests
 
 on:
   push:
@@ -6,25 +6,69 @@ on:
     - '**'
     tags-ignore:
     - '**'
+    paths-ignore:
+    - 'projects/docs/**'
   pull_request:
+  workflow_call:
   workflow_dispatch:
+
+concurrency:
+  group: run-tests-group-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   ci_tests:
-    runs-on: ubuntu-latest
+    name: Tests on ${{ matrix.os }} node${{ matrix.node }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node: [16, 18]
+
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
       - name: Setup node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: ${{ matrix.node }}
           registry-url: https://registry.npmjs.org/
+          cache: npm
+
+      # https://github.com/actions/setup-node/issues/411
+      # https://github.com/npm/cli/issues/4341
+      - name: Workaround for npm installation on Windows
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: npm install -g npm@8.3.1
+
+      - name: Install latest npm
+        run: npm install -g npm@latest
+
+      - name: Cache .angular and node_modules
+        uses: actions/cache@v3
+        id: cache-step
+        with:
+          key: cache-${{ matrix.os }}-node${{ matrix.node }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            cache-${{ matrix.os }}-node${{ matrix.node }}-
+          path: |
+            .angular/cache
+            node_modules
+
       - name: Install dependencies
-        run: npm clean-install
+        if: steps.cache-step.outputs.cache-hit != 'true'
+        run: npm clean-install --engine-strict
+
       - name: Lint
+        working-directory: projects/lib
         run: npm run lint
-      - name: Test library
-        run: npm run test:lib -- --no-watch --no-progress --browsers=ChromeHeadlessCI
-      - name: Test schematics
-        run: npm run test:schematics
+
+      - name: Test
+        working-directory: projects/lib
+        run: npm run test
+
+      - name: Build
+        working-directory: projects/lib
+        run: npm run build

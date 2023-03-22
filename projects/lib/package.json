@@ -1,0 +1,66 @@
+{
+    "name": "@hug/ngx-sentry",
+    "version": "2.0.0",
+    "description": "Angular wrapper for the official Sentry JavaScript SDK",
+    "homepage": "https://github.com/dsi-hug/ngx-sentry",
+    "license": "GPL-3.0-only",
+    "author": "HUG - Hôpitaux Universitaires Genève",
+    "contributors": [
+        "badisi (https://github.com/badisi)"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/dsi-hug/ngx-sentry.git"
+    },
+    "keywords": [
+        "angular",
+        "sentry",
+        "sentry-client",
+        "ngx-sentry",
+        "monitor",
+        "monitoring",
+        "crash-reporting",
+        "error-monitoring",
+        "crash-reports",
+        "csp-report",
+        "error-logging",
+        "error-handling",
+        "http-interceptor",
+        "http-errors"
+    ],
+    "sideEffects": false,
+    "bin": {
+        "ngx-sentry": "./bin/ngx-sentry"
+    },
+    "scripts": {
+        "start": "node ./make.mjs watch",
+        "lint": "node ./make.mjs lint",
+        "test:lib": "node ./make.mjs test-lib",
+        "test:schematics": "node ./make.mjs test-schematics",
+        "test:ci": "node ./make.mjs test-ci",
+        "build": "node ./make.mjs build",
+        "build:global": "node ./make.mjs build-global"
+    },
+    "peerDependencies": {
+        "@angular/common": ">= 14",
+        "@angular/core": ">= 14",
+        "@angular/router": ">= 14"
+    },
+    "dependencies": {
+        "@hug/ngx-schematics-utilities": "^6.5.0",
+        "@sentry/angular-ivy": "^7.43.0",
+        "@sentry/tracing": "^7.43.0",
+        "@sentry/cli": "2.15.1",
+        "tslib": "^2.3.0"
+    },
+    "engines": {
+        "node": ">= 14.14.0"
+    },
+    "schematics": "./schematics/collection.json",
+    "ng-update": {
+        "migrations": "./schematics/migration.json"
+    },
+    "ng-add": {
+        "save": "dependencies"
+    }
+}

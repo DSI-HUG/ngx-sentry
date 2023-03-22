@@ -7,26 +7,29 @@
         "outDir": "./dist/out-tsc",
         "forceConsistentCasingInFileNames": true,
         "strict": true,
+        "noImplicitOverride": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "paths": {
+            "@hug/ngx-sentry": [
+                "projects/lib/src"
+            ],
+            "@hug/ngx-sentry/*": [
+                "projects/lib/src/*"
+            ]
+        },
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
         "sourceMap": true,
         "declaration": false,
         "downlevelIteration": true,
-        "paths": {
-            "@hug/ngx-sentry": [
-                "projects/library/src"
-            ],
-            "@hug/ngx-sentry/*": [
-                "projects/library/src/*"
-            ]
-        },
         "experimentalDecorators": true,
         "moduleResolution": "node",
         "importHelpers": true,
-        "target": "es2017",
-        "module": "es2020",
+        "target": "ES2022",
+        "module": "ES2022",
+        "useDefineForClassFields": false,
         "lib": [
-            "es2018",
+            "ES2022",
             "dom"
         ]
     },

@@ -3,13 +3,13 @@
 </h1>
 
 <p align="center">
-    <br>
-    <a href="https://www.hug.ch/">
-        <img src="https://www.hug.ch/sites/all/themes/interhug/img/logos/logo-hug.svg" alt="hug-logo" height="54px" />
+    <br/>
+    <a href="https://www.hug.ch">
+        <img src="https://cdn.hug.ch/svgs/hug/hug-logo-horizontal.svg" alt="hug-logo" height="54px" />
     </a>
-    <br><br>
+    <br/><br/>
     <i>Angular wrapper for the official Sentry JavaScript SDK</i>
-    <br><br>
+    <br/><br/>
 </p>
 
 <p align="center">
@@ -19,27 +19,21 @@
     <a href="https://npmcharts.com/compare/@hug/ngx-sentry?minimal=true">
         <img src="https://img.shields.io/npm/dw/@hug/ngx-sentry.svg?color=blue&logo=npm" alt="npm donwloads" />
     </a>
-    <a href="https://github.com/DSI-HUG/ngx-sentry/blob/master/LICENSE">
+    <a href="https://github.com/dsi-hug/ngx-sentry/blob/main/LICENSE">
         <img src="https://img.shields.io/badge/license-GPLv3-ff69b4.svg" alt="license GPLv3" />
     </a>
 </p>
 
 <p align="center">
-    <a href="https://github.com/DSI-HUG/ngx-sentry/actions?query=workflow:CI%20tests">
-        <img src="https://github.com/DSI-HUG/ngx-sentry/workflows/CI%20tests/badge.svg" alt="build status" />
+    <a href="https://github.com/dsi-hug/ngx-sentry/actions/workflows/ci_tests.yml">
+        <img src="https://github.com/dsi-hug/ngx-sentry/actions/workflows/ci_tests.yml/badge.svg" alt="build status" />
     </a>
-    <a href="https://david-dm.org/DSI-HUG/ngx-sentry">
-        <img src="https://img.shields.io/david/DSI-HUG/ngx-sentry.svg" alt="dependency status" />
-    </a>
-    <a href="https://david-dm.org/DSI-HUG/ngx-sentry?type=peer">
-        <img src="https://img.shields.io/david/peer/DSI-HUG/ngx-sentry.svg" alt="peerDependency status" />
-    </a>
-    <a href="https://github.com/DSI-HUG/ngx-sentry/blob/master/CONTRIBUTING.md#-submitting-a-pull-request-pr">
+    <a href="https://github.com/dsi-hug/ngx-sentry/blob/main/CONTRIBUTING.md#-submitting-a-pull-request-pr">
         <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome" />
     </a>
 </p>
 
-<hr>
+<hr/>
 
 ## Getting started
 
@@ -48,29 +42,28 @@ To set up or update an Angular project with this library use the Angular CLI's [
 #### Installation
 
 ```sh
-$ ng add @hug/ngx-sentry
+ng add @hug/ngx-sentry
 ```
 
 #### Update
 
 ```sh
-$ ng update @hug/ngx-sentry
+ng update @hug/ngx-sentry
 ```
 
 ----
 
-The `ng add` command will install Sentry dependencies, the HUG Wrapper configuration and ask you the following questions:
+The `ng add` command will ask you the following questions:
 
-1.  **Sentry's project name**: *the name used when creating the Sentry project*
-2.  **Sentry's dsn url**: *Data Source Name url provided during the Sentry project creation process*
+1.  **Name of the project in Sentry**: *the name used when creating the Sentry project*
+2.  **Data Source Name (DSN) url**: *the url provided during the Sentry project creation process*
 
-The `ng add` command will additionally perform the following actions:
+And will also perform the following actions:
 
--   Add dependencies to `package.json`
--   Add `resolveJsonModule` and `allowSyntheticDefaultImports` to `tsconfig.json`
 -   Create a `.sentryclirc` file containing all the Sentry configurations
 -   Initialize and configure Sentry in `main.ts`
--   Import the `NgxSentryModule` in your Angular application module
+-   Add `resolveJsonModule` and `allowSyntheticDefaultImports` to `tsconfig.json`
+-   Import the `NgxSentryModule` in your Angular application module (if app is not standalone)
 
 
 ## Usage
@@ -78,19 +71,19 @@ The `ng add` command will additionally perform the following actions:
 Follow these steps to integrate your project's source maps with Sentry:
 
 1. Generate Source Maps
-```sh
-$ ng build --source-map
-```
+   ```sh
+   ng build --source-map
+   ```
 
 2. Provide Source Maps to Sentry
-```sh
-$ npx ngx-sentry ./dist/your-project-name
-```
+   ```sh
+   npx ngx-sentry ./project-dist-path
+   ```
 
 
 ## Options
 
-This library is a wrapper around the official Sentry JavaScript SDK, with added functionalities and configurations.
+This library is a wrapper around the official [Sentry JavaScript SDK][sentry-sdk-url] with extra functionalities and configurations.
 
 You shouldn't have to configure anything else but in case you wanted to, you can still do it.
 
@@ -154,20 +147,20 @@ See the [developer docs][developer].
 
 ## Contributing
 
-### Want to Help?
+#### > Want to Help?
 
 Want to file a bug, contribute some code or improve documentation? Excellent!
 
 But please read up first on the guidelines for [contributing][contributing], and learn about submission process, coding rules and more.
 
-### Code of Conduct
+#### > Code of Conduct
 
 Please read and follow the [Code of Conduct][codeofconduct], and help us keep this project open and inclusive.
 
 
 ## Credits
 
-This library was made with [@hug/ngx-lib-and-schematics-starter][starter].
+Copyright (C) 2023 [HUG - Hôpitaux Universitaires Genève][dsi-hug]
 
 [![love@hug](https://img.shields.io/badge/@hug-%E2%9D%A4%EF%B8%8Flove-magenta)][dsi-hug]
 
@@ -175,8 +168,8 @@ This library was made with [@hug/ngx-lib-and-schematics-starter][starter].
 
 
 [schematics]: https://angular.io/guide/schematics-for-libraries
-[developer]: https://github.com/DSI-HUG/ngx-sentry/blob/master/DEVELOPER.md
-[contributing]: https://github.com/DSI-HUG/ngx-sentry/blob/master/CONTRIBUTING.md
-[codeofconduct]: https://github.com/DSI-HUG/ngx-sentry/blob/master/CODE_OF_CONDUCT.md
-[starter]: https://github.com/DSI-HUG/ngx-lib-and-schematics-starter
-[dsi-hug]: https://github.com/DSI-HUG
+[sentry-sdk-url]: https://github.com/getsentry/sentry-javascript
+[developer]: https://github.com/dsi-hug/ngx-sentry/blob/main/DEVELOPER.md
+[contributing]: https://github.com/dsi-hug/ngx-sentry/blob/main/CONTRIBUTING.md
+[codeofconduct]: https://github.com/dsi-hug/ngx-sentry/blob/main/CODE_OF_CONDUCT.md
+[dsi-hug]: https://github.com/dsi-hug

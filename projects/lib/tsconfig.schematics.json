@@ -1,0 +1,33 @@
+{
+    "extends": "../../tsconfig.hug.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "rootDir": "schematics",
+        "outDir": "../../dist/schematics",
+        "module": "commonjs",
+        "target": "ES2022",
+        "lib": [
+            "ES2022",
+            "dom"
+        ],
+        "moduleResolution": "node",
+        "declaration": true,
+        "declarationMap": false,
+        "noEmitOnError": true,
+        "skipDefaultLibCheck": true,
+        "strictNullChecks": true,
+        "skipLibCheck": true,
+        "sourceMap": true,
+        "types": [
+            "jasmine",
+            "node"
+        ]
+    },
+    "include": [
+        "schematics/**/*"
+    ],
+    "exclude": [
+        "schematics/*/files/**/*",
+        "schematics/**/*.spec.ts"
+    ]
+}
