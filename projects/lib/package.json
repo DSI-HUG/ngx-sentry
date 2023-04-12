@@ -47,11 +47,11 @@
         "@angular/router": ">= 14"
     },
     "dependencies": {
-        "@hug/ngx-schematics-utilities": "^6.5.0",
-        "@sentry/angular-ivy": "^7.43.0",
-        "@sentry/tracing": "^7.43.0",
-        "@sentry/cli": "2.15.1",
-        "tslib": "^2.3.0"
+        "@hug/ngx-schematics-utilities": "^6.5.2",
+        "@sentry/angular-ivy": "^7.47.0",
+        "@sentry/tracing": "^7.47.0",
+        "@sentry/cli": "2.17.1",
+        "tslib": "^2.5.0"
     },
     "engines": {
         "node": ">= 14.14.0"
