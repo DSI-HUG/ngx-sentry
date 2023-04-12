@@ -5,7 +5,6 @@
  */
 
 import colors from '@colors/colors/safe.js';
-import { spawn } from 'child_process';
 import { watch as chokidarWatch } from 'chokidar';
 import cpy from 'cpy';
 import crossSpawn from 'cross-spawn';
@@ -15,7 +14,7 @@ import { fileURLToPath } from 'url';
 
 const { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } = fxExtra;
 const { green, magenta } = colors;
-const { sync: spawnSync } = crossSpawn;
+const { sync: spawnSync, spawn } = crossSpawn;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const NG_PROJECT_LIBRARY_NAME = 'lib';
@@ -25,17 +24,20 @@ const LIBRARY_TYPE = existsSync(pathResolve(__dirname, 'ng-package.json')) ? 'ng
 const LIBRARY_SRC_PATH = pathResolve(__dirname, LIBRARY_SRC);
 const SCHEMATICS_SRC_PATH = pathResolve(__dirname, SCHEMATICS_SRC);
 const WORKSPACE_PATH = pathResolve(__dirname, '..', '..');
-const TMP_PATH = pathResolve(WORKSPACE_PATH, 'tmp');
 const DIST_PATH = pathResolve(WORKSPACE_PATH, 'dist');
 
 const copyAssets = async () => {
-    try {
-        await cpy(`${WORKSPACE_PATH}/README.md`, DIST_PATH, { flat: true });
-        await cpy(`${WORKSPACE_PATH}/LICENSE`, DIST_PATH, { flat: true });
+    await cpy(`${WORKSPACE_PATH}/README.md`, DIST_PATH, { flat: true });
+    await cpy(`${WORKSPACE_PATH}/LICENSE`, DIST_PATH, { flat: true });
+    if (existsSync(pathResolve(__dirname, 'bin'))) {
         await cpy(pathResolve(__dirname, 'bin'), `${DIST_PATH}/bin`, { flat: true });
+    }
+    if (existsSync(pathResolve(__dirname, 'scripts'))) {
         await cpy(pathResolve(__dirname, 'scripts'), `${DIST_PATH}/scripts`, { flat: true });
+    }
+    if (existsSync(pathResolve(__dirname, 'package.json'))) {
         await cpy(pathResolve(__dirname, 'package.json'), DIST_PATH, { flat: true });
-    } catch { /* swallow errors */ }
+    }
 };
 const copySchematicsAssets = async () => {
     await cpy(`${SCHEMATICS_SRC_PATH}/*/files/**/*`, `${DIST_PATH}/schematics`, { dot: true });
@@ -156,11 +158,11 @@ const buildLib = async () => {
 
 const test = (tsconfigPath, ci = false) => {
     if (existsSync(tsconfigPath)) {
-        const schematicsArgs = [`--project=${tsconfigPath}`, '../../node_modules/.bin/jasmine', '--config=jasmine.json'];
+        const args = [`--project=${tsconfigPath}`, '../../node_modules/jasmine/bin/jasmine.js', '--config=jasmine.json'];
         if (!ci) {
-            schematicsArgs.unshift('--respawn', '--transpile-only');
+            args.unshift('--respawn', '--transpile-only');
         }
-        spawn('ts-node-dev', schematicsArgs, { stdio: 'inherit' });
+        spawn('ts-node-dev', args, { stdio: 'inherit' });
     }
 };
 
