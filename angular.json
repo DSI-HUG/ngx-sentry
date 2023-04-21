@@ -48,7 +48,7 @@
             }
           },
           "options": {
-            "tsConfig": "projects/lib/tsconfig.spec.json",
+            "tsConfig": "projects/lib/tsconfig.lib.spec.json",
             "polyfills": [
               "zone.js",
               "zone.js/testing"
