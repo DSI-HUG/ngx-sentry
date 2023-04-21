@@ -14,12 +14,14 @@
         "projectName": {
             "x-prompt": "Name of the project in Sentry",
             "description": "Sentry project name",
-            "type": "string"
+            "type": "string",
+            "default": "Sentry Project Name"
         },
         "dsnUrl": {
             "x-prompt": "Data Source Name (DSN) url",
             "description": "Sentry project dsn url",
-            "type": "string"
+            "type": "string",
+            "default": "https://sentry-dsn-url"
         }
     },
     "required": [
