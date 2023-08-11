@@ -49,7 +49,6 @@
     "dependencies": {
         "@hug/ngx-schematics-utilities": "^6.6.5",
         "@sentry/angular-ivy": "^7.63.0",
-        "@sentry/tracing": "^7.63.0",
         "@sentry/cli": "2.20.5",
         "tslib": "^2.6.1"
     },

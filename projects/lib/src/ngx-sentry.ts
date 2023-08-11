@@ -2,10 +2,9 @@
 import { APP_INITIALIZER, ErrorHandler, Provider } from '@angular/core';
 import { Router } from '@angular/router';
 import {
-    BrowserOptions, configureScope, createErrorHandler, ErrorHandlerOptions, init, instrumentAngularRouting,
-    TraceService, User
+    BrowserOptions, BrowserTracing, configureScope, createErrorHandler, ErrorHandlerOptions,
+    init, instrumentAngularRouting, TraceService, User
 } from '@sentry/angular-ivy';
-import { Integrations } from '@sentry/tracing';
 
 export const NGX_SENTRY_PROVIDERS = (options?: ErrorHandlerOptions): Provider[] => [{
     // Automatically send Javascript errors captured by the Angular's error handler
@@ -41,7 +40,7 @@ export const initSentry = (options: SentryOptions): void => {
         integrations: [
             // Registers and configures the Tracing integration, which automatically instruments the application
             // to monitor its performance, including custom Angular routing instrumentation.
-            new Integrations.BrowserTracing({
+            new BrowserTracing({
                 tracingOrigins: options.tracingOrigins ?? ['localhost', /^\//],
                 routingInstrumentation: instrumentAngularRouting
             })
