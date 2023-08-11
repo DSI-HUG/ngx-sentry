@@ -28,7 +28,7 @@ export const NGX_SENTRY_PROVIDERS = (options?: ErrorHandlerOptions): Provider[] 
 }];
 
 export type SentryOptions = BrowserOptions & Required<Pick<BrowserOptions, 'dsn' | 'environment' | 'release'>> & {
-    tracingOrigins?: Array<string | RegExp>;
+    tracingOrigins?: (string | RegExp)[];
 };
 
 export const setSentryUser = (user: User | null): void => {
@@ -42,7 +42,7 @@ export const initSentry = (options: SentryOptions): void => {
             // Registers and configures the Tracing integration, which automatically instruments the application
             // to monitor its performance, including custom Angular routing instrumentation.
             new Integrations.BrowserTracing({
-                tracingOrigins: options.tracingOrigins || ['localhost', /^\//],
+                tracingOrigins: options.tracingOrigins ?? ['localhost', /^\//],
                 routingInstrumentation: instrumentAngularRouting
             })
         ],
