@@ -106,7 +106,7 @@ initSentry(options: BrowserOptions);
 
 The behavior of the error handler can be configured either in:
 
-1. `main.ts` *(if the app is a standalone Angular application)*
+* `main.ts` *(if the app is a standalone Angular application)*
     ```ts
     bootstrapApplication(AppComponent, {
       providers: [
@@ -115,7 +115,7 @@ The behavior of the error handler can be configured either in:
     });
     ```
 
-2. `app.module.ts` *(if the app is **not** a standalone Angular application)*
+* `app.module.ts` *(if the app is **not** a standalone Angular application)*
     ```ts
     @NgModule({
       imports: [
