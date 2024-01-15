@@ -47,9 +47,9 @@
         "@angular/router": ">= 14"
     },
     "dependencies": {
-        "@hug/ngx-schematics-utilities": "^7.0.0",
-        "@sentry/angular-ivy": "^7.74.1",
-        "@sentry/cli": "2.21.2",
+        "@hug/ngx-schematics-utilities": "^7.1.0",
+        "@sentry/angular-ivy": "^7.93.0",
+        "@sentry/cli": "2.25.0",
         "tslib": "^2.6.2"
     },
     "engines": {
