@@ -2,7 +2,7 @@
 import { APP_INITIALIZER, ErrorHandler, Provider } from '@angular/core';
 import { Router } from '@angular/router';
 import {
-    BrowserOptions, BrowserTracing, configureScope, createErrorHandler, ErrorHandlerOptions,
+    BrowserOptions, BrowserTracing, createErrorHandler, ErrorHandlerOptions, getCurrentScope,
     init, instrumentAngularRouting, TraceService, User
 } from '@sentry/angular-ivy';
 
@@ -31,7 +31,7 @@ export type SentryOptions = BrowserOptions & Required<Pick<BrowserOptions, 'dsn'
 };
 
 export const setSentryUser = (user: User | null): void => {
-    configureScope(scope => scope.setUser(user));
+    getCurrentScope().setUser(user);
 };
 
 export const initSentry = (options: SentryOptions): void => {
