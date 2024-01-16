@@ -12,7 +12,7 @@ import fxExtra from 'fs-extra';
 import { dirname, resolve as pathResolve } from 'path';
 import { fileURLToPath } from 'url';
 
-const { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } = fxExtra;
+const { existsSync, mkdirSync, readFileSync, rmSync } = fxExtra;
 const { green, magenta } = colors;
 const { sync: spawnSync } = crossSpawn;
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -34,9 +34,6 @@ const copyAssets = async () => {
     }
     if (existsSync(pathResolve(__dirname, 'scripts'))) {
         await cpy(pathResolve(__dirname, 'scripts'), `${DIST_PATH}/scripts`, { flat: true });
-    }
-    if (existsSync(pathResolve(__dirname, 'package.json'))) {
-        await cpy(pathResolve(__dirname, 'package.json'), DIST_PATH, { flat: true });
     }
 };
 const copySchematicsAssets = async () => {
@@ -114,18 +111,6 @@ const packDistAndInstallGlobally = async () => {
     rmSync(filePath);
 };
 
-const sanitizePackageJson = async () => {
-    const pkgJson = JSON.parse(readFileSync(`${DIST_PATH}/package.json`));
-    delete pkgJson.devDependencies;
-    const postinstall = pkgJson.scripts?.postinstall;
-    if (postinstall) {
-        pkgJson.scripts = { postinstall };
-    } else {
-        delete pkgJson.scripts;
-    }
-    writeFileSync(`${DIST_PATH}/package.json`, JSON.stringify(pkgJson, null, 4), { encoding: 'utf8' });
-};
-
 const buildSchematics = async (exitOnError = true) => {
     if (existsSync(SCHEMATICS_SRC_PATH)) {
         if (existsSync('tsconfig.schematics.json')) {
@@ -149,9 +134,6 @@ const buildLib = async (exitOnError = true) => {
 
     log('> Copying assets..');
     await copyAssets();
-
-    log('> Sanitizing package.json..');
-    await sanitizePackageJson();
 };
 
 const test = (tsconfigPath, ci = false) => {
