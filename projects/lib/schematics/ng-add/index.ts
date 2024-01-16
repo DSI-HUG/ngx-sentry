@@ -39,7 +39,7 @@ export const initSentry = (context: ChainableProjectContext, options: NgAddOptio
     }
     rules.push(
         addImportToFile(mainTsPath, 'isDevMode', '@angular/core'),
-        addImportToFile(mainTsPath, 'packageJson', 'package.json', true)
+        addImportToFile(mainTsPath, 'packageJson', '../package.json', true)
     );
 
     // Provide library
