@@ -62,7 +62,7 @@ const joc = jasmine.objectContaining;
                     expect(mainTsContent).toContain('import { initSentry } from \'@hug/ngx-sentry\';');
                 }
                 expect(mainTsContent).toContain('import { isDevMode } from \'@angular/core\';');
-                expect(mainTsContent).toContain('import packageJson from \'package.json\';');
+                expect(mainTsContent).toContain('import packageJson from \'../package.json\';');
                 expect(mainTsContent).toContain('initSentry({\n' +
                 `  dsn: '${defaultOptions.dsnUrl}',\n` +
                 '  environment: \'DEV\', // replace it with your own value\n' +
