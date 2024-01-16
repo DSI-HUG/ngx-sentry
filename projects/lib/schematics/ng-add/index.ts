@@ -2,13 +2,13 @@ import { tags } from '@angular-devkit/core';
 import { chain, Rule } from '@angular-devkit/schematics';
 import {
     addImportToFile, addImportToNgModule, addProviderToBootstrapApplication, application,
-    ChainableProjectContext, createOrUpdateFile, logAction, schematic, workspace
+    ChainableProjectContext, createOrUpdateFile, getProjectMainPath, isProjectStandalone, logAction, schematic, workspace
 } from '@hug/ngx-schematics-utilities';
 
 import { NgAddOptions } from './ng-add-options';
 
 export const initSentry = (context: ChainableProjectContext, options: NgAddOptions): Rule => {
-    const mainTsPath = context.project.pathFromSourceRoot('main.ts');
+    const mainTsPath = getProjectMainPath(context.tree, context.project.name);
     const mainTsContent = context.tree.read(mainTsPath)?.toString('utf-8') ?? '';
     const rules: Rule[] = [];
 
@@ -43,17 +43,12 @@ export const initSentry = (context: ChainableProjectContext, options: NgAddOptio
     );
 
     // Provide library
-    if (mainTsContent.includes('bootstrapApplication(')) {
-        rules.push(
-            addImportToFile(mainTsPath, 'initSentry', '@hug/ngx-sentry/standalone'),
-            addProviderToBootstrapApplication(mainTsPath, 'provideSentry()', '@hug/ngx-sentry/standalone')
-        );
+    rules.push(addImportToFile(mainTsPath, 'initSentry', '@hug/ngx-sentry'));
+    if (isProjectStandalone(context.tree, context.project.name)) {
+        rules.push(addProviderToBootstrapApplication(mainTsPath, 'provideSentry()', '@hug/ngx-sentry'));
     } else {
         const appModulePath = context.project.pathFromSourceRoot('app/app.module.ts');
-        rules.push(
-            addImportToFile(mainTsPath, 'initSentry', '@hug/ngx-sentry'),
-            addImportToNgModule(appModulePath, 'NgxSentryModule.forRoot()', '@hug/ngx-sentry')
-        );
+        rules.push(addImportToNgModule(appModulePath, 'NgxSentryModule.forRoot()', '@hug/ngx-sentry'));
     }
 
     return chain(rules);

@@ -57,7 +57,7 @@ const joc = jasmine.objectContaining;
                 await runner.runSchematic('ng-add', defaultOptions, tree);
                 const mainTsContent = tree.readContent(project.pathFromSourceRoot('main.ts'));
                 if (useStandalone) {
-                    expect(mainTsContent).toContain('import { initSentry } from \'@hug/ngx-sentry/standalone\';');
+                    expect(mainTsContent).toContain('import { initSentry } from \'@hug/ngx-sentry\';');
                 } else {
                     expect(mainTsContent).toContain('import { initSentry } from \'@hug/ngx-sentry\';');
                 }
@@ -77,7 +77,7 @@ const joc = jasmine.objectContaining;
 
                     await runner.runSchematic('ng-add', defaultOptions, tree);
                     const configTsContent = tree.readContent(configTsPath);
-                    expect(configTsContent).toContain('import { provideSentry } from \'@hug/ngx-sentry/standalone\';');
+                    expect(configTsContent).toContain('import { provideSentry } from \'@hug/ngx-sentry\';');
                     expect(configTsContent).toContain('provideSentry()');
                 });
             }

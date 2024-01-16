@@ -1,6 +1,7 @@
 import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
-import { NGX_SENTRY_PROVIDERS } from '@hug/ngx-sentry';
 import { ErrorHandlerOptions } from '@sentry/angular-ivy';
+
+import { NGX_SENTRY_PROVIDERS } from './ngx-sentry';
 
 export const provideSentry = (options?: ErrorHandlerOptions): EnvironmentProviders =>
     makeEnvironmentProviders(NGX_SENTRY_PROVIDERS(options));
