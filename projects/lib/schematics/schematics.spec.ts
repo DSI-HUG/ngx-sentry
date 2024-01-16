@@ -25,7 +25,8 @@ export const appTest1: ApplicationOptions = {
     strict: true,
     style: Style.Scss,
     skipTests: false,
-    skipPackageJson: false
+    skipPackageJson: false,
+    standalone: false
 };
 
 export const appTest2: ApplicationOptions = {
@@ -36,16 +37,20 @@ export const appTest2: ApplicationOptions = {
     strict: true,
     style: Style.Scss,
     skipTests: false,
-    skipPackageJson: false
+    skipPackageJson: false,
+    standalone: false
 };
 
 export const collectionPath = join(__dirname, './collection.json');
 
 export const runner = new SchematicTestRunner('ngx-starter', collectionPath);
 
-export const getCleanAppTree = async (useWorkspace = false): Promise<UnitTestTree> => {
+export const getCleanAppTree = async (useWorkspace = false, standalone = false): Promise<UnitTestTree> => {
     appTest1.projectRoot = (useWorkspace) ? join(workspaceOptions.newProjectRoot!, appTest1.name) : '';
     appTest2.projectRoot = (useWorkspace) ? join(workspaceOptions.newProjectRoot!, appTest2.name) : '';
+
+    appTest1.standalone = standalone;
+    appTest2.standalone = standalone;
 
     const workspaceTree = await runner.runExternalSchematic('@schematics/angular', 'workspace', workspaceOptions);
     await runner.runExternalSchematic('@schematics/angular', 'application', appTest1, workspaceTree);
