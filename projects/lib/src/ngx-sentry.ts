@@ -9,7 +9,6 @@ import {
 export const NGX_SENTRY_PROVIDERS = (options?: ErrorHandlerOptions): Provider[] => [{
     // Automatically send Javascript errors captured by the Angular's error handler
     provide: ErrorHandler,
-    multi: true,
     useValue: createErrorHandler({
         showDialog: false,
         ...options
