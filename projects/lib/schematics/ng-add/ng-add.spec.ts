@@ -1,5 +1,5 @@
 import { UnitTestTree } from '@angular-devkit/schematics/testing';
-import { getProjectFromWorkspace, ProjectDefinition } from '@hug/ngx-schematics-utilities';
+import { ApplicationDefinition, getProjectFromWorkspace } from '@hug/ngx-schematics-utilities';
 
 import { appTest1, appTest2, getCleanAppTree, runner } from '../schematics.spec';
 import { NgAddOptions } from './ng-add-options';
@@ -12,7 +12,7 @@ const joc = jasmine.objectContaining;
             let defaultOptions: NgAddOptions;
             let tree: UnitTestTree;
             let nbFiles: number;
-            let project: ProjectDefinition;
+            let project: ApplicationDefinition;
 
             beforeEach(async () => {
                 tree = await getCleanAppTree(useWorkspace, useStandalone);

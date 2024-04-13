@@ -1,15 +1,14 @@
 import { tags } from '@angular-devkit/core';
 import { chain, Rule } from '@angular-devkit/schematics';
 import {
-    addImportToFile, addImportToNgModule, addProviderToBootstrapApplication, application,
-    ChainableProjectContext, createOrUpdateFile, getProjectMainPath, isProjectStandalone, logAction, schematic, workspace
+    addImportToFile, addImportToNgModule, addProviderToBootstrapApplication, application, ChainableApplicationContext,
+    createOrUpdateFile, logAction, schematic, workspace
 } from '@hug/ngx-schematics-utilities';
 
 import { NgAddOptions } from './ng-add-options';
 
-export const initSentry = (context: ChainableProjectContext, options: NgAddOptions): Rule => {
-    const mainTsPath = getProjectMainPath(context.tree, context.project.name);
-    const mainTsContent = context.tree.read(mainTsPath)?.toString('utf-8') ?? '';
+export const initSentry = ({ tree, project }: ChainableApplicationContext, options: NgAddOptions): Rule => {
+    const mainTsContent = tree.read(project.mainFilePath)?.toString('utf-8') ?? '';
     const rules: Rule[] = [];
 
     // Initialize Sentry in main.ts
@@ -33,21 +32,21 @@ export const initSentry = (context: ChainableProjectContext, options: NgAddOptio
         newContent += mainTsContent.substring(insertAtPosition);
 
         rules.push(
-            createOrUpdateFile(mainTsPath, newContent),
+            createOrUpdateFile(project.mainFilePath, newContent),
             logAction('Have a look at `main.ts` file and update Sentry configuration according to your needs')
         );
     }
     rules.push(
-        addImportToFile(mainTsPath, 'isDevMode', '@angular/core'),
-        addImportToFile(mainTsPath, 'packageJson', '../package.json', true)
+        addImportToFile(project.mainFilePath, 'isDevMode', '@angular/core'),
+        addImportToFile(project.mainFilePath, 'packageJson', '../package.json', true)
     );
 
     // Provide library
-    rules.push(addImportToFile(mainTsPath, 'initSentry', '@hug/ngx-sentry'));
-    if (isProjectStandalone(context.tree, context.project.name)) {
-        rules.push(addProviderToBootstrapApplication(mainTsPath, 'provideSentry()', '@hug/ngx-sentry'));
+    rules.push(addImportToFile(project.mainFilePath, 'initSentry', '@hug/ngx-sentry'));
+    if (project.isStandalone) {
+        rules.push(addProviderToBootstrapApplication(project.mainFilePath, 'provideSentry()', '@hug/ngx-sentry'));
     } else {
-        const appModulePath = context.project.pathFromSourceRoot('app/app.module.ts');
+        const appModulePath = project.pathFromSourceRoot('app/app.module.ts');
         rules.push(addImportToNgModule(appModulePath, 'NgxSentryModule.forRoot()', '@hug/ngx-sentry'));
     }
 
