@@ -74,7 +74,6 @@ const joc = jasmine.objectContaining;
             if (useStandalone) {
                 it('should update app.config.ts', async () => {
                     const configTsPath = project.pathFromSourceRoot('app/app.config.ts');
-
                     await runner.runSchematic('ng-add', defaultOptions, tree);
                     const configTsContent = tree.readContent(configTsPath);
                     expect(configTsContent).toContain('import { provideSentry } from \'@hug/ngx-sentry\';');
@@ -88,7 +87,6 @@ const joc = jasmine.objectContaining;
                 if (useStandalone) {
                     expect(appModuleContent).not.toContain('import { NgxSentryModule } from \'@hug/ngx-sentry\'');
                     expect(appModuleContent).not.toContain('NgxSentryModule.forRoot()');
-
                 } else {
                     expect(appModuleContent).toContain('import { NgxSentryModule } from \'@hug/ngx-sentry\'');
                     expect(appModuleContent).toContain('NgxSentryModule.forRoot()');
