@@ -1,6 +1,6 @@
 {
     "name": "@hug/ngx-sentry",
-    "version": "6.0.2",
+    "version": "6.0.3",
     "description": "Angular wrapper for the official Sentry JavaScript SDK",
     "homepage": "https://github.com/dsi-hug/ngx-sentry",
     "license": "GPL-3.0-only",
