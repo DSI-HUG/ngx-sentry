@@ -3,7 +3,7 @@ import { APP_INITIALIZER, ErrorHandler, Provider } from '@angular/core';
 import { Router } from '@angular/router';
 import {
     BrowserOptions, browserTracingIntegration, createErrorHandler, ErrorHandlerOptions, getCurrentScope, init, TraceService, User
-} from '@sentry/angular-ivy';
+} from '@sentry/angular';
 
 export const NGX_SENTRY_PROVIDERS = (options?: ErrorHandlerOptions): Provider[] => [{
     // Automatically send Javascript errors captured by the Angular's error handler

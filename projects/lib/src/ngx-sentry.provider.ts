@@ -1,5 +1,5 @@
 import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
-import { ErrorHandlerOptions } from '@sentry/angular-ivy';
+import { ErrorHandlerOptions } from '@sentry/angular';
 
 import { NGX_SENTRY_PROVIDERS } from './ngx-sentry';
 

@@ -6,7 +6,7 @@
     },
     "allowedNonPeerDependencies": [
         "@hug/ngx-schematics-utilities",
-        "@sentry/angular-ivy",
+        "@sentry/angular",
         "@sentry/tracing",
         "@sentry/cli"
     ]
