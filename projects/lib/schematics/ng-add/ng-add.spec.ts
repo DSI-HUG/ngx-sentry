@@ -56,19 +56,15 @@ const joc = jasmine.objectContaining;
             it('should update main.ts', async () => {
                 await runner.runSchematic('ng-add', defaultOptions, tree);
                 const mainTsContent = tree.readContent(project.pathFromSourceRoot('main.ts'));
-                if (useStandalone) {
-                    expect(mainTsContent).toContain('import { initSentry } from \'@hug/ngx-sentry\';');
-                } else {
-                    expect(mainTsContent).toContain('import { initSentry } from \'@hug/ngx-sentry\';');
-                }
+                expect(mainTsContent).toContain('import { initSentry } from \'@hug/ngx-sentry\';');
                 expect(mainTsContent).toContain('import { isDevMode } from \'@angular/core\';');
                 expect(mainTsContent).toContain('import packageJson from \'../package.json\';');
                 expect(mainTsContent).toContain('initSentry({\n' +
-                `  dsn: '${defaultOptions.dsnUrl}',\n` +
-                '  environment: \'DEV\', // replace it with your own value\n' +
-                '  release: packageJson.version,\n' +
-                '  enabled: !isDevMode()\n' +
-                '});');
+                    `  dsn: '${defaultOptions.dsnUrl}',\n` +
+                    '  environment: \'DEV\', // replace it with your own value\n' +
+                    '  release: packageJson.version,\n' +
+                    '  enabled: !isDevMode()\n' +
+                    '});');
             });
 
             if (useStandalone) {
