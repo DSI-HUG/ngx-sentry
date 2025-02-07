@@ -43,15 +43,15 @@
         "release": "npm publish ../../dist --access=public --workspaces=false"
     },
     "peerDependencies": {
+        "@hug/ngx-schematics-utilities": "^10.2.0",
         "@angular/common": ">= 15",
         "@angular/core": ">= 15",
         "@angular/router": ">= 15"
     },
     "dependencies": {
-        "@hug/ngx-schematics-utilities": "^10.1.4",
-        "@sentry/angular": "8.32.0",
-        "@sentry/cli": "2.36.5",
-        "tslib": "^2.7.0"
+        "@sentry/angular": "8.54.0",
+        "@sentry/cli": "2.41.1",
+        "tslib": "^2.8.1"
     },
     "engines": {
         "node": ">= 18.12.0"
