@@ -77,9 +77,9 @@ const joc = jasmine.objectContaining;
                 });
             }
 
-            it('should update app.module.ts', async () => {
+            it('should update app-module.ts', async () => {
                 await runner.runSchematic('ng-add', defaultOptions, tree);
-                const appModuleContent = tree.readContent(project.pathFromSourceRoot('app/app.module.ts'));
+                const appModuleContent = tree.readContent(project.pathFromSourceRoot('app/app-module.ts'));
                 if (useStandalone) {
                     expect(appModuleContent).not.toContain('import { NgxSentryModule } from \'@hug/ngx-sentry\'');
                     expect(appModuleContent).not.toContain('NgxSentryModule.forRoot()');

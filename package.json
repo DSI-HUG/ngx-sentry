@@ -8,17 +8,16 @@
         "projects/lib"
     ],
     "dependencies": {
-        "@angular/common": "^19.2.8",
-        "@angular/core": "^19.2.8",
-        "@angular/router": "^19.2.8"
+        "@angular/common": "^20.0.5",
+        "@angular/core": "^20.0.5",
+        "@angular/router": "^20.0.5"
     },
     "devDependencies": {
-        "@angular-devkit/build-angular": "^19.2.9",
-        "@angular/cli": "~19.2.9",
-        "@angular/compiler": "^19.2.8",
-        "@angular/compiler-cli": "^19.2.8",
-        "@angular/platform-browser-dynamic": "^19.2.8",
-        "rxjs": "7.8.2",
+        "@angular/build": "^20.0.4",
+        "@angular/cli": "~20.0.4",
+        "@angular/compiler": "^20.0.5",
+        "@angular/compiler-cli": "^20.0.5",
+        "@angular/platform-browser-dynamic": "^20.0.5",
         "@colors/colors": "^1.6.0",
         "@commitlint/cli": "^19.8.1",
         "@commitlint/config-conventional": "^19.8.1",
@@ -38,7 +37,8 @@
         "karma-jasmine": "~5.1.0",
         "karma-jasmine-html-reporter": "~2.1.0",
         "lint-staged": "^16.1.2",
-        "ng-packagr": "^19.2.2",
+        "ng-packagr": "^20.0.1",
+        "rxjs": "7.8.2",
         "ts-node-dev": "^2.0.0",
         "tslib": "^2.8.1",
         "typescript": "~5.8"

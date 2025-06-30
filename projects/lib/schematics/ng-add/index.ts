@@ -46,7 +46,10 @@ export const initSentry = ({ tree, project }: ChainableApplicationContext, optio
     if (project.isStandalone) {
         rules.push(addProviderToBootstrapApplication(project.mainFilePath, 'provideSentry()', '@hug/ngx-sentry'));
     } else {
-        const appModulePath = project.pathFromSourceRoot('app/app.module.ts');
+        let appModulePath = project.pathFromSourceRoot('app/app-module.ts'); // for Angular 20+
+        if (!tree.exists(appModulePath)) {
+            appModulePath = project.pathFromSourceRoot('app/app.module.ts'); // for Angular < 20
+        }
         rules.push(addImportToNgModule(appModulePath, 'NgxSentryModule.forRoot()', '@hug/ngx-sentry'));
     }
 
