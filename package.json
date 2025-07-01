@@ -10,7 +10,8 @@
     "dependencies": {
         "@angular/common": "^20.0.5",
         "@angular/core": "^20.0.5",
-        "@angular/router": "^20.0.5"
+        "@angular/router": "^20.0.5",
+        "zone.js": "~0.15.1"
     },
     "devDependencies": {
         "@angular/build": "^20.0.4",
@@ -38,7 +39,6 @@
         "karma-jasmine-html-reporter": "~2.1.0",
         "lint-staged": "^16.1.2",
         "ng-packagr": "^20.0.1",
-        "rxjs": "7.8.2",
         "ts-node-dev": "^2.0.0",
         "tslib": "^2.8.1",
         "typescript": "~5.8"
@@ -50,7 +50,7 @@
     },
     "lint-staged": {
         "**/*.{js,json,ts,html}": [
-            "eslint --fix"
+            "eslint . --fix"
         ]
     }
 }
