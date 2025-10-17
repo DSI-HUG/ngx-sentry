@@ -1,5 +1,5 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
-import { ErrorHandlerOptions } from '@sentry/angular';
+import { type ModuleWithProviders, NgModule } from '@angular/core';
+import type { ErrorHandlerOptions } from '@sentry/angular';
 
 import { NGX_SENTRY_PROVIDERS } from './ngx-sentry';
 

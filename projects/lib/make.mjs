@@ -1,5 +1,3 @@
-/* eslint-disable array-element-newline */
-
 /**
  * Usage: $ node ./make.mjs <watch|lint|test-lib|test-schematics|test-ci|build|build-global>
  */
@@ -57,26 +55,30 @@ const spawnCmd = (cmd, args, verbose = true, exitOnError = true) => {
     const ret = spawnSync(cmd, args, {
         stdio: verbose ? 'inherit' : 'pipe'
     });
-    if (exitOnError && (ret.status !== 0)) {
+    if (exitOnError && ret.status !== 0) {
         process.exit(1);
     }
 };
 
-const cleanDir = (path, removeFolder = false) => new Promise(resolve => {
-    const exists = existsSync(path);
-    if (exists) {
-        rmSync(path, { recursive: true });
-    }
-    if (!removeFolder) {
-        // Give time to rmSync to unlock the file on Windows
-        setTimeout(() => {
-            mkdirSync(path, { recursive: true });
+const cleanDir = (path, removeFolder = false) =>
+    new Promise(resolve => {
+        const exists = existsSync(path);
+        if (exists) {
+            rmSync(path, { recursive: true });
+        }
+        if (!removeFolder) {
+            // Give time to rmSync to unlock the file on Windows
+            setTimeout(
+                () => {
+                    mkdirSync(path, { recursive: true });
+                    resolve();
+                },
+                exists ? 1000 : 0
+            );
+        } else {
             resolve();
-        }, exists ? 1000 : 0);
-    } else {
-        resolve();
-    }
-});
+        }
+    });
 
 const cleanUp = async () => {
     if (chokidarWatcher) {
@@ -128,7 +130,7 @@ const buildLib = async (exitOnError = true) => {
         if (LIBRARY_TYPE === 'ng') {
             spawnCmd('ng', ['build', NG_PROJECT_LIBRARY_NAME, '--configuration', 'production'], true, exitOnError);
         } else {
-            spawnCmd('tsc', ['-p', './tsconfig.lib.prod.json'], true, exitOnError);
+            spawnCmd('tsc', ['-p', './tsconfig.prod.json'], true, exitOnError);
         }
     }
 
@@ -138,7 +140,11 @@ const buildLib = async (exitOnError = true) => {
 
 const test = (tsconfigPath, ci = false) => {
     if (existsSync(tsconfigPath)) {
-        const args = [`--project=${tsconfigPath}`, '../../node_modules/jasmine/bin/jasmine.js', '--config=jasmine.json'];
+        const args = [
+            `--project=${tsconfigPath}`,
+            '../../node_modules/jasmine/bin/jasmine.js',
+            '--config=jasmine.json'
+        ];
         if (!ci) {
             args.unshift('--respawn', '--transpile-only');
         }
@@ -161,13 +167,13 @@ const testLib = (ci = false) => {
             }
             spawnCmd('ng', ligArgs);
         } else {
-            test('tsconfig.lib.spec.json', ci);
+            test('tsconfig.spec.json', ci);
         }
     }
 };
 
 const lint = () => {
-    const lintArgs = ['--ignore-pattern', '**/files/**/*'];
+    const lintArgs = ['--ignore-pattern', '**/files/**/*', '--ignore-pattern', '**/*.spec.ts'];
     if (existsSync(SCHEMATICS_SRC_PATH)) {
         lintArgs.unshift(`./{${LIBRARY_SRC},${SCHEMATICS_SRC}}/**/*.{ts,html}`);
     } else {
@@ -191,7 +197,6 @@ const watch = async () => {
     chokidarWatcher.on('change', rebuild);
     chokidarWatcher.on('unlink', rebuild);
 };
-
 (async () => {
     try {
         switch (process.argv[2]) {
@@ -227,7 +232,8 @@ const watch = async () => {
                 await packDistAndInstallGlobally();
                 log(`> ${green('Done!')}\n`);
                 break;
-            default: break;
+            default:
+                break;
         }
     } catch (err) {
         console.error(err);

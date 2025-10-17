@@ -1,11 +1,18 @@
 import { tags } from '@angular-devkit/core';
-import { chain, Rule } from '@angular-devkit/schematics';
+import { chain, type Rule } from '@angular-devkit/schematics';
 import {
-    addImportToFile, addImportToNgModule, addProviderToBootstrapApplication, application, ChainableApplicationContext,
-    createOrUpdateFile, logAction, schematic, workspace
+    addImportToFile,
+    addImportToNgModule,
+    addProviderToBootstrapApplication,
+    application,
+    type ChainableApplicationContext,
+    createOrUpdateFile,
+    logAction,
+    schematic,
+    workspace
 } from '@hug/ngx-schematics-utilities';
 
-import { NgAddOptions } from './ng-add-options';
+import type { NgAddOptions } from './ng-add-options';
 
 export const initSentry = ({ tree, project }: ChainableApplicationContext, options: NgAddOptions): Rule => {
     const mainTsContent = tree.read(project.mainFilePath)?.toString('utf-8') ?? '';
@@ -21,7 +28,7 @@ export const initSentry = ({ tree, project }: ChainableApplicationContext, optio
         }
 
         const initOptions = tags.stripIndents`
-            dsn: '${options?.dsnUrl ?? 'replace it with your own value'}',
+            dsn: '${options.dsnUrl}',
             environment: 'DEV', // replace it with your own value
             release: packageJson.version,
             enabled: !isDevMode()
@@ -57,19 +64,23 @@ export const initSentry = ({ tree, project }: ChainableApplicationContext, optio
 };
 
 export default (options: NgAddOptions): Rule =>
-    schematic('sentry', [
-        workspace()
-            // deploy files
-            .deployFiles({
-                ...options,
-                originUrl: new URL(options.dsnUrl).origin
-            })
-            // tsconfig.json (required to extract the version in package.json)
-            .modifyJsonFile('tsconfig.json', ['compilerOptions', 'allowSyntheticDefaultImports'], true)
-            .modifyJsonFile('tsconfig.json', ['compilerOptions', 'resolveJsonModule'], true)
-            .toRule(),
+    schematic(
+        'sentry',
+        [
+            workspace()
+                // deploy files
+                .deployFiles({
+                    ...options,
+                    originUrl: new URL(options.dsnUrl).origin
+                })
+                // tsconfig.json (required to extract the version in package.json)
+                .modifyJsonFile('tsconfig.json', ['compilerOptions', 'allowSyntheticDefaultImports'], true)
+                .modifyJsonFile('tsconfig.json', ['compilerOptions', 'resolveJsonModule'], true)
+                .toRule(),
 
-        application(options.project)
-            .rule(context => initSentry(context, options))
-            .toRule()
-    ], options);
+            application(options.project)
+                .rule(context => initSentry(context, options))
+                .toRule()
+        ],
+        options
+    );

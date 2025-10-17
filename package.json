@@ -50,7 +50,7 @@
     },
     "lint-staged": {
         "**/*.{js,json,ts,html}": [
-            "eslint . --fix"
+            "eslint --fix"
         ]
     }
 }

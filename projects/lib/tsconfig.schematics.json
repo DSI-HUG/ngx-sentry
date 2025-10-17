@@ -6,10 +6,7 @@
         "outDir": "../../dist/schematics",
         "module": "commonjs",
         "target": "ES2022",
-        "lib": [
-            "ES2022",
-            "dom"
-        ],
+        "lib": ["ES2022", "dom"],
         "moduleResolution": "node",
         "declaration": true,
         "declarationMap": false,
@@ -18,16 +15,8 @@
         "strictNullChecks": true,
         "skipLibCheck": true,
         "sourceMap": true,
-        "types": [
-            "jasmine",
-            "node"
-        ]
+        "types": ["jasmine", "node"]
     },
-    "include": [
-        "schematics/**/*"
-    ],
-    "exclude": [
-        "schematics/*/files/**/*",
-        "schematics/**/*.spec.ts"
-    ]
+    "include": ["schematics/**/*"],
+    "exclude": ["schematics/*/files/**/*", "schematics/**/*.spec.ts"]
 }

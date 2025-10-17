@@ -1,9 +1,9 @@
-/* eslint-disable array-element-newline */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
-import { Schema as ApplicationOptions, Style } from '@schematics/angular/application/schema';
-import { Schema as WorkspaceOptions } from '@schematics/angular/workspace/schema';
-import { join } from 'path';
+import { SchematicTestRunner, type UnitTestTree } from '@angular-devkit/schematics/testing';
+import { type Schema as ApplicationOptions, Style } from '@schematics/angular/application/schema';
+import type { Schema as WorkspaceOptions } from '@schematics/angular/workspace/schema';
+import { join } from 'node:path';
 
 export const workspaceOptions: WorkspaceOptions = {
     name: 'workspace',
@@ -46,8 +46,8 @@ export const collectionPath = join(__dirname, './collection.json');
 export const runner = new SchematicTestRunner('ngx-sentry', collectionPath);
 
 export const getCleanAppTree = async (useWorkspace = false, standalone = false): Promise<UnitTestTree> => {
-    appTest1.projectRoot = (useWorkspace) ? join(workspaceOptions.newProjectRoot!, appTest1.name) : '';
-    appTest2.projectRoot = (useWorkspace) ? join(workspaceOptions.newProjectRoot!, appTest2.name) : '';
+    appTest1.projectRoot = useWorkspace ? join(workspaceOptions.newProjectRoot!, appTest1.name) : '';
+    appTest2.projectRoot = useWorkspace ? join(workspaceOptions.newProjectRoot!, appTest2.name) : '';
 
     appTest1.standalone = standalone;
     appTest2.standalone = standalone;

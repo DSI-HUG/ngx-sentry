@@ -1,33 +1,48 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-import { APP_INITIALIZER, ErrorHandler, Provider } from '@angular/core';
+
+import { APP_INITIALIZER, ErrorHandler, type Provider } from '@angular/core';
 import { Router } from '@angular/router';
 import {
-    BrowserOptions, browserTracingIntegration, createErrorHandler, ErrorHandlerOptions, getCurrentScope,
-    init, replayIntegration, TraceService, User
+    type BrowserOptions,
+    browserTracingIntegration,
+    createErrorHandler,
+    type ErrorHandlerOptions,
+    getCurrentScope,
+    init,
+    replayIntegration,
+    TraceService,
+    type User
 } from '@sentry/angular';
 
-export const NGX_SENTRY_PROVIDERS = (options?: ErrorHandlerOptions): Provider[] => [{
-    // Automatically send Javascript errors captured by the Angular's error handler
-    provide: ErrorHandler,
-    useValue: createErrorHandler({
-        showDialog: false,
-        ...options
-    })
-}, {
-    // Register SentryTrace as a provider in Angular's DI system
-    provide: TraceService,
-    deps: [Router]
-}, {
-    // Force instantiating Tracing
-    provide: APP_INITIALIZER,
-    useFactory: () => () => { /**/ },
-    deps: [TraceService],
-    multi: true
-}];
+export const NGX_SENTRY_PROVIDERS = (options?: ErrorHandlerOptions): Provider[] => [
+    {
+        // Automatically send Javascript errors captured by the Angular's error handler
+        provide: ErrorHandler,
+        useValue: createErrorHandler({
+            showDialog: false,
+            ...options
+        })
+    },
+    {
+        // Register SentryTrace as a provider in Angular's DI system
+        provide: TraceService,
+        deps: [Router]
+    },
+    {
+        // Force instantiating Tracing
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
+        provide: APP_INITIALIZER,
+        useFactory: () => () => {
+            /**/
+        },
+        deps: [TraceService],
+        multi: true
+    }
+];
 
-export type SentryOptions = BrowserOptions & Required<Pick<BrowserOptions, 'dsn' | 'environment' | 'release'>> & {
-    tracePropagationTargets?: (string | RegExp)[];
-};
+export type SentryOptions = BrowserOptions &
+    Required<Pick<BrowserOptions, 'dsn' | 'environment' | 'release'>> & {
+        tracePropagationTargets?: (string | RegExp)[];
+    };
 
 export const setSentryUser = (user: User | null): void => {
     getCurrentScope().setUser(user);
