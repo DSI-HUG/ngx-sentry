@@ -173,12 +173,11 @@ const testLib = (ci = false) => {
 };
 
 const lint = () => {
-    const lintArgs = ['--ignore-pattern', '**/files/**/*', '--ignore-pattern', '**/*.spec.ts'];
+    const lintArgs = [`./${LIBRARY_SRC}/**/*.{ts,html}`];
     if (existsSync(SCHEMATICS_SRC_PATH)) {
-        lintArgs.unshift(`./{${LIBRARY_SRC},${SCHEMATICS_SRC}}/**/*.{ts,html}`);
-    } else {
-        lintArgs.unshift(`./${LIBRARY_SRC}/**/*.{ts,html}`);
+        lintArgs.push(`./${SCHEMATICS_SRC}/**/*.{ts,html}`);
     }
+    lintArgs.push('--ignore-pattern', '**/files/**/*', '--ignore-pattern', '**/*.spec.ts');
     spawnCmd('eslint', lintArgs);
 };
 
