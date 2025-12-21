@@ -10,7 +10,7 @@ import {
     init,
     replayIntegration,
     TraceService,
-    type User
+    type User,
 } from '@sentry/angular';
 
 export const NGX_SENTRY_PROVIDERS = (options?: ErrorHandlerOptions): Provider[] => [
@@ -19,13 +19,13 @@ export const NGX_SENTRY_PROVIDERS = (options?: ErrorHandlerOptions): Provider[] 
         provide: ErrorHandler,
         useValue: createErrorHandler({
             showDialog: false,
-            ...options
-        })
+            ...options,
+        }),
     },
     {
         // Register SentryTrace as a provider in Angular's DI system
         provide: TraceService,
-        deps: [Router]
+        deps: [Router],
     },
     {
         // Force instantiating Tracing
@@ -35,8 +35,8 @@ export const NGX_SENTRY_PROVIDERS = (options?: ErrorHandlerOptions): Provider[] 
             /**/
         },
         deps: [TraceService],
-        multi: true
-    }
+        multi: true,
+    },
 ];
 
 export type SentryOptions = BrowserOptions &
@@ -57,7 +57,7 @@ export const initSentry = (options: SentryOptions): void => {
             browserTracingIntegration(),
 
             // Registers the Replay integration, which automatically captures Session Replays
-            replayIntegration()
+            replayIntegration(),
         ],
 
         // Set tracesSampleRate to 1.0 to capture 100% of transactions for tracing.
@@ -73,12 +73,12 @@ export const initSentry = (options: SentryOptions): void => {
 
         // If the entire session is not sampled, use the below sample rate to sample
         // sessions when an error occurs.
-        replaysOnErrorSampleRate: 1.0
+        replaysOnErrorSampleRate: 1.0,
     };
 
     // Initialize Sentry
     init({
         ...defaultOptions,
-        ...options
+        ...options,
     });
 };

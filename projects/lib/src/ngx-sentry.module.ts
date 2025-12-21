@@ -8,7 +8,7 @@ export class NgxSentryModule {
     public static forRoot(options?: ErrorHandlerOptions): ModuleWithProviders<NgxSentryModule> {
         return {
             ngModule: NgxSentryModule,
-            providers: NGX_SENTRY_PROVIDERS(options)
+            providers: NGX_SENTRY_PROVIDERS(options),
         };
     }
 }

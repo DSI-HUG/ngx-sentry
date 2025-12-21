@@ -9,12 +9,12 @@ export const workspaceOptions: WorkspaceOptions = {
     name: 'workspace',
     newProjectRoot: 'projects',
     strict: true,
-    version: '0.0.0'
+    version: '0.0.0',
 };
 
 export const libTest: ApplicationOptions = {
     name: 'lib-test',
-    skipPackageJson: false
+    skipPackageJson: false,
 };
 
 export const appTest1: ApplicationOptions = {
@@ -26,7 +26,7 @@ export const appTest1: ApplicationOptions = {
     style: Style.Scss,
     skipTests: false,
     skipPackageJson: false,
-    standalone: false
+    standalone: false,
 };
 
 export const appTest2: ApplicationOptions = {
@@ -38,7 +38,7 @@ export const appTest2: ApplicationOptions = {
     style: Style.Scss,
     skipTests: false,
     skipPackageJson: false,
-    standalone: false
+    standalone: false,
 };
 
 export const collectionPath = join(__dirname, './collection.json');

@@ -9,7 +9,7 @@ import {
     createOrUpdateFile,
     logAction,
     schematic,
-    workspace
+    workspace,
 } from '@hug/ngx-schematics-utilities';
 
 import type { NgAddOptions } from './ng-add-options';
@@ -40,12 +40,12 @@ export const initSentry = ({ tree, project }: ChainableApplicationContext, optio
 
         rules.push(
             createOrUpdateFile(project.mainFilePath, newContent),
-            logAction('Have a look at `main.ts` file and update Sentry configuration according to your needs')
+            logAction('Have a look at `main.ts` file and update Sentry configuration according to your needs'),
         );
     }
     rules.push(
         addImportToFile(project.mainFilePath, 'isDevMode', '@angular/core'),
-        addImportToFile(project.mainFilePath, 'packageJson', '../package.json', true)
+        addImportToFile(project.mainFilePath, 'packageJson', '../package.json', true),
     );
 
     // Provide library
@@ -71,7 +71,7 @@ export default (options: NgAddOptions): Rule =>
                 // deploy files
                 .deployFiles({
                     ...options,
-                    originUrl: new URL(options.dsnUrl).origin
+                    originUrl: new URL(options.dsnUrl).origin,
                 })
                 // tsconfig.json (required to extract the version in package.json)
                 .modifyJsonFile('tsconfig.json', ['compilerOptions', 'allowSyntheticDefaultImports'], true)
@@ -80,7 +80,7 @@ export default (options: NgAddOptions): Rule =>
 
             application(options.project)
                 .rule(context => initSentry(context, options))
-                .toRule()
+                .toRule(),
         ],
-        options
+        options,
     );

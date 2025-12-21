@@ -7,7 +7,7 @@ describe('lib', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NgxSentryModule]
+            imports: [NgxSentryModule],
         });
         sentyrModule = TestBed.inject(NgxSentryModule);
     });

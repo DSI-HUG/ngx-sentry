@@ -19,7 +19,7 @@ const joc = jasmine.objectContaining;
                 defaultOptions = {
                     project: useWorkspace ? appTest2.name : appTest1.name,
                     projectName: 'Sentry Project Name',
-                    dsnUrl: 'https://a1b2c3d4e5f6g7h8@sentry.domain.ch/4'
+                    dsnUrl: 'https://a1b2c3d4e5f6g7h8@sentry.domain.ch/4',
                 } as NgAddOptions;
                 project = await getProjectFromWorkspace(tree, defaultOptions.project);
             });
@@ -48,9 +48,9 @@ const joc = jasmine.objectContaining;
                     joc({
                         compilerOptions: joc({
                             resolveJsonModule: true,
-                            allowSyntheticDefaultImports: true
-                        })
-                    })
+                            allowSyntheticDefaultImports: true,
+                        }),
+                    }),
                 );
             });
 
@@ -66,7 +66,7 @@ const joc = jasmine.objectContaining;
                         '  environment: \'DEV\', // replace it with your own value\n' +
                         '  release: packageJson.version,\n' +
                         '  enabled: !isDevMode()\n' +
-                        '});'
+                        '});',
                 );
             });
 

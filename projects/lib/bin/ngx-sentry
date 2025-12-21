@@ -3,8 +3,8 @@
 'use strict';
 
 const { green, magenta } = require('colors/safe');
-const { exec } = require('child_process');
-const { resolve: pathResolve } = require('path');
+const { exec } = require('node:child_process');
+const { resolve: pathResolve } = require('node:path');
 
 const execCmd = (cmd, opts) => new Promise((resolve, reject) => {
     exec(cmd, { cwd: process.cwd(), ...opts }, (err, stdout, stderr) => {

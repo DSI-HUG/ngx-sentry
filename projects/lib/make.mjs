@@ -53,7 +53,7 @@ const logHeader = str => {
 
 const spawnCmd = (cmd, args, verbose = true, exitOnError = true) => {
     const ret = spawnSync(cmd, args, {
-        stdio: verbose ? 'inherit' : 'pipe'
+        stdio: verbose ? 'inherit' : 'pipe',
     });
     if (exitOnError && ret.status !== 0) {
         process.exit(1);
@@ -73,7 +73,7 @@ const cleanDir = (path, removeFolder = false) =>
                     mkdirSync(path, { recursive: true });
                     resolve();
                 },
-                exists ? 1000 : 0
+                exists ? 1000 : 0,
             );
         } else {
             resolve();
@@ -143,7 +143,7 @@ const test = (tsconfigPath, ci = false) => {
         const args = [
             `--project=${tsconfigPath}`,
             '../../node_modules/jasmine/bin/jasmine.js',
-            '--config=jasmine.json'
+            '--config=jasmine.json',
         ];
         if (!ci) {
             args.unshift('--respawn', '--transpile-only');
