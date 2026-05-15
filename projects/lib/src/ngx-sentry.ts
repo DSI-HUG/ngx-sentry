@@ -39,10 +39,10 @@ export const NGX_SENTRY_PROVIDERS = (options?: ErrorHandlerOptions): Provider[] 
     },
 ];
 
-export type SentryOptions = BrowserOptions &
-    Required<Pick<BrowserOptions, 'dsn' | 'environment' | 'release'>> & {
-        tracePropagationTargets?: (string | RegExp)[];
-    };
+export type SentryOptions = BrowserOptions
+  & Required<Pick<BrowserOptions, 'dsn' | 'environment' | 'release'>> & {
+      tracePropagationTargets?: (string | RegExp)[];
+  };
 
 export const setSentryUser = (user: User | null): void => {
     getCurrentScope().setUser(user);

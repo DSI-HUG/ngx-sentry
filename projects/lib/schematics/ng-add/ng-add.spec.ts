@@ -6,7 +6,7 @@ import type { NgAddOptions } from './ng-add-options';
 
 const joc = jasmine.objectContaining;
 [false, true].forEach(useStandalone => {
-    ;[false, true].forEach(useWorkspace => {
+    [false, true].forEach(useWorkspace => {
         describe(`schematics - ng-add - (using${useStandalone ? ' standalone' : ''}${useWorkspace ? ' workspace' : ' flat'} project)`, () => {
             let defaultOptions: NgAddOptions;
             let tree: UnitTestTree;
@@ -20,7 +20,7 @@ const joc = jasmine.objectContaining;
                     project: useWorkspace ? appTest2.name : appTest1.name,
                     projectName: 'Sentry Project Name',
                     dsnUrl: 'https://a1b2c3d4e5f6g7h8@sentry.domain.ch/4',
-                } as NgAddOptions;
+                };
                 project = await getProjectFromWorkspace(tree, defaultOptions.project);
             });
 
@@ -61,12 +61,12 @@ const joc = jasmine.objectContaining;
                 expect(mainTsContent).toContain('import { isDevMode } from \'@angular/core\';');
                 expect(mainTsContent).toContain('import packageJson from \'../package.json\';');
                 expect(mainTsContent).toContain(
-                    'initSentry({\n' +
-                        `  dsn: '${defaultOptions.dsnUrl}',\n` +
-                        '  environment: \'DEV\', // replace it with your own value\n' +
-                        '  release: packageJson.version,\n' +
-                        '  enabled: !isDevMode()\n' +
-                        '});',
+                    'initSentry({\n'
+                    + `  dsn: '${defaultOptions.dsnUrl}',\n`
+                    + '  environment: \'DEV\', // replace it with your own value\n'
+                    + '  release: packageJson.version,\n'
+                    + '  enabled: !isDevMode()\n'
+                    + '});',
                 );
             });
 
