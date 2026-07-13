@@ -1,0 +1,23 @@
+{
+    "extends": "../../../tsconfig.base.json",
+    "compilerOptions": {
+        "rootDir": ".",
+        "outDir": "../../../dist/schematics",
+        "tsBuildInfoFile": "../../../node_modules/.tmp/tsconfig.lib.schematics.tsbuildinfo",
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
+        "types": [
+            "vitest/globals",
+            "node"
+        ],
+        "composite": true,
+        "declaration": true,
+        "declarationMap": false
+    },
+    "include": [
+        "**/*.ts"
+    ],
+    "exclude": [
+        "*/files/**/*"
+    ]
+}

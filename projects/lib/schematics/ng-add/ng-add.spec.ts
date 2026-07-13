@@ -1,10 +1,9 @@
 import type { UnitTestTree } from '@angular-devkit/schematics/testing';
 import { type ApplicationDefinition, getProjectFromWorkspace } from '@hug/ngx-schematics-utilities';
 
-import { appTest1, appTest2, getCleanAppTree, runner } from '../schematics.spec';
+import { appTest1, appTest2, getCleanAppTree, runner } from '../utils.spec';
 import type { NgAddOptions } from './ng-add-options';
 
-const joc = jasmine.objectContaining;
 [false, true].forEach(useStandalone => {
     [false, true].forEach(useWorkspace => {
         describe(`schematics - ng-add - (using${useStandalone ? ' standalone' : ''}${useWorkspace ? ' workspace' : ' flat'} project)`, () => {
@@ -26,7 +25,7 @@ const joc = jasmine.objectContaining;
 
             it('should run without issues', async () => {
                 const test$ = runner.runSchematic('ng-add', defaultOptions, tree);
-                await expectAsync(test$).toBeResolved();
+                await test$;
                 expect(tree.files.length).toEqual(nbFiles + 1);
             });
 
@@ -45,8 +44,9 @@ const joc = jasmine.objectContaining;
                 await runner.runSchematic('ng-add', defaultOptions, tree);
                 const tsconfig = tree.readJson('tsconfig.json');
                 expect(tsconfig).toEqual(
-                    joc({
-                        compilerOptions: joc({
+                    /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+                    expect.objectContaining({
+                        compilerOptions: expect.objectContaining({
                             resolveJsonModule: true,
                             allowSyntheticDefaultImports: true,
                         }),

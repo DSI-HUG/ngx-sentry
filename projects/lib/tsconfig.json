@@ -1,11 +1,12 @@
 {
-    "extends": "../../tsconfig.json",
-    "compilerOptions": {
-        "outDir": "../../out-tsc/lib",
-        "declaration": true,
-        "declarationMap": true,
-        "inlineSources": true,
-        "types": ["node"]
-    },
-    "exclude": ["**/*.spec.ts"]
+    "files": [],
+    "include": [],
+    "references": [
+        {
+            "path": "./tsconfig.lib.json"
+        },
+        {
+            "path": "./schematics/tsconfig.schematics.json"
+        }
+    ]
 }

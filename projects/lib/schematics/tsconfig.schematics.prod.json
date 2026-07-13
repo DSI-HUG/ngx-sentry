@@ -1,0 +1,10 @@
+{
+    "extends": "./tsconfig.schematics.json",
+    "compilerOptions": {
+        "composite": false,
+        "incremental": false
+    },
+    "exclude": [
+        "**/*.spec.ts"
+    ]
+}

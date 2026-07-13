@@ -1,6 +1,0 @@
-{
-    "jsLoader": "require",
-    "spec_dir": "schematics",
-    "spec_files": ["**/*.spec.ts", "!**/files/**/*.spec.ts"],
-    "helpers": ["../jasmine.helper.js"]
-}

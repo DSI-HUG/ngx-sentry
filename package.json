@@ -1,45 +1,34 @@
 {
     "private": true,
     "scripts": {
-        "ncu": "npx npm-check-updates -i --format=group --packageFile '{,projects/**/}package.json' --no-deprecated",
+        "typecheck": "tsc --build --noEmit",
         "prepare": "husky || true"
     },
     "workspaces": [
         "projects/lib"
     ],
-    "dependencies": {
-        "@angular/common": "^21.2.13",
-        "@angular/core": "^21.2.13",
-        "@angular/router": "^21.2.13",
-        "zone.js": "~0.16.2"
-    },
     "devDependencies": {
-        "@angular/build": "^21.2.11",
-        "@angular/cli": "~21.2.11",
-        "@angular/compiler": "^21.2.13",
-        "@angular/compiler-cli": "^21.2.13",
-        "@angular/platform-browser-dynamic": "^21.2.13",
-        "@commitlint/cli": "^21.0.1",
-        "@commitlint/config-conventional": "^21.0.1",
-        "@hug/eslint-config": "^25.0.1",
-        "@types/jasmine": "~6.0.0",
+        "@angular/build": "^22.0.6",
+        "@angular/cli": "~22.0.6",
+        "@angular/compiler": "^22.0.6",
+        "@angular/compiler-cli": "^22.0.6",
+        "@angular/platform-browser-dynamic": "^22.0.6",
+        "@angular/router": "^22.0.6",
+        "@angular/common": "^22.0.6",
+        "@angular/core": "^22.0.6",
+        "@commitlint/cli": "^21.2.1",
+        "@commitlint/config-conventional": "^21.2.0",
+        "@hug/eslint-config": "^26.0.0",
         "chokidar": "^5.0.0",
         "cpy": "^13.2.2",
         "cross-spawn": "^7.0.6",
         "husky": "^9.1.7",
-        "jasmine": "^6.2.0",
-        "jasmine-core": "~6.2.0",
-        "jasmine-spec-reporter": "^7.0.0",
-        "karma": "~6.4.4",
-        "karma-chrome-launcher": "~3.2.0",
-        "karma-coverage": "~2.2.1",
-        "karma-jasmine": "~5.1.0",
-        "karma-jasmine-html-reporter": "~2.2.0",
-        "lint-staged": "^17.0.4",
-        "ng-packagr": "^21.2.3",
-        "ts-node-dev": "^2.0.0",
+        "jsdom": "^29.1.1",
+        "lint-staged": "^17.0.8",
+        "ng-packagr": "^22.0.1",
         "tslib": "^2.8.1",
-        "typescript": "~5.9"
+        "typescript": "~6.0.3",
+        "vitest": "^4.1.10"
     },
     "commitlint": {
         "extends": [
@@ -50,5 +39,13 @@
         "**/*.{js,json,ts,html}": [
             "eslint --fix"
         ]
+    },
+    "allowScripts": {
+        "@hug/eslint-config": true,
+        "esbuild": true,
+        "lmdb": true,
+        "msgpackr-extract": true,
+        "fsevents": true,
+        "@parcel/watcher": true
     }
 }

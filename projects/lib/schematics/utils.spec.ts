@@ -46,8 +46,8 @@ export const collectionPath = join(__dirname, './collection.json');
 export const runner = new SchematicTestRunner('ngx-sentry', collectionPath);
 
 export const getCleanAppTree = async (useWorkspace = false, standalone = false): Promise<UnitTestTree> => {
-    appTest1.projectRoot = useWorkspace ? join(workspaceOptions.newProjectRoot!, appTest1.name) : '';
-    appTest2.projectRoot = useWorkspace ? join(workspaceOptions.newProjectRoot!, appTest2.name) : '';
+    appTest1.projectRoot = (useWorkspace) ? join(workspaceOptions.newProjectRoot!, appTest1.name) : '';
+    appTest2.projectRoot = (useWorkspace) ? join(workspaceOptions.newProjectRoot!, appTest2.name) : '';
 
     appTest1.standalone = standalone;
     appTest2.standalone = standalone;

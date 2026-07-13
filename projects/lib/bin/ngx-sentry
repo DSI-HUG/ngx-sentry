@@ -1,10 +1,9 @@
 #!/usr/bin/env node
+import { exec } from 'node:child_process';
+import { resolve as pathResolve } from 'node:path';
 
-'use strict';
-
-const { green, magenta } = require('colors/safe');
-const { exec } = require('node:child_process');
-const { resolve: pathResolve } = require('node:path');
+const green = (value) => `\x1b[32m${value}\x1b[39m`;
+const magenta = (value) => `\x1b[35m${value}\x1b[39m`;
 
 const execCmd = (cmd, opts) => new Promise((resolve, reject) => {
     exec(cmd, { cwd: process.cwd(), ...opts }, (err, stdout, stderr) => {
@@ -33,7 +32,7 @@ const execCmd = (cmd, opts) => new Promise((resolve, reject) => {
 
         // Upload files
         console.log(magenta('> 3/4 Uploading new files..'));
-        await execCmd(`sentry-cli releases files "${version}" upload-sourcemaps "${sourceMapsPath}" -x .js -x .map --validate --verbose --rewrite --strip-common-prefix`);
+        await execCmd(`sentry-cli releases files "${version}" upload-sourcemaps "${sourceMapsPath}" "-x" .js "-x" .map --validate --verbose --rewrite --strip-common-prefix`);
 
         // Finish release
         console.log(magenta('> 4/4 Finalizing release..'));
