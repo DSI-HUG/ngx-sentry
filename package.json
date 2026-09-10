@@ -28,7 +28,7 @@
         "ng-packagr": "^22.0.1",
         "tslib": "^2.8.1",
         "typescript": "~6.0.3",
-        "vitest": "^4.1.10"
+        "vitest": "^4.1.11"
     },
     "commitlint": {
         "extends": [
