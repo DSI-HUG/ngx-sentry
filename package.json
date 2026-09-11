@@ -10,7 +10,7 @@
     "devDependencies": {
         "@angular/build": "^22.0.6",
         "@angular/cli": "~22.0.6",
-        "@angular/compiler": "^22.0.6",
+        "@angular/compiler": "^22.1.0",
         "@angular/compiler-cli": "^22.0.6",
         "@angular/platform-browser-dynamic": "^22.0.6",
         "@angular/router": "^22.0.6",
